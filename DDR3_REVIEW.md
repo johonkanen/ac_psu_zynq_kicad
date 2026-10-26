@@ -87,7 +87,7 @@ The VTT comes from a TPS51200. 8 layers, KiCad 5 file with no stack-up, MIT lice
 | Addr/cmd–CK | at U16 +1.0…+25.2 ps, at U15 +6.2…+24.1 ps; CK P/N 7.3 ps | PASS against ±103 ps |
 | CK ≥ DQS | byte 0 **+0.3 ps** (the minimum), byte 1 +88, bytes 2/3 +159 / +143 ps | PASS, no margin on byte 0 |
 | VREF | 10 k/10 k divider into the TPS51200 REFIN; SoC VREF0/1 and both DRAMs on it, 8 caps | PASS |
-| Impedance | **unknown**: every DDR trace is 0.102 mm, and the file has no stack-up. On JLC08121H-1080A 0.10 mm would be about 55 Ω (outer and In5) | open |
+| Impedance | every DDR trace is 0.102 mm, and the file has no stack-up. **Resolved 2026-10-26: on JLC081611-7628, In2/In4 are 39.5 Ω SE / 71.4 Ω diff and In6 is 45.5 / 74.6 Ω** (`ZYNQ_PCB_NOTES.md` §6.4) | PASS on that stack-up |
 | Tested | README: "DDR3 PS Memory: Untested" | open |
 
 Notes:

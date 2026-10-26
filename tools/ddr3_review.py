@@ -19,11 +19,14 @@ ap.add_argument("--soc", default="U2")
 ap.add_argument("--dram", default="U1")
 ap.add_argument("--mts", type=int, default=1066, help="operating data rate (MT/s)")
 ap.add_argument("--json")
+ap.add_argument("--ps-outer", type=float, default=5.95, help="outer SE speed, ps/mm (default JLC08121H-1080A)")
+ap.add_argument("--ps-outer-diff", type=float, default=5.75)
+ap.add_argument("--ps-inner", type=float, default=6.75, help="inner speed, ps/mm; JLC081611-7628: 6.63 (In2/In4), 6.80 (In6)")
 ap.add_argument("--pkg", help="Xilinx package delay CSV (bank,ball,site,function,min ps,max ps,...): use its mean "
                 "delay per ball instead of the footprint's pad die length")
 a = ap.parse_args()
 
-PS_OUTER, PS_OUTER_DIFF, PS_INNER = 5.95, 5.75, 6.75
+PS_OUTER, PS_OUTER_DIFF, PS_INNER = a.ps_outer, a.ps_outer_diff, a.ps_inner
 PS_VIA = 7.0            # ps per mm of via barrel (rough; only the barrel between the two layers used)
 DIE_PS_PER_MM = 6.0     # die length was stored as delay / 6 ps/mm
 # UG933 Appendix A, DDR3L, SoC rated 1066, memory rated 1866 (MT41K256M16TW-107): {actual MT/s: (DQ-DQS, Addr-CK)} ps

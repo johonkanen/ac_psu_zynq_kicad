@@ -125,7 +125,7 @@ Bring-up step 3 (the Zynq DDR test) is the final proof. Plan the PS7 DDR setting
 | Safe state of J3 outputs | translator OE + 10 k pull-downs | **PUDC_B tied high** (no internal pull-ups during configuration) + the 10 k pull-downs on every J3 pin **[keep]** |
 | Configuration | SDM / SPI active | Zynq boot mode straps (QSPI boot, JTAG fallback), FSBL + bitstream + U-Boot in QSPI, Linux on eMMC |
 | Software | br2-efinix / Altera HPS | mainline Linux, U-Boot and Xilinx `zynq_fsbl`; PetaLinux or Buildroot `zynq_zed_defconfig`-style board config |
-| Stack-up | JLC08161H-3313, 1.6 mm | 8 layers with **GND on L2/L4/L6** and signals on L1/L3/L5/L7, the source's layer roles; which JLC stack-up is chosen in phase 0.1 (§4.3) |
+| Stack-up | JLC08161H-3313, 1.6 mm | **JLC081611-7628, 1.6 mm, 1 oz inner** (decided 2026-10-26): GND on In1/In3/In5, signals on F/In2/In4/In6, the source's roles. 0.102 mm = 39.5 Ω on In2/In4 (§4.3) |
 
 **Kept from the earlier cards:** outline 76.000 × 65.127 mm, J3/J6 bottom-side sockets numbered like the baseboard,
 J9 HR911130A magjack and its position, J5 LCD, J1/J2 positions, the ADC front end (OPA365, SN74LV4051A, ADS7056),
@@ -212,21 +212,14 @@ Then the copper is copied, and the net of every copied item is checked against o
   Every inner signal layer sits between two GND planes. There are no dedicated power planes: rails are pours on
   L1/L8 and on the signal layers (+1V0, +1V8, VCCAUX, +3V3 on L3/L5/L7). Our board uses the same roles. Our power
   goes on L8 pours and L1/L7 pours outside the block, with the regulators on B.Cu as on the Ti135 card.
-- **Impedance:** the file has no stack-up, and every DDR trace is 0.102 mm (4 mil). Pick the JLC 8-layer stack-up whose
-  L2–L7 spacing brings 0.102 mm closest to 40–50 Ω.
-  - On JLC08121H-1080A (1.2 mm), `tools/zsolve_cases.py` gives about 55 Ω outer and 57 Ω for a stripline between two
-    GND planes.
-  - On JLC08161H-3313, L5 sits between 0.3 mm core and 0.3568 mm prepreg, which makes 0.102 mm well above 60 Ω: not
-    suitable.
-  - A route at 50–57 Ω is consistent with what works on NASR-M (50/100 Ω tracks). If the stack-up lands near 55 Ω:
-    - **VRP/VRN stay 80.6 Ω** (UG933: 2 × the termination impedance, which is 40 Ω);
-    - **Rterm stays 40.2 Ω**;
-    - or widen the traces outside the BGAs, as `tools/ddr/widen.py` did on the Ti135 card.
+- **Stack-up: JLC081611-7628** (1.593 mm, 1 oz inner), chosen 2026-10-26 by field-solving all 49 JLC 8-layer templates
+  for juliancoy's 0.102 mm traces (`ZYNQ_PCB_NOTES.md` §6.4, `reference/stackup_scan_0p102mm.txt`):
+  - In2/In4 (CK, data): 39.5 Ω SE / 71.4 Ω diff;
+  - In6 (addr/cmd): 45.5 / 74.6 Ω, and 47.4 Ω even without a B plane;
+  - F.Cu: 111 Ω, so it is used for fan-out only.
 
-    Decide with the field solve in phase 0.1.
-- **Check the board thickness against the through-hole parts** if 1.2 mm is chosen:
-  - J3/J6 1.27 mm sockets;
-  - the HR911130A pegs.
+  No re-width of the block; termination as UG933. The MDI pairs go on F.Cu at 0.35/0.20 mm (102 Ω).
+- **Board thickness 1.6 mm**, as on the other cards, so J3/J6 and the HR911130A need no check.
 - **DRC:** juliancoy's rules are 0.102 mm width and clearance everywhere. Write our rules from scratch the way
   `tools/board_setup.py` does in the Ti135 repo, with the block area exempt from width changes.
 
@@ -238,7 +231,7 @@ Then the copper is copied, and the net of every copied item is checked against o
 
 1. **Source review:** done 2026-10-26 (`DDR3_REVIEW.md`); **source decided: juliancoy/zynqPCB, both DRAMs**.
    Package decided: CLG484. Still to do on the block before it is frozen:
-   - the stack-up and impedance choice (§4.3);
+   - ~~the stack-up and impedance choice~~ **done 2026-10-26: JLC081611-7628** (§4.3);
    - more CK ≥ DQS margin on byte 0 (+0.3 ps now: lengthen CK slightly or shorten DQS0);
    - check the four U15 nets by hand (A1, DM3, DQ20, WE#);
    - re-run `ddr3_review.py` for both DRAMs on the imported block;
@@ -337,7 +330,7 @@ Then the copper is copied, and the net of every copied item is checked against o
 | The juliancoy DDR is untested (no proven CLG484 source exists) | UG933 review done (`DDR3_REVIEW.md`), fix the open points before freezing (phase 0.1); the PS7 DDR can be slowed down; bring-up step 3 tests it before anything else; a 16-bit fallback with U15 unfitted and lanes 2/3 unused needs no layout change |
 | Net mismatch after the copy (a pad on the wrong net) | pad-based mapping, DRC parity, net-by-net comparison with the source |
 | KiCad 5 → 10 format upgrade changes something (legacy zone fills, footprint text) | upgrade in `work/`, then compare segment counts and lengths per net before and after |
-| The 0.102 mm DDR traces land far from 40 Ω on any JLC stack-up | choose the stack-up by field solve (phase 0.1); widen outside the BGAs if needed |
+| The 0.102 mm DDR traces and the stack-up | JLC081611-7628 puts them at 39.5–45.5 Ω; check JLC's 1 oz inner minimum width/space (4/4 mil) and the surcharge at quote time |
 | The eMMC swap to KIOXIA changes the ball use | both are JEDEC 153-ball; check every used ball (CLK, CMD, DAT0–3, RST_n, VCC, VCCQ, VDDi, VSS) against the KIOXIA data sheet |
 | DRAM stock (HA-125 has 0 at JLC) | MT41K256M16TW-107 on the same land (3,915 pcs) |
 | The SoC at JLC: 116 / 309 pcs | order early, as with the Ti135 parts |
@@ -353,7 +346,8 @@ Then the copper is copied, and the net of every copied item is checked against o
 5. **Package XC7Z020 CLG484**, with JLC stock for both grades.
 6. **Block source: juliancoy/zynqPCB** (commit `5cb7c70`), after the UG933 review rejected pinguz97.
 7. **Both MIO banks at 1.8 V; QSPI flash IS25WP128-RHLE** (shared with the Agilex/Ti135 cards).
+8. **Stack-up JLC081611-7628** (1.6 mm, 1 oz inner); MDI pairs on F.Cu.
 
 Still open:
-- the stack-up and impedance, CK ≥ DQS margin on byte 0, the four U15 nets (phase 0.1);
+- CK ≥ DQS margin on byte 0, the four U15 nets (phase 0.1);
 - the DDR3 temperature grade (phase 0.4).
