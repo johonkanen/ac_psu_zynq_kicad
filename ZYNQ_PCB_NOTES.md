@@ -26,7 +26,7 @@ still need checking against a primary source or the Vivado pin planner.
 |---|---|---|---|
 | 0 | config | PROGRAM_B, INIT_B, DONE, CFGBVS, JTAG, XADC, DXP/DXN, VCCBATT | 3.3 V |
 | 13, 33, 34, 35 | PL HR (1.2–3.3 V) | user I/O; PUDC_B is IO_L21N_T3_DQS_PUDC_B_34 | **3.3 V** (J3, J5, ADC, LEDs directly; no translators) |
-| 500 | PS MIO0 | MIO[15:0], PS_CLK, PS_POR_B | 1.8 V or 3.3 V, §4 |
+| 500 | PS MIO0 | MIO[15:0], PS_CLK, PS_POR_B | **1.8 V** (QSPI IS25WP128; decided 2026-10-26) |
 | 501 | PS MIO1 | MIO[53:16], PS_MIO_VREF, PS_SRST_B | **1.8 V** (eMMC VCCQ, RGMII) |
 | 502 | PS DDR | DDR3L x32 (2 × MT41K256M16TW-107, the juliancoy block), dedicated balls | 1.35 V |
 
@@ -40,11 +40,11 @@ allows, as on the source boards.
 | Rail on the card | V | Zynq pins | Range (DS187) | Notes |
 |---|---|---|---|---|
 | `1V0` | 1.00 | VCCPINT, VCCINT, VCCBRAM | 0.95–1.05 | VCCPINT "can be combined with VCCINT" when the PL never powers down alone (UG933 Ch. 5). VCCINT and VCCBRAM must share a supply (DS187 note 5) |
-| `1V8` | 1.80 | VCCPAUX, VCCAUX, VCCO_MIO1 (and MIO0 if at 1.8 V) | 1.71–1.89 | |
+| `1V8` | 1.80 | VCCPAUX, VCCAUX, VCCO_MIO0, VCCO_MIO1 | 1.71–1.89 | both MIO banks at 1.8 V |
 | `VCCPLL` | 1.80 | VCCPLL | 1.71–1.89 | from 1V8 through a 120 Ω @ 100 MHz 0603 bead + 10 µF 0603. A 0.47–4.7 µF 0402 cap goes ≤ 5.1 mm of trace from the VCCPLL/GND vias. A planelet ≥ 2 mm wide and < 76 mm long, or a trace ≤ 40 Ω and < 50.8 mm (UG933 Ch. 5; parts BLM18SG121TN1, GRM188R60G106ME47, GRM155R60J474KE19) |
 | `1V35` | 1.35 | VCCO_DDR | 1.14–1.89 | DDR3L; also the DRAM VDD/VDDQ |
 | `0V675` | VCCO_DDR / 2 | PS_DDR_VREF0/1, DRAM VREFCA/VREFDQ, VTT if used | – | divider or tracking regulator (§6.3) |
-| `3V3` | 3.30 | VCCO_0, VCCO_13/33/34/35, (VCCO_MIO0 at 3.3 V) | 1.14–3.465 (HR VCCO) | |
+| `3V3` | 3.30 | VCCO_0, VCCO_13/33/34/35 | 1.14–3.465 (HR VCCO) | |
 | `VCCADC` | 1.80 | VCCADC_0 / GNDADC_0 | 1.71–1.89 | XADC unused: VCCADC to VCCAUX through a bead, GNDADC to GND **[verify against UG480]** |
 | – | – | VCCBATT_0 | 1.0–1.89 | no bitstream encryption: tie to GND or VCCAUX (DS187 note 10). The source ties it to 1V8 |
 
@@ -100,7 +100,8 @@ UG933 allows consolidating bulk capacitors when rails are merged (*Bulk Capacito
 
 - 30–60 MHz, single-ended LVCMOS at the **VCCO_MIO0 level**;
 - duty cycle 40–60 %, ≤ ±0.5 % RMS jitter, rise/fall ≤ 6 ns (DS187 Table 20);
-- the usual choice is a 33.333 MHz oscillator, as on pinguz97 and the ZedBoard.
+- the usual choice is a 33.333 MHz oscillator, as on pinguz97 and the ZedBoard; **here a 1.8 V part**, since bank 500 is
+  at 1.8 V.
 
 ### 4.2 Boot mode straps (UG585 *Boot Mode Pin Settings*)
 
@@ -114,8 +115,8 @@ MIO[8:2] are sampled at PS_POR_B release. Every one needs **its own 20 kΩ** pul
 | MIO2 | BOOT_MODE[3]: JTAG chain | 0: cascaded (PS DAP + PL TAP on one JTAG) |
 | MIO5 / MIO4 / MIO3 | BOOT_MODE[0] / [2] / [1]: boot device | **1 / 0 / 0 = Quad-SPI**. JTAG 000, NOR 001 (MIO3), NAND 010 (MIO4), SD 110 (MIO5 + MIO4) |
 | MIO6 | BOOT_MODE[4]: PLLs | 0: PLLs enabled |
-| MIO7 | VMODE[0]: bank 500 | 1 (pull-up) = 1.8 V, 0 = 2.5/3.3 V. **Must match VCCO_MIO0, or I/O damage is possible** |
-| MIO8 | VMODE[1]: bank 501 | 1 (pull-up) = 1.8 V |
+| MIO7 | VMODE[0]: bank 500 | **1 (pull-up) = 1.8 V**; 0 = 2.5/3.3 V. **Must match VCCO_MIO0, or I/O damage is possible** |
+| MIO8 | VMODE[1]: bank 501 | **1 (pull-up) = 1.8 V** (the pull-up still goes to VCCO_MIO0, UG933 Table 5-3; both are 1V8 here) |
 
 **The Zynq-7000 BootROM cannot boot from eMMC.** Its boot devices are QSPI, NOR, NAND, SD and JTAG. So:
 - QSPI holds the FSBL, the bitstream and U-Boot;
@@ -126,7 +127,7 @@ MIO[8:2] are sampled at PS_POR_B release. Every one needs **its own 20 kΩ** pul
 
 | Interface | MIO | Bank | Notes |
 |---|---|---|---|
-| QSPI0 (single, x4) | 1–6, + 8 as the feedback clock | 500 | UG933: IO0–3 and SS matched to SCLK within ±50 ps. Minimum trace delay from T_QSPICKD < T_CKO,flash + 2·T_pd. To run above ~40 MHz, MIO8 carries only the strap resistor (feedback mode) |
+| QSPI0 (single, x4): **ISSI IS25WP128-RHLE** (C1349419, 1.8 V, 128 Mbit, the part shared with the Agilex/Ti135 cards) | 1–6, + 8 as the feedback clock | 500 | UG933: IO0–3 and SS matched to SCLK within ±50 ps. Minimum trace delay from T_QSPICKD < T_CKO,flash + 2·T_pd. To run above ~40 MHz, MIO8 carries only the strap resistor (feedback mode) |
 | GEM0 RGMII | 16–27 | 501 | RTL8211F(DI) with internal delays (`rgmii-id`): DATA/CTL to CLK skew **≤ ±50 ps including package** (UG933). PS_MIO_VREF = VCCO_MIO1/2 = 0.9 V: divider + 10 nF |
 | MDIO0 | 52, 53 | 501 | pull-up on MDIO |
 | SD0 (eMMC, 4-bit) | 40–45 | 501 | **40–60 Ω series resistor (fit 0 Ω first) on CLK, next to the MIO pin.** PCB + package skew of DAT0–3 and CMD **between 50 and 200 ps relative to CLK** (UG933 *SDIO*; match them as a group to CLK and keep CLK the shortest). Zynq-7000 SDIO is 4-bit, SD 2.0 high speed ≤ 50 MHz: no HS200/HS400, so the eMMC DS ball stays unused. RST_n from a GPIO MIO |
@@ -134,12 +135,19 @@ MIO[8:2] are sampled at PS_POR_B release. Every one needs **its own 20 kΩ** pul
 | I2C | free pair | 501 | 4.7 kΩ pull-ups at the far end; the PS I2C has no glitch filter, so add RC filters (UG933 *IIC*) |
 | GPIO | rest | 500/501 | eMMC RST_n, PHY reset, PHY interrupt, LEDs |
 
-Bank voltage choice:
-- **Bank 501 at 1.8 V** is fixed by the eMMC VCCQ and the 1.8 V RGMII.
-- **Bank 500** is open:
-  - at 1.8 V: the shared IS25WP128 (1.8 V) works, and PS_CLK is a 1.8 V oscillator;
-  - at 3.3 V: a 3.3 V flash (W25Q128JV, as on pinguz97).
-  - Recommended: **1.8 V**, so the flash part stays common with the Agilex/Ti135 cards **[decide]**.
+Bank voltages (decided 2026-10-26):
+- **Bank 501 at 1.8 V**, fixed by the eMMC VCCQ and the 1.8 V RGMII.
+- **Bank 500 at 1.8 V** with the **IS25WP128-RHLE**, the flash part shared with the other cards. PS_CLK is a 1.8 V
+  oscillator, and MIO7 is pulled up.
+
+QSPI notes:
+- 128 Mbit = 16 MB is the most the BootROM reaches with 3-byte addressing in single-flash mode. It holds BOOT.bin (FSBL +
+  bitstream + U-Boot; the 7Z020 bitstream is about 4 MB uncompressed **[verify size]**), with room for a fallback image.
+  Linux and the rootfs live on the eMMC.
+- RESET# (ball A4): pull up to 1V8, or drive it from a spare MIO GPIO.
+- Check that Vivado/Vitis `program_flash` and U-Boot (`spi-nor`) list the IS25WP128 **[verify]**; it has SFDP. Drop-in
+  fallback on the same footprint, as on the other cards: Micron MT25QU256ABA8E12-1SIT (1.8 V). Note that above 16 MB
+  the BootROM only maps the first 16 MB.
 
 ## 5. PL configuration and JTAG (bank 0)
 
@@ -273,7 +281,7 @@ Data rate: **DDR3/DDR3L ≤ 1066 Mb/s on every speed grade** (DS187 Table 18). R
 - [ ] UG470 values for PROGRAM_B / INIT_B / DONE.
 - [ ] XADC tie-off if it stays unused (UG480).
 - [ ] The PS_POR_B secure-lockdown window (DS187 Figure 1) against the enable chain.
-- [ ] Bank 500 voltage (1.8 V + IS25WP128, or 3.3 V + W25Q128JV), §4.3.
+- [ ] IS25WP128 support in Vivado `program_flash` and U-Boot; the 7Z020 bitstream size (§4.3).
 - [ ] The full MIO and PL pin plan in Vivado (PLAN.md phase 0.5).
 - [ ] The UART path: PS UART on 1.8 V MIO plus a translator, or a PL UART on a 3.3 V bank.
 

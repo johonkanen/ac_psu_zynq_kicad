@@ -120,7 +120,7 @@ Bring-up step 3 (the Zynq DDR test) is the final proof. Plan the PS7 DDR setting
 | DRAM | 1 GB LPDDR4 x32 (H9HCNNN8KUMLHR) | **1 GB DDR3L x32: 2 × MT41K256M16TW-107 [reuse]** on the juliancoy layout, the Zynq maximum (1 GB, 1 rank). VTT from a TPS51200 (C34771) |
 | eMMC | KIOXIA THGAMVG7T13BAIL, 8-bit HS400 / HS200 | **Same KIOXIA part [keep]** on the IS21ES08G land (both are JEDEC 153-ball 11.5 × 13, 0.5 mm). The Zynq SDIO is **4-bit, SD HS ≤ 50 MHz** (~20 MB/s): enough for a rootfs. VCCQ = 1V8 sets bank 501 to 1.8 V (`ZYNQ_PCB_NOTES.md` §4.3) **[new]** |
 | Ethernet | RTL8211FDI-CG, RGMII at 1.8 V | **RTL8211F(DI)-CG [keep, new layout]**: PS GEM0 on MIO 16–27 (bank 501), MDIO on MIO 52/53. The FDI is the industrial grade of the same die and footprint |
-| QSPI | IS25WP128 (1.8 V) | **IS25WP128 [keep]** with bank 500 at 1.8 V (recommended), or W25Q128JV with bank 500 at 3.3 V (`ZYNQ_PCB_NOTES.md` §4.3) |
+| QSPI | IS25WP128 (1.8 V) | **IS25WP128-RHLE [keep]**, bank 500 at 1.8 V (decided 2026-10-26); PS_CLK oscillator at 1.8 V |
 | 3.3 V I/O | Ti135: 20 HVIO + 4 × SN74AXC8T245 | **HR banks 13/33/34/35 run at 3.3 V directly**: no translators. J3, J5, ADC mux selects and UART go straight to PL pins |
 | Safe state of J3 outputs | translator OE + 10 k pull-downs | **PUDC_B tied high** (no internal pull-ups during configuration) + the 10 k pull-downs on every J3 pin **[keep]** |
 | Configuration | SDM / SPI active | Zynq boot mode straps (QSPI boot, JTAG fallback), FSBL + bitstream + U-Boot in QSPI, Linux on eMMC |
@@ -279,8 +279,8 @@ Then the copper is copied, and the net of every copied item is checked against o
 
 1. Import the block sheets (§4.2 step 1).
 2. **[new]** `emmc` (KIOXIA THGAMVG7T13BAIL on SD0, 4-bit; VCCQ at the MIO bank voltage, §2), `ethernet` (RTL8211F(DI)
-   on GEM0 RGMII + MDIO, from the Ti135 sheet 09) and `qspi`. Choose the bank 500/501 voltages in the Vivado pin plan
-   (phase 0.5): the eMMC VCCQ must be 1.8 V, and RGMII must run at 1.8 V or 3.3 V to match the PHY.
+   on GEM0 RGMII + MDIO, from the Ti135 sheet 09) and `qspi` (IS25WP128-RHLE). **Both MIO banks (500 and 501) are at
+   1.8 V**, with MIO7/MIO8 pulled up; the MIO pin assignment comes from the Vivado pin plan (phase 0.5).
 3. New sheets: `pwr_input` (J6), `pwr_rails` (TLV62585 cells from the Ti135 card), `pwr_seq` (Zynq order:
    VCCPINT → VCCPAUX/VCCPLL → VCCO_DDR/VCCO_MIO; PL rails per DS187), `soc_config` (boot-mode straps, PS_POR_B
    supervisor, PS_SRST_B, PUDC_B high, JTAG J1), `soc_pl` (HR banks to J3/J5/ADC/LEDs), `adc` [keep], `connectors`
@@ -352,8 +352,8 @@ Then the copper is copied, and the net of every copied item is checked against o
 4. **Speed grade -1 or -2**, whichever is in stock; the PS7 DDR runs at the -1 limit.
 5. **Package XC7Z020 CLG484**, with JLC stock for both grades.
 6. **Block source: juliancoy/zynqPCB** (commit `5cb7c70`), after the UG933 review rejected pinguz97.
+7. **Both MIO banks at 1.8 V; QSPI flash IS25WP128-RHLE** (shared with the Agilex/Ti135 cards).
 
 Still open:
 - the stack-up and impedance, CK ≥ DQS margin on byte 0, the four U15 nets (phase 0.1);
-- the bank 500 voltage and QSPI part (`ZYNQ_PCB_NOTES.md` §4.3);
 - the DDR3 temperature grade (phase 0.4).
