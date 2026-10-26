@@ -44,7 +44,8 @@ JLC stock on 2026-10-26 (`tools/jlc/jlc_search.py`): MT41K256M16TW-107:P C253882
 DDR3 copper on the pinguz97 board, measured from the file:
 - DQ/DM/DQS byte 0 on F.Cu, byte 1 on In5, 10–18 mm, 0.12 mm (DQS pairs 0.1 mm);
 - CK on In5, ~35 mm;
-- address/command fly-by: Zynq → DRAM 4–17 mm, then DRAM → termination `*_T` 18–33 mm, on F/In5/B;
+- address/command point to point through 22 Ω series resistors: Zynq → resistor 4–17 mm, resistor → DRAM (`*_T`)
+  18–33 mm, on F/In5/B. There is no VTT termination;
 - 98 nets, about 1.5 m of copper in all;
 - die lengths are stored on the CLG484 pads (`scripts/footprint_add_die_lengths.py`), and the repo has a delay
   calculator (`scripts/calculate_track_delays.py`).
@@ -95,7 +96,20 @@ lanes re-tuned first, and it brings the second DRAM.
 The proven boards are all CLG400 (kangyuzhe666, Stanlazy) or FBG676 (NASR-M, CIAA-ACC). **They stay as references
 only** (rules, lengths, termination, PS7 settings), not as copper sources.
 
-**Because the copper is not proven, it is reviewed before the import** (§5 phase 0.1):
+**Review result (2026-10-26, `DDR3_REVIEW.md`): the pinguz97 DDR block fails.**
+- Its x16 DRAM is wired to Zynq byte lanes 2/3, but 16-bit mode uses lanes 0/1 (UG585).
+- Its VRP/VRN resistors are swapped.
+- A builder reports DDR test failures (its issue #3).
+
+**juliancoy/zynqPCB passes every check that could be made:**
+- correct lanes and VRP/VRN;
+- UG933 fly-by with 40 Ω VTT termination;
+- skews within the derated limits.
+
+Its impedance is unknown and it is untested. **Recommended: switch the block source to juliancoy, fitted with only
+U16 for 512 MB, or both DRAMs for 1 GB. Decision pending.**
+
+The review steps, as run:
 1. **Ask the pinguz97 author** whether the prototype's DDR passed (open a GitHub issue or join #3).
 2. **Check the route against Xilinx UG933** (Zynq-7000 PCB design guide, DDR3 rules). Compute die-to-die delays with the
    stored die lengths:
@@ -220,9 +234,9 @@ Then the copper is copied, and the net of every copied item is checked against o
 
 ### Phase 0: decisions and checks (desk work)
 
-1. **Source review** (§1): ask the pinguz97 author about the DDR result, and check the route against UG933. If the DDR
-   failed or the review finds problems that cannot be fixed inside the block, switch to juliancoy/zynqPCB and re-tune
-   it. **Package decided 2026-10-26: CLG484.**
+1. **Source review** (§1): **done 2026-10-26, `DDR3_REVIEW.md`.** pinguz97 fails (F1 byte lanes, F2 VRP/VRN), and
+   juliancoy/zynqPCB passes. Next: decide the switch to juliancoy, and report F1/F2 on pinguz97 issue #3.
+   **Package decided 2026-10-26: CLG484.**
 2. ~~Licence~~ **Decided 2026-10-26:** CERN-OHL-S for this repo (§3).
 3. ~~512 MB vs 1 GB~~ **Decided 2026-10-26: 512 MB** (one x16 DDR3L, the pinguz97 block). 512 MB is plenty for a Linux
    control card (Buildroot rootfs, no desktop).
@@ -333,5 +347,6 @@ Then the copper is copied, and the net of every copied item is checked against o
 5. **Package XC7Z020 CLG484**, with JLC stock for both grades. Source: pinguz97/Zynq-SoM, fallback juliancoy/zynqPCB (§1).
 
 Still open:
-- the pinguz97 DDR result from its author, and the UG933 review (phase 0.1);
+- **the block source after the UG933 review** (`DDR3_REVIEW.md`): pinguz97 fails, and the recommendation is
+  juliancoy/zynqPCB (512 MB with U16 only, or 1 GB);
 - the DDR3 temperature grade (phase 0.4).
