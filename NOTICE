@@ -1,10 +1,36 @@
 zynq_soc_board
-Licensed under the CERN Open Hardware Licence Version 2 - Strongly Reciprocal (CERN-OHL-S-2.0), see LICENSE.
+Copyright (c) 2026 Jari Honkanen. Licensed under the MIT License, see LICENSE.
 
-This design reuses the Zynq-7000 SoC and DDR3L schematic sheets and PCB layout of:
+This design reuses the Zynq-7000 SoC and DDR3L schematic sheet and PCB layout (XC7Z020-CLG484, 2 x MT41K256M16,
+VTT termination) of:
 
-  Zynq SoM Board, https://github.com/pinguz97/Zynq-SoM
-  commit ad96951a225fbf9f263b555ef070a536b09ff710 (2025-04-01)
-  licensed under CERN-OHL-S-2.0
+  zynqPCB, https://github.com/juliancoy/zynqPCB
+  commit 5cb7c703f831d22c567289728a168692498f59f9 (2021-11-06)
+
+Its licence, which applies to those portions:
+
+MIT License
+
+Copyright (c) 2021 Julian Loiacono
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 Modifications are listed in REUSE_LOG.md once the block is imported.
+
+pinguz97/Zynq-SoM (CERN-OHL-S-2.0) was reviewed (DDR3_REVIEW.md) but no part of it is copied into this repository.

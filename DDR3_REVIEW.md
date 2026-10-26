@@ -102,6 +102,9 @@ Notes:
 
 ## Recommendation
 
+**Decided 2026-10-26 (user): switch to juliancoy/zynqPCB, both DRAMs fitted (1 GB), MIT licence.** The open points
+from item 2 below are tracked in PLAN.md phase 0.1.
+
 1. **Do not use the pinguz97 DDR copper.** Report F1 and F2 on its issue #3, since they explain that user's failures.
 2. **Switch the block source to juliancoy/zynqPCB** (MIT). It is the only routed CLG484 DDR3 with no functional
    error found.

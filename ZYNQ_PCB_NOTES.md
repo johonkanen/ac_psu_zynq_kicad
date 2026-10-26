@@ -28,7 +28,7 @@ still need checking against a primary source or the Vivado pin planner.
 | 13, 33, 34, 35 | PL HR (1.2–3.3 V) | user I/O; PUDC_B is IO_L21N_T3_DQS_PUDC_B_34 | **3.3 V** (J3, J5, ADC, LEDs directly; no translators) |
 | 500 | PS MIO0 | MIO[15:0], PS_CLK, PS_POR_B | 1.8 V or 3.3 V, §4 |
 | 501 | PS MIO1 | MIO[53:16], PS_MIO_VREF, PS_SRST_B | **1.8 V** (eMMC VCCQ, RGMII) |
-| 502 | PS DDR | DDR3L, dedicated balls | 1.35 V |
+| 502 | PS DDR | DDR3L x32 (2 × MT41K256M16TW-107, the juliancoy block), dedicated balls | 1.35 V |
 
 The 7Z020 has no HP banks, so the PL I/O cannot use DCI or anything above 3.3 V.
 
@@ -242,7 +242,8 @@ Data rate: **DDR3/DDR3L ≤ 1066 Mb/s on every speed grade** (DS187 Table 18). R
 ### 6.4 PS7 configuration (Vivado)
 
 - *DDR Configuration*:
-  - memory part MT41K256M16 RE-125 (or the closest), DDR3 (low voltage), 16-bit, 533.333 MHz, no ECC;
+  - memory part MT41K256M16 RE-125 (or the closest), DDR3 (low voltage), **32-bit** (2 × x16, 1 GB), 533.333 MHz,
+    no ECC;
   - **Board delay** and **DQS to Clock delay** per byte, computed from `ddr3_review.py --json`: the trace delay of
     each byte's DQS and of CK, in ns;
   - write levelling, read gate and read DQS training: **on**.
