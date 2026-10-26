@@ -1,0 +1,10 @@
+zynq_soc_board
+Licensed under the CERN Open Hardware Licence Version 2 - Strongly Reciprocal (CERN-OHL-S-2.0), see LICENSE.
+
+This design reuses the Zynq-7000 SoC, DDR3L, eMMC, Ethernet PHY and QSPI schematic sheets and PCB layout of:
+
+  Zynq SoM Board, https://github.com/pinguz97/Zynq-SoM
+  commit ad96951a225fbf9f263b555ef070a536b09ff710 (2025-04-01)
+  licensed under CERN-OHL-S-2.0
+
+Modifications are listed in REUSE_LOG.md once the block is imported.

@@ -1,0 +1,20 @@
+__pycache__/
+*.pyc
+# generated outputs (rebuild with tools/ scripts)
+reports/
+vivado/**/build/
+# KiCad local state
+*.kicad_prl
+*-backups/
+fp-info-cache
+_autosave-*
+\#auto_saved_files#
+*.lck
+# placement / routing runs (placement/prep.sh, KiCadRoutingTools)
+work/
+kicad/.history/
+# KiCadRoutingTools skills, linked from ~/dev/KiCadRoutingTools/.claude/skills
+.claude/skills/
+# vendor files (copyright, not redistributable)
+reference/vendor/*
+!reference/vendor/README.md
