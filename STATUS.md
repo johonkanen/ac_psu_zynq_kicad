@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-27** (phase 2 started: project skeleton and sheet 1, the imported DDR3 block, done).
+Last updated: **2026-10-27** (phase 2: project skeleton, sheet 1 (the imported DDR3 block) and sheet 5 (SoC power) done).
 Read this first if you are picking the work up (human or agent).
 
 ## What this repository is
@@ -37,6 +37,8 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 | Licence | **MIT** |
 | eMMC / Ethernet / QSPI | **designed and routed here, not copied.** KIOXIA THGAMVG7T13BAIL (SD0, 4-bit), RTL8211F(DI)-CG (GEM0 RGMII), ISSI IS25WP128-RHLE (shared parts with the other cards) |
 | MIO banks | **both at 1.8 V** (MIO7/MIO8 pulled up); PS_CLK 33.333 MHz 1.8 V oscillator |
+| Bank 0 (config/JTAG) | **1.8 V, as on juliancoy** (2026-10-27): CFGBVS to GND, JTAG J1 at 1.8 V; the block copper for VCCO_0/RSVDVCC/R9/R10 stays |
+| VCCPLL | **own 120 Ω bead FB501 + 10 µF + 0.47 µF** from 1V8 (UG933 must; juliancoy had it on raw +1V8). juliancoy's VCCAUX bead FB1 becomes a **0 Ω jumper** (2026-10-27, REUSE_LOG E5) |
 | Console | **PS UART1 on MIO48/49 + a 2-bit translator** to the 3.3 V J2 |
 | ADC | ADS7056 DVDD at **3.3 V** (SPI straight to the 3.3 V bank) |
 | Boot | **QSPI boot** (the BootROM cannot boot from eMMC); Linux on eMMC; JTAG for recovery |
@@ -73,15 +75,44 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     the net it has on `DFTBoard.kicad_pcb`, by pad sets and by name, and every footprint matches.
   - ERC shows only what is expected now: the rails and `DDR3_VTT_EN` are undriven, and U20 units 1–7 and 9 are not
     placed yet.
+- **Sheet 5 `05_soc_power`: U20 unit 9 and the SoC decoupling** (`tools/sheets/05_soc_power.py`).
+  - The legacy converter is now shared: `tools/sheets/_legacy.py`. `convert(keep=...)` takes a subset of a source
+    sheet and prunes the wires, labels and power symbols that no longer reach a kept pin. `cut=` drops source wires
+    for a re-wire, and mirrored symbols are supported. Sheet 1 regenerates byte-identical through it.
+  - From juliancoy's `power.sch` (`/58508414/`): U20 unit 9 and the 21 decaps in the block copper (footprint within
+    4 mm of the U20 body: C4, C5, C8, C9, C11, C14, C15, C17–C20, C23, C24, C26, C28–C31, C33, C34, FB1), at the source
+    coordinates. juliancoy's regulators, LM3880 sequencers, sense resistors and their bulk caps are dropped.
+  - Also in the block, with source refs: the 16 3V3 caps under U20 that juliancoy drew on other sheets (C46…C122;
+    REUSE_LOG).
+  - Ours: FB501 + C528/C529 (VCCPLL, E5), and C501–C527, which bring each merged rail up to UG933 Tables 3-1/3-2
+    (CLG484 Z-7020; the count is a note on the sheet). That is 330 µF tantalum + 100 µF + 2 × 4.7 µF + 3 × 0.47 µF on
+    1V0, 3 × 100 µF + 2 × 47 µF on 1V8, 3 × 0.47 µF on 1V35, and 3 × 4.7 µF + 3 × 0.47 µF each for VCCO_34 and
+    VCCO_35. Banks 34/35 had VCCO on GND on juliancoy, so they have no caps in the block.
+  - Block changes: E5 (VCCPLL), E6 (C59/C122 → 1V8 for the MIO banks), E7 (planned, copper: VCCO_MIO balls
+    +3V3 → 1V8, VCCO_34/35 balls GND → 3V3).
+  - **`tools/check_block_netlist.py` covers sheets 1 and 5: 0 failures.** That is 99 parts, 555 pads (172 U20 balls)
+    and 87 nets. Block parts on our sheets are refs < 200. Rails map +1V0/+1V8/+1V35/+3V3 → ours, and /Power/ → our
+    sheet path. U20.H10, C59.1 and C122.1 are reported as expected differences.
+  - ERC: only the not-yet-drawn items. GND, 1V0, 1V8, 1V35 and 3V3 are undriven (sheets 2–4), `DDR3_VTT_EN` is
+    dangling on the root, and U20 units 1–7 are not placed.
+  - The VCCO pins are on the bank units (sheets 6, 11). Their caps are on sheet 5 as rail rows.
+- **Vivado pin plan** re-run with `CFGBVS GND` / `CONFIG_VOLTAGE 1.8`: DRC 0, no critical warnings, pin plan
+  unchanged.
+- **Sheet 6 needs from U20 unit 1** (source nets, bank 0 at 1.8 V):
+  - VCCO_0 R12 and RSVDVCC T7/T8/T10 → 1V8;
+  - CFGBVS T13 → GND;
+  - VCCADC K11 → 1V8 and GNDADC K12 → GND (as the source);
+  - VCCBATT G9, DXP/DXN N11/N12, VP/VN L11/M12, VREFP/VREFN M11/L12 → GND;
+  - RSVDGND G10 → GND on the source (UG865 says leave open: **[verify]**);
+  - PROGRAM_B T11 and INIT_B T14 → R9/R10 4.7 k to 1V8 (block parts: keep the refs and add sheet 6 to the check's
+    `SHEETS`);
+  - DONE T12 is open on the source: add a 330 Ω pull-up / LED (C6xx/R6xx);
+  - TCK G11, TMS G12, TDI H13, TDO G14 → J1 at 1.8 V, with pull-ups.
 - **Next:**
-  1. **The U20 power unit (9) and the SoC decaps.** juliancoy's `power.sch` holds U20 units 1 and 9 and the SoC decaps
-     that are inside the block copper. Keep the decap refs (< 200) when drawing sheet 5 `soc_power`, so the copper
-     import can map them. Extend `01_ddr3.py`'s converter, or the check, to cover them.
-  2. **Draw the new sheets:**
+  1. **Draw the new sheets:**
      - power input (J6);
      - TLV62585 rails (cells from the Ti135 repo's `_power.py`);
      - power sequencing + PS_POR_B supervisor, which also drives `DDR3_VTT_EN` (E3);
-     - SoC power/decoupling (UG933 Tables 3-1/3-2);
      - clocks;
      - boot straps and configuration (`ZYNQ_PCB_NOTES.md` §4–5, §7);
      - QSPI;
@@ -92,7 +123,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
      - connectors (J3 + pull-downs, J5, J2 + translator, J1 JTAG, J9).
 
      The sheet numbers are in `p2k_config.py`.
-  3. ERC, then a netlist check that every PL/MIO signal lands on the ball from the pin plan.
+  2. ERC, then a netlist check that every PL/MIO signal lands on the ball from the pin plan.
 
 **Suggested way to work on phase 2:**
 - **Script the sheets like the Ti135 repo** (`efinix_soc_board/tools/sheets/NN_*.py` + `_common.py`, with

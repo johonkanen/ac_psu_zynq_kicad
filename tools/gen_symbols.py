@@ -7,8 +7,8 @@
 Sources: KiCad 10 standard symbols (copied and renamed), and the block's symbols from juliancoy/zynqPCB
 (reference/zynqpcb/DFTBoard-cache.lib, KiCad 5, upgraded with `kicad-cli sym upgrade` into work/): the XC7Z020-CLG484
 (all 9 units, used by sheet 1 and by our SoC sheets), the MT41K256M16 FBGA-96 and the TPS51200.
-The block's passives (R, R_Small, C_Small, LED) use the KiCad 10 symbols; tools/sheets/01_ddr3.py checks that their
-pins sit where the KiCad 5 ones did.
+The block's passives (R, R_Small, C_Small, LED, FerriteBead_Small) use the KiCad 10 symbols; tools/sheets/_legacy.py
+checks that their pins sit where the KiCad 5 ones did.
 """
 import copy
 import os
@@ -70,10 +70,12 @@ def build():
         from_std("Device", "R_Small", "R_Small", "R"),
         from_std("Device", "C", "C", "C"),
         from_std("Device", "C_Small", "C_Small", "C"),
+        from_std("Device", "C_Polarized", "C_Polarized", "C"),
         from_std("Device", "LED", "LED", "D"),
+        from_std("Device", "FerriteBead_Small", "FerriteBead_Small", "FB"),
         rename(from_std("power", "PWR_FLAG", "PWR_FLAG", "#FLG"), "PWR_FLAG"),
     ]
-    syms += [power(n, n == "GND") for n in ("GND", "1V35", "3V3")]
+    syms += [power(n, n == "GND") for n in ("GND", "1V0", "1V8", "1V35", "3V3")]
     return syms
 
 

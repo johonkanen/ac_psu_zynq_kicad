@@ -105,7 +105,7 @@ with open(os.path.join(BUILD, "pins.xdc"), "w") as f:
     for s in sigs:
         ball = assign[s["signal"]][0]
         f.write(f"set_property -dict {{PACKAGE_PIN {ball} IOSTANDARD LVCMOS33}} [get_ports {s['signal']}]\n")
-    f.write("set_property CFGBVS VCCO [current_design]\nset_property CONFIG_VOLTAGE 3.3 [current_design]\n")
+    f.write("set_property CFGBVS GND [current_design]\nset_property CONFIG_VOLTAGE 1.8 [current_design]\n")
 with open(os.path.join(BUILD, "build.tcl"), "w") as f:
     f.write(f"""create_project -force pinplan . -part {PART}
 create_bd_design ps

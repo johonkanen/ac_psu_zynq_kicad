@@ -24,7 +24,7 @@ still need checking against a primary source or the Vivado pin planner.
 
 | Bank | Type | Contents | VCCO on this card |
 |---|---|---|---|
-| 0 | config | PROGRAM_B, INIT_B, DONE, CFGBVS, JTAG, XADC, DXP/DXN, VCCBATT | 3.3 V |
+| 0 | config | PROGRAM_B, INIT_B, DONE, CFGBVS, JTAG, XADC, DXP/DXN, VCCBATT | **1.8 V**, as on juliancoy (user, 2026-10-27): the block's copper for VCCO_0, RSVDVCC and R9/R10 stays as it is |
 | 13, 33, 34, 35 | PL HR (1.2–3.3 V) | user I/O; PUDC_B is ball **K16**, IO_L3P_T0_DQS_PUDC_B_34 | **3.3 V** (J3, J5, ADC, LEDs directly; no translators) |
 | 500 | PS MIO0 | MIO[15:0], PS_CLK, PS_POR_B | **1.8 V** (QSPI IS25WP128; decided 2026-10-26) |
 | 501 | PS MIO1 | MIO[53:16], PS_MIO_VREF, PS_SRST_B | **1.8 V** (eMMC VCCQ, RGMII) |
@@ -40,13 +40,13 @@ allows, as on the source boards.
 | Rail on the card | V | Zynq pins | Range (DS187) | Notes |
 |---|---|---|---|---|
 | `1V0` | 1.00 | VCCPINT, VCCINT, VCCBRAM | 0.95–1.05 | VCCPINT "can be combined with VCCINT" when the PL never powers down alone (UG933 Ch. 5). VCCINT and VCCBRAM must share a supply (DS187 note 5) |
-| `1V8` | 1.80 | VCCPAUX, VCCAUX, VCCO_MIO0, VCCO_MIO1 | 1.71–1.89 | both MIO banks at 1.8 V |
+| `1V8` | 1.80 | VCCPAUX, VCCAUX, VCCO_MIO0, VCCO_MIO1, VCCO_0, RSVDVCC[3:1] | 1.71–1.89 | both MIO banks and bank 0 at 1.8 V; VCCAUX through FB1, now a 0 Ω jumper (REUSE_LOG E5) |
 | `VCCPLL` | 1.80 | VCCPLL | 1.71–1.89 | from 1V8 through a 120 Ω @ 100 MHz 0603 bead + 10 µF 0603. A 0.47–4.7 µF 0402 cap goes ≤ 5.1 mm of trace from the VCCPLL/GND vias. A planelet ≥ 2 mm wide and < 76 mm long, or a trace ≤ 40 Ω and < 50.8 mm (UG933 Ch. 5; parts BLM18SG121TN1, GRM188R60G106ME47, GRM155R60J474KE19) |
 | `1V35` | 1.35 | VCCO_DDR | 1.14–1.89 | DDR3L; also the DRAM VDD/VDDQ |
 | `0V675` | VCCO_DDR / 2 | PS_DDR_VREF0/1, DRAM VREFCA/VREFDQ, VTT if used | – | divider or tracking regulator (§6.3) |
-| `3V3` | 3.30 | VCCO_0, VCCO_13/33/34/35 | 1.14–3.465 (HR VCCO) | |
-| `VCCADC` | 1.80 | VCCADC_0 / GNDADC_0 | 1.71–1.89 | XADC unused: VCCADC to VCCAUX through a bead, GNDADC to GND **[verify against UG480]** |
-| – | – | VCCBATT_0 | 1.0–1.89 | no bitstream encryption: tie to GND or VCCAUX (DS187 note 10). The source ties it to 1V8 |
+| `3V3` | 3.30 | VCCO_13/33/34/35 | 1.14–3.465 (HR VCCO) | |
+| `VCCADC` | 1.80 | VCCADC_0 / GNDADC_0 | 1.71–1.89 | XADC unused: VCCADC to VCCAUX through a bead, GNDADC to GND **[verify against UG480]**. The source has VCCADC (K11) straight on +1V8, inside the block copper |
+| – | – | VCCBATT_0 | 1.0–1.89 | no bitstream encryption: tie to GND or VCCAUX (DS187 note 10). The source ties it (G9) to GND, and so do we (block copper) |
 
 **Decoupling** (UG933 Tables 3-1 and 3-2, CLG484 Z-7020; capacitor specs in Table 3-3):
 
@@ -55,7 +55,7 @@ allows, as on the source boards.
 | VCCINT | 1 | – | – | 2 | 4 |
 | VCCBRAM | – | 1 | – | 1 | 1 |
 | VCCAUX | – | – | 1 | 1 | 2 |
-| VCCO per HR bank | – | 1 (47 or 100) | | 2 | 4 |
+| VCCO per HR bank | – | 1 (47 or 100; one per four HR banks, note 3) | | 2 | 4 |
 | VCCO_0 | – | – | 1 | – | – |
 | VCCPINT | – | 1 | – | 1 | 3 |
 | VCCPAUX | – | 1 | – | 1 | 1 |
@@ -64,6 +64,7 @@ allows, as on the source boards.
 | VCCPLL | 10 µF + 0.47–4.7 µF (above) | | | | |
 
 UG933 allows consolidating bulk capacitors when rails are merged (*Bulk Capacitor Consolidation Rules*, Ch. 3).
+Sheet 5 (`tools/sheets/05_soc_power.py`) counts the block's caps per merged rail and adds the rest (C501–C529).
 0.47 µF parts go under the BGA on B.Cu, as on the earlier cards.
 
 ## 3. Power sequencing and reset (DS187, UG585)
@@ -151,8 +152,8 @@ Checked in Vivado 2024.2 by `vivado/pinplan/pinplan.py`. The full table with eve
   **PUDC_B (K16) is never used as I/O.**
 - **Ball order:** a first pass from the package edge inwards. Re-order it once the parts are placed (pin swaps inside
   a bank are free, and the flow re-checks them).
-- **Vivado check:** PS7 + all PL pins, synthesised and placed: **DRC 0, no critical warnings**. CFGBVS = VCCO,
-  CONFIG_VOLTAGE 3.3.
+- **Vivado check:** PS7 + all PL pins, synthesised and placed: **DRC 0, no critical warnings**. CFGBVS = GND,
+  CONFIG_VOLTAGE 1.8 (bank 0 at 1.8 V since 2026-10-27; re-run then).
 - **ADC:** the ADS7056 DVDD goes to 3.3 V on this card, so its SPI runs on the 3.3 V bank directly. The Ti135 card had
   DVDD at 1.8 V.
 
@@ -182,16 +183,16 @@ QSPI notes:
 
 | Pin | Connection | Source |
 |---|---|---|
-| CFGBVS_0 | **to VCCO_0 (3.3 V)**; to GND only if VCCO_0 ≤ 1.8 V. Wrong = damage | UG865 Table 1-5 |
-| PROGRAM_B_0 | 4.7 kΩ pull-up to VCCO_0 (not floating) | UG933, UG470 **[verify value]** |
-| INIT_B_0 | 4.7 kΩ pull-up to VCCO_0 (open drain) | UG470 **[verify value]** |
-| DONE_0 | 330 Ω pull-up to VCCO_0, optional LED | UG470 **[verify value]** |
+| CFGBVS_0 | **to GND** (VCCO_0 = 1.8 V, as on juliancoy); to VCCO_0 only when VCCO_0 is 2.5/3.3 V. Wrong = damage. Vivado: `CFGBVS GND`, `CONFIG_VOLTAGE 1.8` | UG865 Table 1-5 |
+| PROGRAM_B_0 | 4.7 kΩ pull-up to VCCO_0 (not floating); R9 in the block | UG933, UG470 **[verify value]** |
+| INIT_B_0 | 4.7 kΩ pull-up to VCCO_0 (open drain); R10 in the block | UG470 **[verify value]** |
+| DONE_0 | 330 Ω pull-up to VCCO_0, optional LED (unconnected on juliancoy) | UG470 **[verify value]** |
 | PUDC_B (ball K16, IO_L3P_T0_DQS_PUDC_B_34) | **tie to VCCO_34 (High) directly or through ≤ 1 kΩ** → no internal pull-ups during configuration. Never float | UG865 Table 1-5 |
-| TCK, TMS, TDI | pull-ups (UG933 *Boot Mode Pins* note); JTAG at VCCO_0 = 3.3 V. One header serves PS and PL (cascaded, MIO2 = 0) | UG933 |
+| TCK, TMS, TDI | pull-ups (UG933 *Boot Mode Pins* note); JTAG at VCCO_0 = **1.8 V** (J1 VREF = 1V8; the Xilinx/Digilent cables follow VREF). One header serves PS and PL (cascaded, MIO2 = 0) | UG933 |
 | DXP_0 / DXN_0 | tie to GND when unused | UG865, UG933 |
 | VP/VN, VREFP/VREFN | XADC unused: tie to GNDADC; VREFP/VREFN to GND selects the internal reference | UG480 **[verify]** |
 | RSVDVCC[3:1] | **tie to VCCO_0** | UG865 Table 1-5 |
-| RSVDGND | do not connect | UG865 Table 1-5 |
+| RSVDGND | do not connect; juliancoy ties G10 to GND **[verify UG865]** | UG865 Table 1-5 |
 | VCCBATT_0 | GND or VCCAUX (no encryption) | DS187 |
 
 **PUDC_B High plus the 10 kΩ pull-downs on every J3 pin** keep the PWM/gate outputs low until the bitstream drives them.
@@ -346,7 +347,7 @@ Why it was chosen:
 | PS_POR_B | supervisor output, open drain, + pull-up to VCCO_MIO0 | 4.7–10 kΩ |
 | PS_SRST_B | pull-up to VCCO_MIO1 | 4.7–10 kΩ |
 | PS_MIO_VREF | divider VCCO_MIO1/2 + 10 nF | 2 × 10 kΩ (as on pinguz97) |
-| CFGBVS_0 | to VCCO_0 | direct |
+| CFGBVS_0 | to GND (VCCO_0 = 1.8 V) | direct |
 | PUDC_B | to VCCO_34 | ≤ 1 kΩ |
 | PROGRAM_B / INIT_B / DONE | pull-ups to VCCO_0 | 4.7 k / 4.7 k / 330 Ω **[verify UG470]** |
 | TCK/TMS/TDI | pull-ups to VCCO_0 | 4.7–10 kΩ |
