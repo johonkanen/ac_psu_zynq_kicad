@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-27** (phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config) and 7 (clocks) done).
+Last updated: **2026-10-27** (phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks) and 8–10 (QSPI, Ethernet, eMMC) done).
 Read this first if you are picking the work up (human or agent).
 
 ## What this repository is
@@ -150,11 +150,50 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
       handles this with the 22 p feed-forward cap; check the loop on the first board (load step);
     - 1V0 at 2.4 A in a SOT-563 needs copper for heat;
     - LCSC numbers for U341 and U401 are not set yet (the Ti135 sheets have none either).
+- **Sheets 8–10, the MIO peripherals** (`tools/sheets/08_qspi.py`, `09_ethernet.py`, `10_emmc.py`), ported from
+  the Ti135 card. Its symbols are now in `tools/gen_symbols.py`: IS25WP128-RHLE, RTL8211FD, HR911130A,
+  THGAMVG7T13BAIL, plus Crystal_GND24 and 74LVC1G07. Its two custom footprints (the CSP-24 flash land and the
+  HR911130A) are copied into `lib/zynq_card.pretty`, which has a new `fp-lib-table` entry. Every part's footprint
+  is set on the sheet: `fill_footprints()` in `_common.py` fills R/C/etc. by symbol and fails on a part without
+  one.
+  - Every port uses the sheet-6 name. A netlist export confirms each one lands on the right U20 ball (the
+    symbol's balls match Vivado's `pkgpins.csv` and `ps7_mio.csv`).
+  - **Sheet 8:** U801 IS25WP128-RHLE (C1349419) on 1V8, C801 100 n.
+    - R801 10 k is the CS# pull-up.
+    - The boot straps on IO0–3/SCLK stay on sheet 6. WP# is strapped low, which is harmless while SRWD = 0;
+      HOLD# is high.
+    - **RESET# (A4) is on `ps_por_n`**, so the flash resets with the PS. This is our choice; the Ti135 card only
+      pulled it up. It is open drain, and R608 is the pull-up.
+    - The ball map (A4 RESET#, B2 SCLK, C2 CS#, D3/D2/C4/D4 IO0–3, B4/B3 VCC/GND) is the one checked against the
+      ISSI data sheet on the Agilex 5 card (`SHARED_PARTS.md`). The ISSI PDF could not be fetched here (bot check).
+  - **Sheet 9:** the Ti135 sheet with its refs and values (U901 RTL8211FDI-CG, U902 74LVC1G07, Y901 25 MHz,
+    J9 HR911130A, R901–R933, R950, C901–C951). Checked against the RTL8211F data sheet Rev. 1.7:
+    - **RGMII level:** CFG_EXT = 0 and CFG_LDO = 10 run the RGMII and MDIO pads from the internal LDO at 1.8 V, so
+      DVDD_RG is caps only. This matches both 1.8 V MIO banks. Table 58: MDIO is at the pad voltage, and every
+      other pin is 3.3 V.
+    - **INTB [verify] closed:** pin 31 is O/OD ("supports 3.3 V pull-up"). So R930 4k7 goes to 1V8, and
+      Vol 0.4 V is below the MIO VIL of 0.63 V.
+    - **R933 is 1 k (Ti135: 10 k):** the MIO9 pull-up is on at reset (DS187 IRPU up to 220 µA at 1.8 V). 10 k
+      would leave `eth_rst_n` near 1 V. 1 k keeps it at ≤ 0.22 V, so the PHY stays in reset until software
+      releases it.
+    - Port renames: `eth_mdc`/`eth_mdio` → `mdc`/`mdio`.
+    - The J9 pinout was re-checked against the HanRun drawing.
+  - **Sheet 10:** U1001 THGAMVG7T13BAIL (C7599693) on SD0, 4-bit.
+    - VCC 3V3 (C1001 4u7 + C1002 220n), VCCQ 1V8 (C1003 4u7 + C1004 100n), VDDi C1005 2u2: the KIOXIA values
+      from the Agilex 5 card's `SHARED_PARTS.md`.
+    - 47 k pull-ups on CMD and DAT0–7 (DAT4–7 are unused but not left floating), and a 47 k pull-down on DS.
+    - The RST_n pull-up is the MIO7 VMODE strap (R606, sheet 6).
+    - R1001 is the 0 R on `sd_clk` at the MIO pin.
+  - Parts without an LCSC number yet: Y901 (25 MHz 3225) and FB901 (BLM15PX121SN1D), as on the Ti135 card.
+  - **ERC:** the `isolated_pin_label`/`label_dangling` entries for these ports are gone. What is left is expected:
+    - `isolated_pin_label` × 8: `uart_tx`/`uart_rx` and `i2c_scl`/`i2c_sda` (label and port each). Their sheets
+      are not drawn yet (J2 translator on sheet 13; the I²C EEPROM).
+    - `missing_unit`, `missing_power_pin` and `missing_bidi_pin` on U20: the PL bank units, sheet 11.
+
+    Block check: 0 failures. kicad-cli's "annotation errors" warning on the netlist export is from before this
+    change.
 - **Next:**
   1. **Draw the new sheets:**
-     - QSPI;
-     - eMMC;
-     - Ethernet (from the Ti135 sheet 09);
      - PL I/O (from `vivado/pinplan/zynq_pinplan.csv`; PUDC_B K16 to VCCO_34; VCCO_34/35 balls to 3V3 = E7, add them
        to the check's EXPECTED);
      - ADC (from the Ti135 sheet 13, DVDD at 3V3);
@@ -189,7 +228,8 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 
   Then re-run `tools/ddr3_review.py` for both DRAMs.
 - [ ] **[verify] items:**
-  - `ZYNQ_PCB_NOTES.md` §8: UG470 PROGRAM_B/INIT_B/DONE values, XADC tie-off, the RTL8211F INTB level, IS25WP128 support in `program_flash`/U-Boot;
+  - `ZYNQ_PCB_NOTES.md` §8: UG470 PROGRAM_B/INIT_B/DONE values, XADC tie-off, IS25WP128 support in `program_flash`/U-Boot, the IS25WP128 reset recovery time (RESET# on
+    `ps_por_n`, sheet 8);
   - `POWER_BUDGET.md`: the DDR3L/eMMC/QSPI currents.
 - [ ] **Heatsink:** the push-pin grip range for 1.6 mm board + package + tape, and the barb protrusion against the
       5.3 mm card-to-baseboard gap.

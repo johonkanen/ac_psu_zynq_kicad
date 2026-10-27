@@ -10,6 +10,6163 @@
 		(rev "0.1")
 		(comment 1 "XC7Z020-CLG484 control card for the AC lab PSU baseboard")
 	)
-	(lib_symbols)
+	(lib_symbols
+		(symbol "zynq_card:THGAMVG7T13BAIL"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at -10.16 34.29 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "THGAMVG7T13BAIL"
+				(at -10.16 -31.75 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" "https://www.lcsc.com/datasheet/C7599693.pdf"
+				(at 0 0 0)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "KIOXIA e-MMC 5.1, 16 GB, 153-ball 11.5x13 mm 0.5 mm. VCCQ 1.8 V only. NC/RFU/VSF balls not shown (leave open)"
+				(at 0 0 0)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "THGAMVG7T13BAIL_0_1"
+				(rectangle
+					(start -10.16 33.02)
+					(end 10.16 -30.48)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "THGAMVG7T13BAIL_1_1"
+				(pin input line
+					(at -12.7 30.48 0)
+					(length 2.54)
+					(name "CLK"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "M6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -12.7 27.94 0)
+					(length 2.54)
+					(name "CMD"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "M5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at -12.7 25.4 0)
+					(length 2.54)
+					(name "DS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "H5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -12.7 22.86 0)
+					(length 2.54)
+					(name "RST_n"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "K5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -12.7 17.78 0)
+					(length 2.54)
+					(name "DAT0"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -12.7 15.24 0)
+					(length 2.54)
+					(name "DAT1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -12.7 12.7 0)
+					(length 2.54)
+					(name "DAT2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -12.7 10.16 0)
+					(length 2.54)
+					(name "DAT3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -12.7 7.62 0)
+					(length 2.54)
+					(name "DAT4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -12.7 5.08 0)
+					(length 2.54)
+					(name "DAT5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -12.7 2.54 0)
+					(length 2.54)
+					(name "DAT6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -12.7 0 0)
+					(length 2.54)
+					(name "DAT7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "B6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 30.48 180)
+					(length 2.54)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "E6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 27.94 180)
+					(length 2.54)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "F5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 25.4 180)
+					(length 2.54)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "J10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 22.86 180)
+					(length 2.54)
+					(name "VCC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "K9"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 17.78 180)
+					(length 2.54)
+					(name "VCCQ"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "C6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 15.24 180)
+					(length 2.54)
+					(name "VCCQ"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "M4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 12.7 180)
+					(length 2.54)
+					(name "VCCQ"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "N4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 10.16 180)
+					(length 2.54)
+					(name "VCCQ"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "P3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 7.62 180)
+					(length 2.54)
+					(name "VCCQ"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "P5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 12.7 2.54 180)
+					(length 2.54)
+					(name "VDDi"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "C2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 -2.54 180)
+					(length 2.54)
+					(name "VSS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "A6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 -5.08 180)
+					(length 2.54)
+					(name "VSS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "E7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 -7.62 180)
+					(length 2.54)
+					(name "VSS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "G5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 -10.16 180)
+					(length 2.54)
+					(name "VSS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "H10"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 -12.7 180)
+					(length 2.54)
+					(name "VSS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "J5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 -15.24 180)
+					(length 2.54)
+					(name "VSS"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "K8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 -17.78 180)
+					(length 2.54)
+					(name "VSSQ"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "C4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 -20.32 180)
+					(length 2.54)
+					(name "VSSQ"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "N2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 -22.86 180)
+					(length 2.54)
+					(name "VSSQ"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "N5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 -25.4 180)
+					(length 2.54)
+					(name "VSSQ"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "P4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 12.7 -27.94 180)
+					(length 2.54)
+					(name "VSSQ"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "P6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "zynq_card:3V3"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#PWR"
+				(at 0 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "3V3"
+				(at 0 3.556 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Power symbol for net \"3V3\" (IPC net name)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "3V3_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "3V3_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "zynq_card:1V8"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#PWR"
+				(at 0 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "1V8"
+				(at 0 3.556 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "1V8_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "1V8_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "zynq_card:GND"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#PWR"
+				(at 0 -6.35 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "GND"
+				(at 0 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "GND_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 -1.27) (xy 1.27 -1.27) (xy 0 -2.54) (xy -1.27 -1.27) (xy 0 -1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "GND_1_1"
+				(pin power_in line
+					(at 0 0 270)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "zynq_card:R"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "R"
+				(at 2.032 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "R"
+				(at 0 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at -1.778 0 90)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "R res resistor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "R_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "R_0_1"
+				(rectangle
+					(start -1.016 -2.54)
+					(end 1.016 2.54)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "R_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 1.27)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "zynq_card:C"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C"
+				(at 0.635 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Unpolarized capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "C_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "C_0_1"
+				(polyline
+					(pts
+						(xy -2.032 0.762) (xy 2.032 0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -2.032 -0.762) (xy 2.032 -0.762)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(text "e-MMC on SD0 (MIO40-45, bank 501, 1.8 V), 4-bit. Pull-ups to 1V8 (= VCCQ, the same supply as VCCO_MIO1, as the\ndata sheet requires). RST_n pull-up = the MIO7 strap on sheet 6. R1001 (CLK, 0 R) sits at the MIO pin."
+		(exclude_from_sim no)
+		(at 17.78 17.78 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4b0f9ee7-a6b1-5872-9415-fb39456a3015")
+	)
+	(symbol
+		(lib_id "zynq_card:THGAMVG7T13BAIL")
+		(at 190.5 101.6 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "39565b1b-2d0b-551e-8962-904e72271616")
+		(property "Reference" "U1001"
+			(at 180.34 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "THGAMVG7T13BAIL"
+			(at 180.34 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_BGA:LFBGA-153_11.5x13mm_Layout14x14_P0.5mm"
+			(at 190.5 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C7599693.pdf"
+			(at 190.5 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "KIOXIA e-MMC 5.1, 16 GB, 153-ball 11.5x13 mm 0.5 mm. VCCQ 1.8 V only. NC/RFU/VSF balls not shown (leave open)"
+			(at 190.5 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C7599693"
+			(at 190.5 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "M6"
+			(uuid "ed0588cc-7b7e-5060-890c-7b9708d30426")
+		)
+		(pin "M5"
+			(uuid "82055875-e0fd-5707-aed7-e939c2abbb88")
+		)
+		(pin "H5"
+			(uuid "1f70c0b4-79c6-5367-a96e-148289d01a4f")
+		)
+		(pin "K5"
+			(uuid "e2989119-8447-5e92-83c3-37daee34439d")
+		)
+		(pin "A3"
+			(uuid "46964008-91ee-5ddc-b48e-d322ca6cc00b")
+		)
+		(pin "A4"
+			(uuid "e7a07db2-2184-5313-a783-45f7123f9edf")
+		)
+		(pin "A5"
+			(uuid "6d4b5791-0561-57fc-862b-6955f5dc0fed")
+		)
+		(pin "B2"
+			(uuid "47008989-463f-540b-9e56-dbc3981cf82c")
+		)
+		(pin "B3"
+			(uuid "6e1ecdfc-d47b-5eb7-af07-fd8697b545c4")
+		)
+		(pin "B4"
+			(uuid "f5de9ae1-4150-541e-9843-5b6882ef6abf")
+		)
+		(pin "B5"
+			(uuid "c8afcd96-632e-5010-b9ad-482975590e89")
+		)
+		(pin "B6"
+			(uuid "bd13969b-8852-5fa3-9211-a352cac03ed9")
+		)
+		(pin "E6"
+			(uuid "514da9a3-847c-50fc-b7d3-3b93a4080fdd")
+		)
+		(pin "F5"
+			(uuid "7bb079ae-9c2a-5925-999e-5024dd7f1992")
+		)
+		(pin "J10"
+			(uuid "a1a5f62a-3971-50ee-bdb6-4dfa8bd73ff0")
+		)
+		(pin "K9"
+			(uuid "6a38989a-0fa5-5005-9bad-715eb87f6e12")
+		)
+		(pin "C6"
+			(uuid "e09f7a8e-da41-55f5-9010-5c33428f440d")
+		)
+		(pin "M4"
+			(uuid "fb26210b-a857-5e0f-b59a-84b4a141151f")
+		)
+		(pin "N4"
+			(uuid "660ac688-0fa7-5453-84af-b4defe9d720d")
+		)
+		(pin "P3"
+			(uuid "f090cb36-6191-558e-b291-7048296ba09c")
+		)
+		(pin "P5"
+			(uuid "7622e2c7-8ea5-5286-a0eb-b5706cc00578")
+		)
+		(pin "C2"
+			(uuid "06e02133-2c71-5115-8a9f-a83b4b85066d")
+		)
+		(pin "A6"
+			(uuid "811429a8-d59d-55fb-b595-a77a84887b69")
+		)
+		(pin "E7"
+			(uuid "70fe4893-0c49-563c-b788-ee3c9fdef20c")
+		)
+		(pin "G5"
+			(uuid "0f964d26-bf57-5b4a-8b18-04401c5732d9")
+		)
+		(pin "H10"
+			(uuid "f583445d-8a30-5957-9cd0-adfac6c6eefe")
+		)
+		(pin "J5"
+			(uuid "01062738-ff2f-54b0-af2b-42cb468f3677")
+		)
+		(pin "K8"
+			(uuid "1ea1b4e9-d646-5b30-b514-8cfc261db09b")
+		)
+		(pin "C4"
+			(uuid "c6829229-9af3-57a2-888b-d137831dea7b")
+		)
+		(pin "N2"
+			(uuid "62981ba7-599f-5e8c-9105-d61ca9d64184")
+		)
+		(pin "N5"
+			(uuid "778eda1c-e10c-5310-b2c0-4d26bcecae60")
+		)
+		(pin "P4"
+			(uuid "b543184c-b5d7-5163-9519-2d4bd26d6976")
+		)
+		(pin "P6"
+			(uuid "08af6c44-fb7a-583d-8bec-432d247b86bc")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "U1001")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 177.8 73.66) (xy 172.72 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0f8e3663-9bf8-563c-8cf9-3edb3a468113")
+	)
+	(label "sd_cmd"
+		(at 172.72 73.66 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "717c7657-5a7f-5ffd-8988-09cbc375f850")
+	)
+	(wire
+		(pts
+			(xy 177.8 76.2) (xy 172.72 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ecd2cf65-6035-5d78-84ba-a8ba49a4ad3d")
+	)
+	(label "emmc_ds"
+		(at 172.72 76.2 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "1d7e2a08-a5af-5c3a-998c-6ecaf6721efd")
+	)
+	(wire
+		(pts
+			(xy 177.8 78.74) (xy 172.72 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7682b2e5-7ba2-57ed-bb8d-2b545a0987b0")
+	)
+	(label "emmc_rst_n"
+		(at 172.72 78.74 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "13ea1211-1e04-59d0-ac03-a51572cf9fd2")
+	)
+	(wire
+		(pts
+			(xy 177.8 83.82) (xy 172.72 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d85aa324-d302-5608-b796-7c61ae756207")
+	)
+	(label "sd_dat0"
+		(at 172.72 83.82 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "ad2f4e47-ae61-5c88-86e8-72685514accd")
+	)
+	(wire
+		(pts
+			(xy 177.8 86.36) (xy 172.72 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "754c36e4-6251-52f9-86b7-f0d9ff53ed75")
+	)
+	(label "sd_dat1"
+		(at 172.72 86.36 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "fff839dc-d042-5b3d-aa25-7df115320e13")
+	)
+	(wire
+		(pts
+			(xy 177.8 88.9) (xy 172.72 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "42e3687b-db10-5948-9937-69ca3079e5a1")
+	)
+	(label "sd_dat2"
+		(at 172.72 88.9 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e607f8c3-fdbd-560a-b269-1ea17bb4d6aa")
+	)
+	(wire
+		(pts
+			(xy 177.8 91.44) (xy 172.72 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a0accfb4-8f7b-5ca4-8b61-4843a1e61a53")
+	)
+	(label "sd_dat3"
+		(at 172.72 91.44 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "05bdb9a7-7722-5db5-ba6d-ddf3d04dbb05")
+	)
+	(wire
+		(pts
+			(xy 177.8 93.98) (xy 172.72 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fdf0f648-0451-58bb-952a-ae08892809da")
+	)
+	(label "emmc_dat4"
+		(at 172.72 93.98 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "9d678029-3c22-5b7d-8647-4fce9031b1e8")
+	)
+	(wire
+		(pts
+			(xy 177.8 96.52) (xy 172.72 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "643af121-cf35-595f-9f51-d4129a882754")
+	)
+	(label "emmc_dat5"
+		(at 172.72 96.52 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "2b8ef850-ad69-5489-98b2-c5e914f7d96b")
+	)
+	(wire
+		(pts
+			(xy 177.8 99.06) (xy 172.72 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5a66443a-721d-5957-9cb4-415ceaeaa55e")
+	)
+	(label "emmc_dat6"
+		(at 172.72 99.06 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "0f25e64e-b451-598d-9f4f-5ab0bbb27c1e")
+	)
+	(wire
+		(pts
+			(xy 177.8 101.6) (xy 172.72 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6f16c921-0cbb-5d3d-95a4-b05397cb1b54")
+	)
+	(label "emmc_dat7"
+		(at 172.72 101.6 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "55e14a6f-db76-58e2-8276-73b1d1b0ce8d")
+	)
+	(wire
+		(pts
+			(xy 177.8 71.12) (xy 172.72 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cd1ed1dc-73bb-574a-a6b6-7e34fcb6c426")
+	)
+	(label "emmc_clk"
+		(at 172.72 71.12 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "8ea0680b-3026-50a9-a6ae-5337d18ebe28")
+	)
+	(wire
+		(pts
+			(xy 203.2 71.12) (xy 207.01 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "67c2d1b7-7241-5373-b0b9-b23c824b931b")
+	)
+	(symbol
+		(lib_id "zynq_card:3V3")
+		(at 207.01 71.12 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5757a3e3-147d-500c-bdb4-448102a89778")
+		(property "Reference" "#PWR001"
+			(at 203.2 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3"
+			(at 210.31 71.12 270)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"3V3\" (IPC net name)"
+			(at 207.01 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3666515a-cdbd-55bb-98cd-8a65bdf3b4bc")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR001")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 73.66) (xy 207.01 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f9a8fedc-bd87-5965-a76b-af513c685032")
+	)
+	(symbol
+		(lib_id "zynq_card:3V3")
+		(at 207.01 73.66 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4019c501-c58a-5606-a042-a954e34dc2a5")
+		(property "Reference" "#PWR002"
+			(at 203.2 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3"
+			(at 210.31 73.66 270)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"3V3\" (IPC net name)"
+			(at 207.01 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9ccfe629-ebb1-55ec-8c26-f0f440faf317")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR002")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 76.2) (xy 207.01 76.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d365b7d3-389e-5a3a-9796-407cefba8a50")
+	)
+	(symbol
+		(lib_id "zynq_card:3V3")
+		(at 207.01 76.2 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "88346598-7cc7-593e-bd0c-73d1c589becb")
+		(property "Reference" "#PWR003"
+			(at 203.2 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3"
+			(at 210.31 76.2 270)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"3V3\" (IPC net name)"
+			(at 207.01 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "24a33c58-a8c8-57d7-bc62-8faa47ecd484")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR003")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 78.74) (xy 207.01 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cf76bfc3-785c-5812-942e-2056f8466289")
+	)
+	(symbol
+		(lib_id "zynq_card:3V3")
+		(at 207.01 78.74 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6ced9e6b-075e-5ce7-ac95-1e54ba84f806")
+		(property "Reference" "#PWR004"
+			(at 203.2 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3"
+			(at 210.31 78.74 270)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"3V3\" (IPC net name)"
+			(at 207.01 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a9fc3a83-995f-5495-9f4f-abd671256d10")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR004")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 83.82) (xy 207.01 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2786cece-35fd-5475-a32b-da86d47925df")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 207.01 83.82 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0c4995ba-bce1-5baf-b852-e5b62ee5faa5")
+		(property "Reference" "#PWR005"
+			(at 203.2 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 210.31 83.82 270)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 207.01 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "89222a43-9e4c-5afe-9e81-5f0978cdd22e")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR005")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 86.36) (xy 207.01 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "01ec5db2-5b99-5ac1-8d6b-14fcd0b683cb")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 207.01 86.36 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3e847455-d23c-5407-bf82-a7d554686d48")
+		(property "Reference" "#PWR006"
+			(at 203.2 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 210.31 86.36 270)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 207.01 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c4dd3be5-c21f-5d19-86b7-28d8b7b782c4")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR006")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 88.9) (xy 207.01 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5b644182-ea9d-5473-83db-a45aeef9224c")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 207.01 88.9 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "96e1d3e2-5abf-5681-934c-041b91be1177")
+		(property "Reference" "#PWR007"
+			(at 203.2 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 210.31 88.9 270)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 207.01 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6504492f-768a-55f0-8361-d21b99b0c2ad")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR007")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 91.44) (xy 207.01 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "33ec193d-daf0-5af1-ba5b-1fbe08e0c3ac")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 207.01 91.44 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "11eee150-119f-5d5a-8af0-5e99f190f424")
+		(property "Reference" "#PWR008"
+			(at 203.2 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 210.31 91.44 270)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 207.01 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9bd05617-8b35-5f3f-bb2f-3ea73a616948")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR008")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 93.98) (xy 207.01 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a7e820b8-1d2d-5abe-a09c-2959c791f607")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 207.01 93.98 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b79b005c-05ec-5c21-88c0-8067d06cea06")
+		(property "Reference" "#PWR009"
+			(at 203.2 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 210.31 93.98 270)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 207.01 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c3d33b1c-5480-5a0a-8dfd-d7ff950c74b6")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR009")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 104.14) (xy 207.01 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4ddbbacc-e70a-57ad-af02-10ac884b36fd")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 207.01 104.14 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "dd35a09f-587b-5b91-85f6-f7703cf371e4")
+		(property "Reference" "#PWR010"
+			(at 213.36 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.31 104.14 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 207.01 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "7f9cb7b0-4919-5bd6-a5e2-51237c5521cc")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR010")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 106.68) (xy 207.01 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "139640c4-9080-5dc8-b0a1-a12475314d32")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 207.01 106.68 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0d4a009f-309f-5559-82ed-491f1a49873a")
+		(property "Reference" "#PWR011"
+			(at 213.36 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.31 106.68 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 207.01 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "bb653084-76ea-5bf4-91d2-3164d648ed25")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR011")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 109.22) (xy 207.01 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e1b31ef3-a4a6-5275-9aaa-8bf864f2de99")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 207.01 109.22 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "237e7727-b220-52a2-a7f9-42c79a4ef4f8")
+		(property "Reference" "#PWR012"
+			(at 213.36 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.31 109.22 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 207.01 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d6400032-fd5a-5f84-a0b4-1f5290252595")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR012")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 111.76) (xy 207.01 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "55649a75-1c0d-5aea-9fd0-4e2a7d66fb3f")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 207.01 111.76 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "15521852-b23c-531e-b729-d86eb645acb1")
+		(property "Reference" "#PWR013"
+			(at 213.36 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.31 111.76 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 207.01 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e9ada501-ffba-5d35-bf43-f3b9a3129ca3")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR013")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 114.3) (xy 207.01 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "48853c0d-2f30-57d0-9a48-92bfe28fcde9")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 207.01 114.3 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "dfad1311-b45e-592a-ac76-28590dc5f74e")
+		(property "Reference" "#PWR014"
+			(at 213.36 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.31 114.3 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 207.01 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "38b87c09-3a99-5821-99e3-d89b8b8c2932")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR014")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 116.84) (xy 207.01 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8f31dea5-4810-5178-9fea-2ead48a3cae8")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 207.01 116.84 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e08d7beb-42ed-5bb5-871f-5f2c42c72d38")
+		(property "Reference" "#PWR015"
+			(at 213.36 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.31 116.84 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 207.01 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "aea00ca5-94ee-56a6-9116-7ece7dc62164")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR015")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 119.38) (xy 207.01 119.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "add36dfe-8e10-5ffb-a23f-1c39194577a2")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 207.01 119.38 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "15798cc9-ff56-5129-8ba0-0ab0858dd20e")
+		(property "Reference" "#PWR016"
+			(at 213.36 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.31 119.38 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 207.01 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9985aa9c-dea3-5764-b6ed-492e672bed9e")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR016")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 121.92) (xy 207.01 121.92)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "39c90310-009e-5d46-b470-023f091a8e5a")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 207.01 121.92 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "91f111ab-738d-5d31-a9ba-6cdce98130f9")
+		(property "Reference" "#PWR017"
+			(at 213.36 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.31 121.92 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 207.01 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "34b02793-bbd0-53fb-b599-eb09a5a6a664")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR017")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 124.46) (xy 207.01 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aeff70a6-70c6-56c7-89b7-f7158d55d687")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 207.01 124.46 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0291ac8f-fa7d-50f6-abee-f3fe646306cb")
+		(property "Reference" "#PWR018"
+			(at 213.36 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.31 124.46 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 207.01 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3f4003b5-21df-5852-b369-290bc61e06a6")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR018")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 127) (xy 207.01 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b9a2bded-3ba3-5df9-97ae-145b53fc8e81")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 207.01 127 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "afb656cd-a61c-5314-939d-f0654fc98f66")
+		(property "Reference" "#PWR019"
+			(at 213.36 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.31 127 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 207.01 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "3192fc72-f519-52cb-9129-edd6247cefe4")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR019")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 129.54) (xy 207.01 129.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "da0764be-0ca3-52c3-be57-c32a51836e8b")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 207.01 129.54 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4eeacf68-6a60-5258-a9ba-8f71eea5fe35")
+		(property "Reference" "#PWR020"
+			(at 213.36 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.31 129.54 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 207.01 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f2b5a4e1-2297-58ee-af95-216a5b88abad")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR020")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 203.2 99.06) (xy 208.28 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "06d4c946-ffbb-56de-a6e9-4556e7c676d9")
+	)
+	(label "emmc_vddi"
+		(at 208.28 99.06 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e365a9ba-6184-5fdd-9cc6-d4a10b30ad8b")
+	)
+	(symbol
+		(lib_id "zynq_card:R")
+		(at 50.8 63.5 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4db62dfd-d047-591c-9f40-039e924b77ce")
+		(property "Reference" "R1001"
+			(at 50.8 59.69 270)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "0R"
+			(at 50.8 61.47 270)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 50.8 65.278 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 50.8 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 50.8 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b09f9fe5-9986-52b0-a362-f0d2dc20e8ef")
+		)
+		(pin "2"
+			(uuid "36d42a40-398e-5dfb-92dd-41aa52c9f2e1")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "R1001")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 46.99 63.5) (xy 44.45 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f85878c4-338a-5ddf-8770-d93f0a660b4d")
+	)
+	(hierarchical_label "sd_clk"
+		(shape input)
+		(at 44.45 63.5 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3d849932-fa72-52f2-ab09-889ea1f1dee1")
+	)
+	(wire
+		(pts
+			(xy 54.61 63.5) (xy 57.15 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "abab466d-9365-5cf2-91db-c329bf3b8920")
+	)
+	(label "emmc_clk"
+		(at 57.15 63.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "7a16849b-d2cd-5ce6-89bb-c20d30c87849")
+	)
+	(hierarchical_label "sd_cmd"
+		(shape bidirectional)
+		(at 50.8 73.66 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "119466ed-ce39-5d1a-a754-a302aef184df")
+	)
+	(wire
+		(pts
+			(xy 50.8 73.66) (xy 58.42 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0b1461d2-81e7-5906-83eb-a96cb0d0e61f")
+	)
+	(label "sd_cmd"
+		(at 58.42 73.66 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "5700a1b7-1d7f-5b8a-a2ad-9ae14f9d5115")
+	)
+	(hierarchical_label "emmc_rst_n"
+		(shape input)
+		(at 50.8 77.47 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5bf7705a-9e1d-5a94-a0b7-b9ce190cff5c")
+	)
+	(wire
+		(pts
+			(xy 50.8 77.47) (xy 58.42 77.47)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "040bfe30-da86-5461-8e18-d4fbb01195aa")
+	)
+	(label "emmc_rst_n"
+		(at 58.42 77.47 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "3949ecd3-a37c-51f9-a833-c1d7fde8b19f")
+	)
+	(hierarchical_label "sd_dat0"
+		(shape bidirectional)
+		(at 50.8 81.28 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c5f1c0d3-669f-5719-9fa6-86267cb719f2")
+	)
+	(wire
+		(pts
+			(xy 50.8 81.28) (xy 58.42 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2928bf15-86c8-511b-a20f-109e73697bdc")
+	)
+	(label "sd_dat0"
+		(at 58.42 81.28 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "5042e035-a3dd-5642-a1ab-e419221dd6e8")
+	)
+	(hierarchical_label "sd_dat1"
+		(shape bidirectional)
+		(at 50.8 85.09 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "bcb1a317-c3ff-5f1d-b94d-612f64e049c3")
+	)
+	(wire
+		(pts
+			(xy 50.8 85.09) (xy 58.42 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2696754c-0e80-5ba5-bcd0-43382fea0b84")
+	)
+	(label "sd_dat1"
+		(at 58.42 85.09 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "56e69b8f-1eb1-5cc2-adb1-1049ad1d632d")
+	)
+	(hierarchical_label "sd_dat2"
+		(shape bidirectional)
+		(at 50.8 88.9 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "9b7a4660-4173-59d9-b81c-5e9e4e3330e4")
+	)
+	(wire
+		(pts
+			(xy 50.8 88.9) (xy 58.42 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a5b4b6eb-cb7d-56f2-bef6-15d14625fbfe")
+	)
+	(label "sd_dat2"
+		(at 58.42 88.9 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2f018b27-a1be-5ab2-b378-727caf9ec326")
+	)
+	(hierarchical_label "sd_dat3"
+		(shape bidirectional)
+		(at 50.8 92.71 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "b0baf042-3cbf-5ec8-9236-4534453eb3ea")
+	)
+	(wire
+		(pts
+			(xy 50.8 92.71) (xy 58.42 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b2c287ca-ba3b-58e8-bb8a-675855c81428")
+	)
+	(label "sd_dat3"
+		(at 58.42 92.71 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9ed37ee5-b677-5bd3-80d5-93583da299ef")
+	)
+	(text "R1001: at the MIO40 pin"
+		(exclude_from_sim no)
+		(at 38.1 57.15 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d6d2126b-47b4-53d3-9f20-f8eeec801ee6")
+	)
+	(text "47 k pull-ups to 1V8 (CMD, DAT0-7; DAT4-7 unused in 4-bit mode); DS (HS400 strobe, unused) 47 k pull-down"
+		(exclude_from_sim no)
+		(at 38.1 137.16 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "03f509d6-bff9-5d47-9dc6-ff00bcd4d307")
+	)
+	(symbol
+		(lib_id "zynq_card:R")
+		(at 38.1 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e3a665e1-5918-5764-a899-0b1c0efda237")
+		(property "Reference" "R1010"
+			(at 43.39 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "47k"
+			(at 42.29 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 36.322 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 38.1 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 38.1 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ed2d583b-a823-5895-b5be-cef7ffa35d14")
+		)
+		(pin "2"
+			(uuid "888f8ff8-f857-5a0a-8737-0d4db925d9c1")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "R1010")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 38.1 151.13) (xy 38.1 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "458179a5-daf8-5004-9600-055e704d9251")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 38.1 148.59 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ce444637-8158-501e-a67e-23ca2c54d514")
+		(property "Reference" "#PWR021"
+			(at 38.1 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 38.1 145.034 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 38.1 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 38.1 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 38.1 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "113e0173-68bd-507f-8c9f-f1a0285fd4f9")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR021")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 38.1 158.75) (xy 38.1 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d4b44471-37e7-5458-952c-f315935d241a")
+	)
+	(label "sd_cmd"
+		(at 38.1 161.29 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "2f36c27e-a65d-50c3-8869-ac537f9e3dc2")
+	)
+	(symbol
+		(lib_id "zynq_card:R")
+		(at 48.26 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b601389f-7bca-52f8-a7d8-407d649e4108")
+		(property "Reference" "R1011"
+			(at 53.55 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "47k"
+			(at 52.45 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 46.482 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 48.26 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 48.26 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "bd3b035c-3466-527a-bf72-1d346cb67650")
+		)
+		(pin "2"
+			(uuid "f8cbcdfd-b020-52f6-89e3-bdf161b59975")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "R1011")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 48.26 151.13) (xy 48.26 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dd2048e0-97ea-5588-a29e-45361ef25a1d")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 48.26 148.59 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "47d99eb2-49b1-560b-b69d-b21fced121fa")
+		(property "Reference" "#PWR022"
+			(at 48.26 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 48.26 145.034 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 48.26 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 48.26 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 48.26 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "33691d1f-a66a-50b2-8144-8a6c345a4e41")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR022")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 48.26 158.75) (xy 48.26 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3b729187-0976-5718-a114-5a645ebb5469")
+	)
+	(label "sd_dat0"
+		(at 48.26 161.29 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "13b181de-bfe5-5a8b-b30d-ca038870f9e2")
+	)
+	(symbol
+		(lib_id "zynq_card:R")
+		(at 58.42 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9669e30c-085e-5dc6-b412-a8ae90f3cc64")
+		(property "Reference" "R1012"
+			(at 63.71 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "47k"
+			(at 62.61 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 56.642 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 58.42 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 58.42 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "702695e4-fef9-54c7-893c-59effc164e6f")
+		)
+		(pin "2"
+			(uuid "c9a9ddae-97d4-53a7-bfd7-8813f7381d8e")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "R1012")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 58.42 151.13) (xy 58.42 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eb58dd89-ed26-5c87-8e66-aec9521b67b7")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 58.42 148.59 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "953e901b-f181-5951-92a9-0b4c88f8a435")
+		(property "Reference" "#PWR023"
+			(at 58.42 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 58.42 145.034 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 58.42 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 58.42 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 58.42 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ff239f59-0629-57ce-9ac4-6d29a1f24fa6")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR023")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 58.42 158.75) (xy 58.42 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1d36a841-a0a2-51c9-8719-eceb3bb6eb8e")
+	)
+	(label "sd_dat1"
+		(at 58.42 161.29 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d21cef8f-3a02-5318-a8fc-72f584dd2822")
+	)
+	(symbol
+		(lib_id "zynq_card:R")
+		(at 68.58 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f87b4f51-9256-5e2d-a03b-425f6aa54510")
+		(property "Reference" "R1013"
+			(at 73.87 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "47k"
+			(at 72.77 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 66.802 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 68.58 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 68.58 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b6870fc3-2285-5a36-b1af-d95c324bf474")
+		)
+		(pin "2"
+			(uuid "fe862b8a-11be-5335-bb1d-ed3d70d8c0f7")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "R1013")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 68.58 151.13) (xy 68.58 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "82ce558f-0e8e-5cfa-91f5-973bf7005a82")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 68.58 148.59 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b4340df1-4991-571f-a917-c194dd184c2d")
+		(property "Reference" "#PWR024"
+			(at 68.58 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 68.58 145.034 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 68.58 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 68.58 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 68.58 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "96670373-4689-5328-b8c1-2ec634052610")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR024")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 68.58 158.75) (xy 68.58 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e486fce6-eeb4-518e-bdda-8685dd4634ec")
+	)
+	(label "sd_dat2"
+		(at 68.58 161.29 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "57bafeee-277f-5771-8468-0d047be313e7")
+	)
+	(symbol
+		(lib_id "zynq_card:R")
+		(at 78.74 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9e7acd71-680e-5b3c-b95c-98f68da7f672")
+		(property "Reference" "R1014"
+			(at 84.03 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "47k"
+			(at 82.93 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 76.962 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 78.74 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 78.74 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f22f5168-4b54-579c-837e-7201279736c1")
+		)
+		(pin "2"
+			(uuid "f1983ef4-8e5a-5159-9a23-72c3c09aaf56")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "R1014")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 78.74 151.13) (xy 78.74 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9540092b-adeb-5caf-b0c4-4a735b0aee4e")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 78.74 148.59 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ac35c206-4a68-5630-9321-f19d626310ce")
+		(property "Reference" "#PWR025"
+			(at 78.74 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 78.74 145.034 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 78.74 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 78.74 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 78.74 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "ac246c3c-7e58-562b-b8f4-5049c5a5df1b")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR025")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 78.74 158.75) (xy 78.74 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "34be73d3-fb82-5802-bb5b-819b0213efb0")
+	)
+	(label "sd_dat3"
+		(at 78.74 161.29 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "55a958c9-7ff5-5f43-936d-1ba5d014268a")
+	)
+	(symbol
+		(lib_id "zynq_card:R")
+		(at 88.9 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d39f448e-1e2d-59db-b095-27730597004f")
+		(property "Reference" "R1015"
+			(at 94.19 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "47k"
+			(at 93.09 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 87.122 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.9 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 88.9 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "952573d7-6681-5526-9d53-bfa339ca6b74")
+		)
+		(pin "2"
+			(uuid "c37b2b46-8812-53e4-8177-f9ed7ff8d536")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "R1015")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 88.9 151.13) (xy 88.9 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "43a8191f-fed6-5899-a353-acbc6868debb")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 88.9 148.59 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b47ce8df-32df-5d7c-bcce-18b62a21f331")
+		(property "Reference" "#PWR026"
+			(at 88.9 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 88.9 145.034 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 88.9 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 88.9 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 88.9 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "730a8972-3a21-5faa-9e02-0bb34d89c51d")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR026")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 88.9 158.75) (xy 88.9 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d819fb7f-88f5-5f89-9240-55721fd3f8c4")
+	)
+	(label "emmc_dat4"
+		(at 88.9 161.29 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "d560e2cc-fc9f-5cb5-a150-23fe2f1e806a")
+	)
+	(symbol
+		(lib_id "zynq_card:R")
+		(at 99.06 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a0ae1290-ac6f-597f-b26e-b4fbfdedc93f")
+		(property "Reference" "R1016"
+			(at 104.35 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "47k"
+			(at 103.25 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 97.282 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 99.06 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 99.06 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c121aad4-cbbd-5cc3-835d-616ab216bf44")
+		)
+		(pin "2"
+			(uuid "2a762968-8d9f-5946-8109-3144426523d8")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "R1016")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 99.06 151.13) (xy 99.06 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dc2650bd-1135-5c31-9b65-1980c4046a04")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 99.06 148.59 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5a916f4c-d603-56d5-a48f-97c72272df86")
+		(property "Reference" "#PWR027"
+			(at 99.06 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 99.06 145.034 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 99.06 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 99.06 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 99.06 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c1d6a4e1-9333-5da3-9d99-2afbae3076fc")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR027")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 99.06 158.75) (xy 99.06 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b56629ef-fb01-571c-93ba-790d2630101c")
+	)
+	(label "emmc_dat5"
+		(at 99.06 161.29 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "22d52d5d-691f-5026-8218-735d8719c9f2")
+	)
+	(symbol
+		(lib_id "zynq_card:R")
+		(at 109.22 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9912218b-7545-5291-ab87-e191f0e08c78")
+		(property "Reference" "R1017"
+			(at 114.51 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "47k"
+			(at 113.41 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 107.442 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 109.22 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 109.22 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "d171b1a7-21f8-58d8-b44d-b800ac53150a")
+		)
+		(pin "2"
+			(uuid "6613a3a7-b902-50d8-a2d8-5b41e90cd59b")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "R1017")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 109.22 151.13) (xy 109.22 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9b7caf2e-4cbb-583d-90b7-54fbde4ba242")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 109.22 148.59 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "accaf5e8-79ee-5852-bbbe-67f158b04e32")
+		(property "Reference" "#PWR028"
+			(at 109.22 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 109.22 145.034 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 109.22 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 109.22 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 109.22 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6d16f783-fb2f-5fad-a0e8-720c953d35e4")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR028")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 109.22 158.75) (xy 109.22 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "352b4bf9-a48c-596a-b29b-fe56ef619eeb")
+	)
+	(label "emmc_dat6"
+		(at 109.22 161.29 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "444f935b-dee2-5d38-85ab-07ce6fc27ea4")
+	)
+	(symbol
+		(lib_id "zynq_card:R")
+		(at 119.38 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ccfdaeac-0feb-5762-8fe7-fdeab1bddb6d")
+		(property "Reference" "R1018"
+			(at 124.67 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "47k"
+			(at 123.57 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 117.602 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 119.38 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 119.38 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "57372a14-f6fe-57d4-9fab-f4ad32ddd1e1")
+		)
+		(pin "2"
+			(uuid "f7ac318f-67fa-5bf1-bdd0-3f7fccddd0ba")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "R1018")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 119.38 151.13) (xy 119.38 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "aa987564-b8f5-5aa4-81ff-cb8a88633d0d")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 119.38 148.59 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a68cbeec-27d8-52ff-94bc-cf0c541591b0")
+		(property "Reference" "#PWR029"
+			(at 119.38 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 119.38 145.034 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 119.38 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 119.38 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 119.38 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0caf1763-9151-5bd5-afdc-8be49e98b9ce")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR029")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 119.38 158.75) (xy 119.38 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "66b0d930-d1ca-5658-93f3-cae05885bcba")
+	)
+	(label "emmc_dat7"
+		(at 119.38 161.29 270)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "14280bea-32c5-5d3f-a943-aaeedba7b22e")
+	)
+	(symbol
+		(lib_id "zynq_card:R")
+		(at 129.54 154.94 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "cdff8563-0ec7-5c59-b924-39a49b33927e")
+		(property "Reference" "R1019"
+			(at 134.83 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "47k"
+			(at 133.73 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 127.762 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 129.54 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "98e57830-fcde-5e0d-bab9-d311745fac5d")
+		)
+		(pin "2"
+			(uuid "fc9a1dfa-4978-546d-9b5f-006704e3345b")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "R1019")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 129.54 151.13) (xy 129.54 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "32d7bc30-c04a-5e39-8925-8b5683b7b17b")
+	)
+	(label "emmc_ds"
+		(at 129.54 148.59 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "28b1c4af-7aa1-5ce8-b59f-e52d4797335d")
+	)
+	(wire
+		(pts
+			(xy 129.54 158.75) (xy 129.54 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5228b30b-157e-5245-af92-0e45ef9c0a7b")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 129.54 161.29 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2d681bc7-aa6f-59ad-b417-ffe64811b4f5")
+		(property "Reference" "#PWR030"
+			(at 129.54 167.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 129.54 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 129.54 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 129.54 161.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1aedacc8-779c-52f2-85e7-34e57ce29d05")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR030")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(text "VCC 3V3: 4u7 + 220n"
+		(exclude_from_sim no)
+		(at 43.18 190.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8108f95f-baea-521c-ad49-834be44756f1")
+	)
+	(symbol
+		(lib_id "zynq_card:C")
+		(at 38.1 203.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "bb7479a9-ec7d-5e1b-be8a-f2c3b2bc7ed0")
+		(property "Reference" "C1001"
+			(at 43.39 201.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4u7"
+			(at 42.29 204.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 39.0652 207.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 38.1 203.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 38.1 203.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2b493251-9f2b-5fde-97d1-6c3f6f1fab0e")
+		)
+		(pin "2"
+			(uuid "77807d18-238d-5894-abd3-f8682a41f132")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "C1001")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 38.1 199.39) (xy 38.1 196.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2cc5acf1-66c4-5a32-92fc-fa6eb98d29e8")
+	)
+	(wire
+		(pts
+			(xy 38.1 207.01) (xy 38.1 209.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "becbc8f9-9fc2-5a48-a1ef-04864aa8c472")
+	)
+	(symbol
+		(lib_id "zynq_card:3V3")
+		(at 38.1 194.31 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5d4196fd-006e-51a6-8087-8630bcaf2e62")
+		(property "Reference" "#PWR031"
+			(at 38.1 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "3V3"
+			(at 38.1 190.754 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 38.1 194.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 38.1 194.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"3V3\" (IPC net name)"
+			(at 38.1 194.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1beeb8ae-da33-514c-93ac-f22a66949f74")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR031")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 38.1 196.85) (xy 38.1 194.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2694c734-1b6d-56cd-8c2b-c274882534ce")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 38.1 212.09 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "370229b8-5ffa-5a28-8960-e8f5528cc639")
+		(property "Reference" "#PWR032"
+			(at 38.1 218.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 38.1 215.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 38.1 212.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 38.1 212.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 38.1 212.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "af19d5f2-0e0d-5313-964f-83dbe15376e6")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR032")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 38.1 209.55) (xy 38.1 212.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5643ec51-3d83-5b11-86bb-354d7d6b3fc0")
+	)
+	(junction
+		(at 38.1 196.85)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "87cb8503-7986-5611-a9f2-c42390f5fb2a")
+	)
+	(junction
+		(at 38.1 209.55)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a775998e-ce12-5038-9f68-d4b4c07ffc1e")
+	)
+	(symbol
+		(lib_id "zynq_card:C")
+		(at 46.99 203.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "26180971-1d6b-5812-8fdc-ad32f822b0ea")
+		(property "Reference" "C1002"
+			(at 52.28 201.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "220n"
+			(at 51.73 204.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 47.9552 207.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 46.99 203.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 46.99 203.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "331498da-1573-5ec0-be34-9cdcd67b561a")
+		)
+		(pin "2"
+			(uuid "f97da4e3-4700-5ffd-bf12-2ae759e88cea")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "C1002")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 46.99 199.39) (xy 46.99 196.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "79f78e86-8732-5914-9368-ada189701225")
+	)
+	(wire
+		(pts
+			(xy 46.99 207.01) (xy 46.99 209.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5a76cacd-2b82-5c9f-911d-6940da0e815b")
+	)
+	(wire
+		(pts
+			(xy 38.1 196.85) (xy 46.99 196.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "603cd452-c975-5f5a-9ea9-95aff8f5910a")
+	)
+	(wire
+		(pts
+			(xy 38.1 209.55) (xy 46.99 209.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5fba82dd-f98d-5513-a5e8-6643d1abdedb")
+	)
+	(text "VCCQ 1V8: 4u7 + 100n"
+		(exclude_from_sim no)
+		(at 119.38 190.5 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "de79082c-f798-5f91-bec7-b9c801b6cf86")
+	)
+	(symbol
+		(lib_id "zynq_card:C")
+		(at 114.3 203.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "34bcb690-6b56-57e8-b61e-8f13e25f3c75")
+		(property "Reference" "C1003"
+			(at 119.59 201.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4u7"
+			(at 118.49 204.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 115.2652 207.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 114.3 203.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 114.3 203.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e88c8e36-a6e0-59ee-8576-712e72a0ea3c")
+		)
+		(pin "2"
+			(uuid "825ced1f-bd8f-5936-b766-ff49dcaaad49")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "C1003")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 114.3 199.39) (xy 114.3 196.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5d01443b-a8e7-51a1-aa1e-68d2753008b4")
+	)
+	(wire
+		(pts
+			(xy 114.3 207.01) (xy 114.3 209.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5fc7ab42-3b2b-51f7-ab35-d90a0db0e66d")
+	)
+	(symbol
+		(lib_id "zynq_card:1V8")
+		(at 114.3 194.31 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "85feb3dd-eea9-5ece-b835-0ac9726d6009")
+		(property "Reference" "#PWR033"
+			(at 114.3 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "1V8"
+			(at 114.3 190.754 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 114.3 194.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 114.3 194.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"1V8\" (IPC net name)"
+			(at 114.3 194.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b5447c31-a2a9-5005-916b-05fa32f762dd")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR033")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 114.3 196.85) (xy 114.3 194.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c07941ce-a801-5de9-8461-fdb147480c2e")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 114.3 212.09 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "489b60d0-0368-59f3-a108-3402a208ea63")
+		(property "Reference" "#PWR034"
+			(at 114.3 218.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 114.3 215.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 114.3 212.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 114.3 212.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 114.3 212.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "be8cbbf6-0f31-577e-818f-b7d68c93976e")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR034")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 114.3 209.55) (xy 114.3 212.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "92e8dca9-ec1e-5122-be5c-9212adfbdea7")
+	)
+	(junction
+		(at 114.3 196.85)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e6980c38-13f6-5eff-8e0f-ce6cbe0f08b3")
+	)
+	(junction
+		(at 114.3 209.55)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d3855187-0b30-5617-8b8e-055701096dcc")
+	)
+	(symbol
+		(lib_id "zynq_card:C")
+		(at 123.19 203.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "78224589-acc2-52ae-a1d2-be063eb2cecd")
+		(property "Reference" "C1004"
+			(at 128.48 201.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100n"
+			(at 127.93 204.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 124.1552 207.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 123.19 203.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 123.19 203.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e193d783-edb4-5d2b-9664-43d3c9e7d97b")
+		)
+		(pin "2"
+			(uuid "6d10f535-2606-56d8-bbbd-3b77b7d77955")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "C1004")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 123.19 199.39) (xy 123.19 196.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "39205cc3-5892-5c42-bf3a-b0f400a4cfa2")
+	)
+	(wire
+		(pts
+			(xy 123.19 207.01) (xy 123.19 209.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4f86678f-47bb-55a5-9168-71f9873b0b8f")
+	)
+	(wire
+		(pts
+			(xy 114.3 196.85) (xy 123.19 196.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b39c53b1-4f8b-5756-804a-9b578c71f32d")
+	)
+	(wire
+		(pts
+			(xy 114.3 209.55) (xy 123.19 209.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dbddfcdf-5592-5e55-b08a-a7cf918ba86b")
+	)
+	(symbol
+		(lib_id "zynq_card:C")
+		(at 190.5 203.2 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8f52eb4a-e60b-5427-9c71-32dc3b78071c")
+		(property "Reference" "C1005"
+			(at 195.79 201.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "2u2"
+			(at 194.69 204.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 191.4652 207.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 190.5 203.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 190.5 203.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "db5f0e70-88f6-5601-8305-fa3b53ea34d5")
+		)
+		(pin "2"
+			(uuid "2a525f76-4ee2-56f7-90c9-13e1e009e32b")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "C1005")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 190.5 199.39) (xy 190.5 196.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e45fb51b-c97c-5c02-a046-8c26601bae54")
+	)
+	(label "emmc_vddi"
+		(at 190.5 196.85 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "646d6a2b-1ace-5539-b6ac-4b47de56194f")
+	)
+	(wire
+		(pts
+			(xy 190.5 207.01) (xy 190.5 209.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c61fd133-4a53-5139-b902-392fc4443386")
+	)
+	(symbol
+		(lib_id "zynq_card:GND")
+		(at 190.5 209.55 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6c9e09d6-1020-5cf4-93c2-84ad0fc8b439")
+		(property "Reference" "#PWR035"
+			(at 190.5 215.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 190.5 213.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 190.5 209.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 190.5 209.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol for net \"GND\" (IPC net name)"
+			(at 190.5 209.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "e8691ebe-3810-5a20-8d6b-189869b0c42d")
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac/71e24aa8-bef7-4c45-ace3-64a3a26c99e1"
+					(reference "#PWR035")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(text "VDDi: 2u2 (1-4.7 u)"
+		(exclude_from_sim no)
+		(at 195.58 193.04 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "34a53684-82a3-5de6-92c5-3b84e4659578")
+	)
 	(embedded_fonts no)
 )

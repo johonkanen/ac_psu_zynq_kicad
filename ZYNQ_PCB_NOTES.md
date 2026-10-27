@@ -143,7 +143,7 @@ Checked in Vivado 2024.2 by `vivado/pinplan/pinplan.py`. The full table with eve
 | SD0 → eMMC (4-bit) | 40 CLK, 41 CMD, 42–45 DAT0–3 | 501 | LVCMOS 1.8 V, fast slew, 50 MHz. **0 Ω (40–60 Ω) series on CLK at the MIO pin**; DAT/CMD to CLK skew 50–200 ps (UG933 *SDIO*). Zynq-7000 SDIO is 4-bit, SD 2.0 high speed ≤ 50 MHz: no HS200/HS400, so DAT4–7 and DS stay unused (pull-ups only). No card detect: `non-removable` in the device tree |
 | UART1 (console) | 48 TX, 49 RX | 501 | **decided 2026-10-27:** PS UART on 1.8 V MIO + a translator to the 3.3 V J2 header. TX and RX go opposite ways, so it needs per-bit direction: **not** an SN74LVC2T45 (one DIR for both bits); e.g. an SN74AVC4T774 as on J1, or 2 × SN74LVC1T45. The FSBL and U-Boot can print before the PL is configured, which an EMIO/PL UART could not |
 | I2C0 | 50 SCL, 51 SDA | 501 | for an optional MAC-address EEPROM; 4.7 k to 1V8 at the far end; RC glitch filters (UG933 *IIC*) |
-| GPIO | 7 `emmc_rst_n` (output-only pin), 9 `eth_rst_n`, 10 `eth_int_n` | 500 | `eth_rst_n` drives the PHY's 3.3 V PHYRSTB through an open-drain buffer (as on the Ti135 card); `eth_int_n` pulled up to 1V8 **[verify the RTL8211F INTB level]** |
+| GPIO | 7 `emmc_rst_n` (output-only pin), 9 `eth_rst_n`, 10 `eth_int_n` | 500 | `eth_rst_n` drives the PHY's 3.3 V PHYRSTB through an open-drain buffer (as on the Ti135 card); `eth_int_n` pulled up to 1V8: INTB is open drain, 3.3 V tolerant (RTL8211F Rev. 1.7 Table 4), Vol 0.4 V < MIO VIL 0.63 V (closed 2026-10-27, sheet 9). The `eth_rst_n` pull-down is 1 k to beat the MIO reset pull-up (IRPU ≤ 220 µA) |
 | spare | 0, 11–15, 28–39, 46, 47 | | MIO14 was juliancoy's VTT enable (REUSE_LOG E3). 28–39 would be USB0 (unused) |
 
 ### 4.4 PL pin plan (Vivado, 2026-10-27)
@@ -372,7 +372,8 @@ Why it was chosen:
 - [ ] IS25WP128 support in Vivado `program_flash` and U-Boot; the 7Z020 bitstream size (§4.3).
 - [x] ~~The full MIO and PL pin plan in Vivado~~ done 2026-10-27 (§4.3, §4.4).
 - [x] ~~The UART path~~ PS UART1 on MIO48/49 + translator (§4.3).
-- [ ] The RTL8211F INTB output level (3.3 V or the RGMII pad supply) before it lands on a 1.8 V MIO.
+- [x] ~~The RTL8211F INTB output level~~ open drain, 3.3 V tolerant: 4k7 to 1V8 is fine (2026-10-27, sheet 9).
+- [ ] IS25WP128 reset recovery time after RESET# (on `ps_por_n`, sheet 8) vs the BootROM's first QSPI access.
 
 ## Sources
 

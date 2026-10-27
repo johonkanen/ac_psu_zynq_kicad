@@ -174,3 +174,23 @@ def pull_r(sh, ref, x, y, net, rail, value, top=1):
     else:
         sh.wire(t, up(t, 2)); power_at(sh, rail, up(t, 2), "up")  # noqa: F405
         sh.wire(b, down(b, 2)); sh.label(net, *down(b, 2), 270)  # noqa: F405
+
+
+def fill_footprints(sh, defaults):
+    """Set the Footprint of every placed symbol on this sheet that has none yet, by symbol name:
+    defaults = {symbol name: footprint}. Fails on a symbol left without one (power symbols and flags excepted)."""
+    from p2k.sexpr import find, find_all
+    for c in sh.tree:
+        if isinstance(c, list) and c[0] == "symbol" and find(c, "lib_id"):
+            name = find(c, "lib_id")[1].split(":", 1)[1]
+            props = {p[1]: p for p in find_all(c, "property")}
+            if props["Reference"][2].startswith("#"):
+                continue
+            if not props["Footprint"][2]:
+                if name not in defaults:
+                    raise SystemExit(f"{props['Reference'][2]}: no footprint for symbol {name}")
+                props["Footprint"][2] = defaults[name]
+
+
+R0402 = "Resistor_SMD:R_0402_1005Metric"
+C0402 = "Capacitor_SMD:C_0402_1005Metric"
