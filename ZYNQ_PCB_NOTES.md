@@ -81,19 +81,25 @@ Sheet 5 (`tools/sheets/05_soc_power.py`) counts the block's caps per merged rail
   - Low until VCCPINT, VCCPAUX and VCCO_MIO0 are at their minimum, then at least **T_PSPOR = 100 µs** more
     (DS187 Table 22).
   - Do not release it inside the secure lockdown window relative to the last PL supply ramp (DS187 Figure 1).
+    DS187 Table 23 gives T_SLW = t(last of VCCINT/VCCBRAM/VCCAUX/VCCO_0 at 250 mV) − t(PS_POR_B release); at 33.33 MHz
+    the forbidden ranges are 12…40 ms (default), −16…12 ms (eFUSE CRC), −27…13 ms (PLL bypass) and −746…−705 ms
+    (both). Here the last of those supplies is 1V8 (VCCAUX, VCCO_0), and PS_POR_B is released 180–425 ms after it
+    (TPS3808 CT = VDD, 300 ms typ.), outside every range. CT open (12–28 ms) would not be.
   - At power-off, before VCCPINT falls below 0.80 V, assert PS_POR_B (or stop PS_CLK, or let VCCPAUX < 0.70 V or
     VCCO_MIO0 < 0.90 V) until VCCPINT < 0.40 V. This protects the eFUSEs.
 
-  → A supervisor on the last rail's power-good, ≥ 10 ms delay, open-drain onto PS_POR_B. It is the same scheme as the
-  Ti135 card's TPS3808 into CRESET_N.
+  → A supervisor on the last rail's power-good, open-drain onto PS_POR_B, delay 300 ms (lockdown window above). It is
+  the same scheme as the Ti135 card's TPS3808 into CRESET_N. Its SENSE watches 1V0 (0.895 V) for the power-off rule.
 - **PS_SRST_B:**
   - pull up to VCCO_MIO1;
   - must be High to boot;
   - must not be asserted while the BootROM runs, or it locks down until the next POR (UG585 *External Reset Signal
     Pins*);
   - the minimum pulse is 3 PS_CLK cycles. A reset button belongs on PS_SRST_B, not on PS_POR_B (NASR-M ERRATA).
-- **Proposed enable chain:** 5V0 → `1V0` → `1V8` (+ VCCPLL, VCCADC) → `3V3`, `1V35` → `0V675`/VTT → pg_all →
-  supervisor → PS_POR_B. It meets both recommended orders and the VCCO – VCCAUX rule.
+- **Enable chain (drawn, sheets 3–4):** 5V0 → `1V0` → PG → `1V8` (+ VCCPLL, VCCADC) → PG → `3V3` and `1V35` together →
+  PG(3V3) & PG(1V35) = `DDR3_VTT_EN` (TPS51200 VTT) and the supervisor's ~MR → 300 ms → PS_POR_B. It meets both
+  recommended orders and the VCCO – VCCAUX rule (3V3 starts only after 1V8 is at 95 %). Every TLV62585 ramps in
+  0.9 ms (0.2–50 ms).
 
 ## 4. PS clock, boot mode and MIO
 
@@ -362,7 +368,7 @@ Why it was chosen:
 
 - [ ] UG470 values for PROGRAM_B / INIT_B / DONE.
 - [ ] XADC tie-off if it stays unused (UG480).
-- [ ] The PS_POR_B secure-lockdown window (DS187 Figure 1) against the enable chain.
+- [x] ~~The PS_POR_B secure-lockdown window~~ (DS187 v1.21 Table 23): closed with a 300 ms supervisor delay (§3, sheet 4).
 - [ ] IS25WP128 support in Vivado `program_flash` and U-Boot; the 7Z020 bitstream size (§4.3).
 - [x] ~~The full MIO and PL pin plan in Vivado~~ done 2026-10-27 (§4.3, §4.4).
 - [x] ~~The UART path~~ PS UART1 on MIO48/49 + translator (§4.3).

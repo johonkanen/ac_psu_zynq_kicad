@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-27** (phase 2: project skeleton, sheets 1 (the imported DDR3 block), 5 (SoC power), 6 (SoC config) and 7 (clocks) done).
+Last updated: **2026-10-27** (phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config) and 7 (clocks) done).
 Read this first if you are picking the work up (human or agent).
 
 ## What this repository is
@@ -95,8 +95,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
   - **`tools/check_block_netlist.py` covers sheets 1 and 5: 0 failures.** That is 99 parts, 555 pads (172 U20 balls)
     and 87 nets. Block parts on our sheets are refs < 200. Rails map +1V0/+1V8/+1V35/+3V3 → ours, and /Power/ → our
     sheet path. U20.H10, C59.1 and C122.1 are reported as expected differences.
-  - ERC: only the not-yet-drawn items. GND, 1V0, 1V8, 1V35 and 3V3 are undriven (sheets 2–4), `DDR3_VTT_EN` is
-    dangling on the root, and U20 units 1–7 are not placed.
+  - ERC: only the not-yet-drawn items. (The undriven rails and `DDR3_VTT_EN` were closed by sheets 2–4.)
   - The VCCO pins are on the bank units (sheets 6, 11). Their caps are on sheet 5 as rail rows.
 - **Vivado pin plan** re-run with `CFGBVS GND` / `CONFIG_VOLTAGE 1.8`: DRC 0, no critical warnings, pin plan
   unchanged.
@@ -130,11 +129,29 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
   - The circuit is that card's: EN tied to VDD, supply through FB701 BLM18PG121SN1D (C14709, basic) + C701 470 nF,
     and R701 33 Ω source-series to the `ps_clk` port.
   - The PL has no clock input; the PHY's 25 MHz crystal goes on sheet 9.
+- **Sheets 2–4, power** (`tools/sheets/02_pwr_input.py`, `03_pwr_rails.py`, `04_pwr_seq.py`, cell `_power.py`), ported from
+  the Ti135 sheets 01/03/04 and its TLV62585 cell. Symbols added to `tools/gen_symbols.py`: TLV62585PDRL (Ti135 box),
+  NCP163, TPS3808DBV (~RESET made open drain), L_Power, Conn_02x03, power symbols 5V0 and 3V3_analog.
+  - **Sheet 2:** J6 (pins 1/3/5 GND = ISOGND, 2/4/6 5V0 = 5V_ISOL), PWR_FLAGs on 5V0 and GND, bulk C201 47 µF 1206,
+    C202 22 µF, C203 100 nF. The Ti135 card has no other input protection, so none is added.
+  - **Sheet 3:** U301 1V0 (R1 66.5 k, 2 × 22 µF out), U311 1V8 (200 k), U321 3V3 (453 k), U331 1V35 (124 k): 10 µF in,
+    WPN4020H1R0MT 1 µH, 22 p feed-forward, PWR_FLAG on each rail. Load vs 3 A: 1V0 2.40 A high (80 %), the rest
+    ≤ 0.97 A. U341 NCP163 → 3V3_analog (from 5V0, always on).
+  - **Sheet 4:** R401/R402 100 k to 5V0 on `pg_1v0` (EN of 1V8) and `pg_1v8` (EN of 3V3 and 1V35).
+    PG(3V3) & PG(1V35) is wired onto `DDR3_VTT_EN` (pull-up = R25 on sheet 1), which also feeds U401 TPS3808G01 ~MR.
+    U401: VDD 1V8, SENSE = 1V0 through R403 121 k / R404 100 k (0.895 V, the power-off eFUSE rule), CT = VDD
+    (300 ms, 180–420 ms), open-drain RESET → `ps_por_n` (R608 on sheet 6).
+  - **The PS_POR_B lockdown [verify] is closed** (DS187 v1.21 Table 23, now in `reference/vendor/`): the release is
+    180–425 ms after 1V8 (the last of VCCINT/VCCBRAM/VCCAUX/VCCO_0), outside every T_SLW range. The Ti135 value,
+    CT open (12–28 ms), would fall inside the eFUSE-CRC and PLL-bypass windows. `ZYNQ_PCB_NOTES.md` §3 updated.
+  - ERC: the `power_pin_not_driven` errors are gone; sheets 2–4 have no ERC entries. Block check still 0 failures.
+  - To check at layout or on the bench:
+    - the TLV62585 is specified for 10–47 µF out, and every rail carries hundreds of µF (sheet 5). The Ti135 cell
+      handles this with the 22 p feed-forward cap; check the loop on the first board (load step);
+    - 1V0 at 2.4 A in a SOT-563 needs copper for heat;
+    - LCSC numbers for U341 and U401 are not set yet (the Ti135 sheets have none either).
 - **Next:**
   1. **Draw the new sheets:**
-     - power input (J6);
-     - TLV62585 rails (cells from the Ti135 repo's `_power.py`);
-     - power sequencing + PS_POR_B supervisor, which also drives `DDR3_VTT_EN` (E3);
      - QSPI;
      - eMMC;
      - Ethernet (from the Ti135 sheet 09);
@@ -172,8 +189,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 
   Then re-run `tools/ddr3_review.py` for both DRAMs.
 - [ ] **[verify] items:**
-  - `ZYNQ_PCB_NOTES.md` §8: UG470 PROGRAM_B/INIT_B/DONE values, XADC tie-off, the PS_POR_B lockdown window, the
-    RTL8211F INTB level, IS25WP128 support in `program_flash`/U-Boot;
+  - `ZYNQ_PCB_NOTES.md` §8: UG470 PROGRAM_B/INIT_B/DONE values, XADC tie-off, the RTL8211F INTB level, IS25WP128 support in `program_flash`/U-Boot;
   - `POWER_BUDGET.md`: the DDR3L/eMMC/QSPI currents.
 - [ ] **Heatsink:** the push-pin grip range for 1.6 mm board + package + tape, and the barb protrusion against the
       5.3 mm card-to-baseboard gap.

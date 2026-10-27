@@ -42,6 +42,146 @@
 		)
 		(uuid "1f05b2f9-f272-5c9a-bfed-d8e6039848e2")
 	)
+	(label "DDR3_VTT_EN"
+		(at 363.22 33.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3e849378-d45f-56ed-bd68-acad61e96012")
+	)
+	(wire
+		(pts
+			(xy 358.14 33.02) (xy 363.22 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "db911764-6af7-5686-b88c-b48545d95826")
+	)
+	(label "pg_1v0"
+		(at 363.22 35.56 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "76031960-eb8e-500c-9af6-dc6eca6d2e74")
+	)
+	(wire
+		(pts
+			(xy 358.14 35.56) (xy 363.22 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "69ccee31-4e98-59ef-86ff-ba0288630327")
+	)
+	(label "pg_1v8"
+		(at 363.22 38.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "17d19a4f-bf25-54d3-a068-30650b1b07f0")
+	)
+	(wire
+		(pts
+			(xy 358.14 38.1) (xy 363.22 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "226a037b-e869-53a1-9729-6f80dd28df80")
+	)
+	(label "DDR3_VTT_EN"
+		(at 497.84 33.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5760f861-90c6-5138-9a98-f6cf82d1353a")
+	)
+	(wire
+		(pts
+			(xy 492.76 33.02) (xy 497.84 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7f725ab9-dfa3-546b-911e-8c9aa835edb9")
+	)
+	(label "pg_1v0"
+		(at 497.84 35.56 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "521057b4-8769-5806-b46a-1c1e09a4181e")
+	)
+	(wire
+		(pts
+			(xy 492.76 35.56) (xy 497.84 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1a35ede8-b33c-5287-937c-04c23b95489f")
+	)
+	(label "pg_1v8"
+		(at 497.84 38.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a8134b0b-0ac6-5d22-a143-48e8de12552a")
+	)
+	(wire
+		(pts
+			(xy 492.76 38.1) (xy 497.84 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fd4b38dc-0a06-5587-ac43-bf0e374eb4bf")
+	)
+	(label "ps_por_n"
+		(at 497.84 40.64 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c16611f4-1e3a-52af-b152-1f11e43eac79")
+	)
+	(wire
+		(pts
+			(xy 492.76 40.64) (xy 497.84 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cbe8ba96-38a6-5644-ba4f-d928547e32ad")
+	)
 	(label "eth_int_n"
 		(at 154.94 53.34 180)
 		(effects
@@ -743,7 +883,7 @@
 		(uuid "556187d8-0f2a-53a8-8130-bbe8e730104e")
 	)
 	(label "ps_clk"
-		(at 363.22 53.34 0)
+		(at 363.22 55.88 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -754,7 +894,7 @@
 	)
 	(wire
 		(pts
-			(xy 358.14 53.34) (xy 363.22 53.34)
+			(xy 358.14 55.88) (xy 363.22 55.88)
 		)
 		(stroke
 			(width 0)
@@ -856,7 +996,7 @@
 	)
 	(sheet
 		(at 294.64 30.48)
-		(size 63.5 7.62)
+		(size 63.5 10.16)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -879,7 +1019,7 @@
 			)
 		)
 		(property "Sheetfile" "03_pwr_rails.kicad_sch"
-			(at 294.64 38.7 0)
+			(at 294.64 41.24 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -894,10 +1034,40 @@
 				)
 			)
 		)
+		(pin "DDR3_VTT_EN" passive
+			(at 358.14 33.02 0)
+			(uuid "f4db2e78-20a7-528e-b6a4-6d6891cca7ca")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "pg_1v0" passive
+			(at 358.14 35.56 0)
+			(uuid "45ebcd85-bc27-5383-9da8-56440fbfd58d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "pg_1v8" passive
+			(at 358.14 38.1 0)
+			(uuid "f0184a14-7513-5719-ab1a-ffb7d1c6869c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
 	)
 	(sheet
 		(at 429.26 30.48)
-		(size 63.5 7.62)
+		(size 63.5 12.7)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -920,7 +1090,7 @@
 			)
 		)
 		(property "Sheetfile" "04_pwr_seq.kicad_sch"
-			(at 429.26 38.7 0)
+			(at 429.26 43.78 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -933,6 +1103,46 @@
 				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
 					(page "5")
 				)
+			)
+		)
+		(pin "DDR3_VTT_EN" passive
+			(at 492.76 33.02 0)
+			(uuid "53aaa849-12c1-58b5-98cc-cc0b15a99fa8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "pg_1v0" passive
+			(at 492.76 35.56 0)
+			(uuid "6301ebc4-f7a5-5ef1-abd6-2815eb94c029")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "pg_1v8" passive
+			(at 492.76 38.1 0)
+			(uuid "9ded4810-ea68-5323-b7d9-c6cf34cd3dbc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "ps_por_n" output
+			(at 492.76 40.64 0)
+			(uuid "69f8fa8a-52e3-5346-97df-8dcafdad6af4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 			)
 		)
 	)
@@ -1369,7 +1579,7 @@
 		)
 	)
 	(sheet
-		(at 294.64 50.8)
+		(at 294.64 53.34)
 		(size 63.5 7.62)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1384,7 +1594,7 @@
 		)
 		(uuid "e4f4eda2-daf5-4cdf-a3f5-4f5833d57381")
 		(property "Sheetname" "07 clocks"
-			(at 294.64 50.1 0)
+			(at 294.64 52.64 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -1393,7 +1603,7 @@
 			)
 		)
 		(property "Sheetfile" "07_clocks.kicad_sch"
-			(at 294.64 59.02 0)
+			(at 294.64 61.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1409,7 +1619,7 @@
 			)
 		)
 		(pin "ps_clk" output
-			(at 358.14 53.34 0)
+			(at 358.14 55.88 0)
 			(uuid "b2b59e75-72fd-508d-9a15-2d2be6ea0fba")
 			(effects
 				(font
@@ -1420,7 +1630,7 @@
 		)
 	)
 	(sheet
-		(at 429.26 50.8)
+		(at 429.26 55.88)
 		(size 63.5 7.62)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1435,7 +1645,7 @@
 		)
 		(uuid "0ebbcc3d-41c3-4da3-8718-184ec0a1ecfa")
 		(property "Sheetname" "08 qspi"
-			(at 429.26 50.1 0)
+			(at 429.26 55.18 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -1444,7 +1654,7 @@
 			)
 		)
 		(property "Sheetfile" "08_qspi.kicad_sch"
-			(at 429.26 59.02 0)
+			(at 429.26 64.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1502,7 +1712,7 @@
 		)
 	)
 	(sheet
-		(at 294.64 71.12)
+		(at 294.64 73.66)
 		(size 63.5 7.62)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1517,7 +1727,7 @@
 		)
 		(uuid "71e24aa8-bef7-4c45-ace3-64a3a26c99e1")
 		(property "Sheetname" "10 emmc"
-			(at 294.64 70.42 0)
+			(at 294.64 72.96 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -1526,7 +1736,7 @@
 			)
 		)
 		(property "Sheetfile" "10_emmc.kicad_sch"
-			(at 294.64 79.34 0)
+			(at 294.64 81.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1543,7 +1753,7 @@
 		)
 	)
 	(sheet
-		(at 429.26 71.12)
+		(at 429.26 76.2)
 		(size 63.5 7.62)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1558,7 +1768,7 @@
 		)
 		(uuid "341430c8-0d7e-4693-b9fa-480b7bdd6e85")
 		(property "Sheetname" "11 soc_pl"
-			(at 429.26 70.42 0)
+			(at 429.26 75.5 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -1567,7 +1777,7 @@
 			)
 		)
 		(property "Sheetfile" "11_soc_pl.kicad_sch"
-			(at 429.26 79.34 0)
+			(at 429.26 84.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1625,7 +1835,7 @@
 		)
 	)
 	(sheet
-		(at 294.64 91.44)
+		(at 294.64 93.98)
 		(size 63.5 7.62)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1640,7 +1850,7 @@
 		)
 		(uuid "2f032d10-ac2c-4b52-b9e2-88f768c9901b")
 		(property "Sheetname" "13 connectors"
-			(at 294.64 90.74 0)
+			(at 294.64 93.28 0)
 			(effects
 				(font
 					(size 1.524 1.524)
@@ -1649,7 +1859,7 @@
 			)
 		)
 		(property "Sheetfile" "13_connectors.kicad_sch"
-			(at 294.64 99.66 0)
+			(at 294.64 102.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)

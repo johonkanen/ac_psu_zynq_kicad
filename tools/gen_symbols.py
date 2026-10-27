@@ -18,7 +18,7 @@ import sys
 TOOLS = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(TOOLS)
 sys.path.insert(0, os.path.join(TOOLS, "p2k"))
-from p2k.symgen import PI, Sym, box, find, find_all, from_std, load, power, rename, run, set_prop  # noqa: E402
+from p2k.symgen import IN, PI, PO, Sym, box, find, find_all, from_std, load, power, rename, run, set_prop  # noqa: E402
 
 JC_LIB = os.path.join(ROOT, "reference", "zynqpcb", "DFTBoard-cache.lib")
 JC_SYM = os.path.join(ROOT, "work", "jc_cache.kicad_sym")
@@ -76,6 +76,26 @@ def avc4t774():
     return s
 
 
+def tlv62585p():
+    """TLV62585PDRLR (SOT-563), the Ti135 card's generated symbol (efinix_soc_board/tools/gen_symbols.py)."""
+    left = [(3, "VIN", PI), (4, "EN", IN)]
+    right = [(2, "SW", PO), (5, "FB", IN), (6, "PG", "open_collector")]
+    s = box("TLV62585PDRL", "U", left, right, bottom=[(1, "GND", PI)], value="TLV62585PDRLR",
+            desc="TI 3 A synchronous buck, 2.5-5.5 V in, 0.6 V FB, power good, SOT-563 (PDRL)")
+    set_prop(s, "Datasheet", "https://www.ti.com/lit/ds/symlink/tlv62585.pdf")
+    return s
+
+
+def tps3808():
+    """TPS3808DBV from the KiCad library, with ~RESET as open drain (SBVS050: open-drain RESET output)."""
+    s = from_std("Power_Supervisor", "TPS3808DBV", "TPS3808DBV", "U")
+    for sub in find_all(s, "symbol"):
+        for p in find_all(sub, "pin"):
+            if find(p, "number")[1] == "1":
+                p[1] = Sym("open_collector")
+    return s
+
+
 def build():
     cache = jc_cache()
     syms = [from_jc(cache, n) for n in JC_SYMBOLS]
@@ -87,12 +107,17 @@ def build():
         from_std("Device", "C_Polarized", "C_Polarized", "C"),
         from_std("Device", "LED", "LED", "D"),
         from_std("Device", "FerriteBead_Small", "FerriteBead_Small", "FB"),
+        from_std("Device", "L", "L_Power", "L", desc="Power inductor 4x4 mm (regulator output)"),
+        from_std("Connector_Generic", "Conn_02x03_Odd_Even", "Conn_02x03_Odd_Even", "J"),
+        from_std("Regulator_Linear", "NCP163ASN330T1G", "NCP163ASN330T1G", "U"),
+        tps3808(),
+        tlv62585p(),
         from_std("Connector_Generic", "Conn_01x05", "Conn_01x05", "J"),
         from_std("Oscillator", "ASE-xxxMHz", "ASE-xxxMHz", "Y"),
         avc4t774(),
         rename(from_std("power", "PWR_FLAG", "PWR_FLAG", "#FLG"), "PWR_FLAG"),
     ]
-    syms += [power(n, n == "GND") for n in ("GND", "1V0", "1V8", "1V35", "3V3")]
+    syms += [power(n, n == "GND") for n in ("GND", "5V0", "1V0", "1V8", "1V35", "3V3", "3V3_analog")]
     return syms
 
 
