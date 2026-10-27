@@ -154,6 +154,8 @@ Checked in Vivado 2024.2 by `vivado/pinplan/pinplan.py`. The full table with eve
 - **Why bank 34 for J3:** on the CLG484 grid (top view), the DDR (bank 502) is on the left edge and the MIO banks are
   top left. Banks 35/34/33 run down the right edge, and bank 13 is along the bottom. With the DDR side facing away
   from J3, the right edge faces J3, and bank 34 is in the middle of it.
+- **Copper:** juliancoy has banks 34/35 unused, with VCCO and every I/O ball on GND. Here they are at 3V3 and their I/O
+  balls carry our nets or stay open (REUSE_LOG E7, E9).
 - **Kept free inside the banks:** the clock-capable pins (MRCC/SRCC) and the VREF pins, for later clocks.
   **PUDC_B (K16) is never used as I/O.**
 - **Ball order:** a first pass from the package edge inwards. Re-order it once the parts are placed (pin swaps inside
@@ -180,7 +182,7 @@ QSPI notes:
 - 128 Mbit = 16 MB is the most the BootROM reaches with 3-byte addressing in single-flash mode. It holds BOOT.bin (FSBL +
   bitstream + U-Boot; the 7Z020 bitstream is about 4 MB uncompressed **[verify size]**), with room for a fallback image.
   Linux and the rootfs live on the eMMC.
-- RESET# (ball A4): pull up to 1V8, or drive it from a spare MIO GPIO.
+- RESET# (ball A4): on `ps_por_n` (sheet 8), so the flash resets together with the PS.
 - Check that Vivado/Vitis `program_flash` and U-Boot (`spi-nor`) list the IS25WP128 **[verify]**; it has SFDP. Drop-in
   fallback on the same footprint, as on the other cards: Micron MT25QU256ABA8E12-1SIT (1.8 V). Note that above 16 MB
   the BootROM only maps the first 16 MB.

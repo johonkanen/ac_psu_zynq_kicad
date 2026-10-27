@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-27** (phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks) and 8–10 (QSPI, Ethernet, eMMC) done).
+Last updated: **2026-10-27** (phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC) and 11 (PL banks) done).
 Read this first if you are picking the work up (human or agent).
 
 ## What this repository is
@@ -192,10 +192,29 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 
     Block check: 0 failures. kicad-cli's "annotation errors" warning on the netlist export is from before this
     change.
+- **Sheet 11 `11_soc_pl`** (`tools/sheets/11_soc_pl.py`): U20 units 2–5 (PL banks 34, 33, 35, 13), all VCCO on 3V3.
+  All nine U20 units are now placed.
+  - **Labels:** one hierarchical label per pin-plan signal, named as in `zynq_pinplan.csv`. The script asserts each
+    ball's bank and pin function against the symbol. Unused balls get a no-connect flag.
+  - **Bank 34:** the 32 J3 ports. **PUDC_B (K16) is tied straight to 3V3 (VCCO_34)**, and the J3 pull-downs go on
+    sheet 13.
+  - **Bank 33:** the ADC ports (sheet 12) and the LCD/touch ports (sheet 13). The user LEDs are on this sheet:
+    D1101/D1102 red 0603 with R1101/R1102 1 k to 3V3, active low.
+  - **Banks 13 and 35:** spare.
+  - U20's footprint is set on these units too (the block's BGA-484, as on sheets 1 and 5).
+  - **New block change E9 (copper planned):** juliancoy ties every I/O ball of banks 34 and 35 to GND, along with
+    their VCCO (UG933: an unused bank on one potential). With VCCO at 3V3 (E7), those 100 balls carry our nets or
+    stay open. Their GND vias must be dropped at the import.
+  - **Block check:** sheet 11 is in `SHEETS`. The VCCO_34/35 balls (E7) and the bank 34/35 I/O balls (E9) are
+    generated into EXPECTED from the symbol, and a whole bank is reported on one line. VCCO_13/33 match the source's
+    +3V3. Result: **0 failures** (101 parts, 709 pads, 322 U20 balls).
+  - **ERC, all expected:**
+    - `isolated_pin_label` × 108: the ADC, LCD/touch and J3 ports (sheets 12/13), plus UART/I²C as before;
+    - `pin_to_pin` × 1: PUDC_B, a bidirectional pin, on the 3V3 rail with its PWR_FLAG. This is the intended tie.
+
+    The U20 `missing_unit` entries are gone.
 - **Next:**
   1. **Draw the new sheets:**
-     - PL I/O (from `vivado/pinplan/zynq_pinplan.csv`; PUDC_B K16 to VCCO_34; VCCO_34/35 balls to 3V3 = E7, add them
-       to the check's EXPECTED);
      - ADC (from the Ti135 sheet 13, DVDD at 3V3);
      - connectors (J3 + pull-downs, J5, J2 + translator (per-bit direction), J9).
 
@@ -224,7 +243,9 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
   - E1: CK_P +4.30 mm, CK_N +3.23 mm in the trunk, giving CK = DQS0 + 25 ps and CK P/N matched;
   - E2 (optional): match the DQS3 pair;
   - E3: TPS51200 EN;
-  - E4: the DRAM part swap.
+  - E4: the DRAM part swap;
+  - E5–E9: copper parts of the schematic changes (VCCPLL planelet, MIO/bank 34/35 VCCO balls, RSVDGND, banks 34/35
+    I/O balls off GND).
 
   Then re-run `tools/ddr3_review.py` for both DRAMs.
 - [ ] **[verify] items:**

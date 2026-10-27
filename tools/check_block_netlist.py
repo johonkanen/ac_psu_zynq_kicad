@@ -33,6 +33,7 @@ SHEETS = {
     "/01 ddr3/": ("01_ddr3.kicad_sch", "/DDR3/"),
     "/05 soc_power/": ("05_soc_power.kicad_sch", "/Power/"),
     "/06 soc_config/": ("06_soc_config.kicad_sch", None),
+    "/11 soc_pl/": ("11_soc_pl.kicad_sch", None),
 }
 # U20 units on these sheets are compared pin by pin. On the other block sheets only the U20 balls on a source rail
 # (their fan-out is block copper) or on a net of another block part are: the signal balls are routed here.
@@ -59,6 +60,25 @@ EXPECTED = {
     ("U20", "G10"): "E8: RSVDGND left open (UG865 v1.9: do not connect)",
     ("U20", "B6"): "E3: PS_MIO14 no longer drives DDR3_VTT_EN (spare MIO)",
 }
+
+
+def u20_pin_names():
+    """{ball: pin name} of the XC7Z020 symbol in lib/zynq_card.kicad_sym."""
+    sys.path.insert(0, os.path.join(TOOLS, "p2k"))
+    from p2k.sexpr import find, find_all, load
+    sym = next(s for s in find_all(load(os.path.join(ROOT, "lib", "zynq_card.kicad_sym")), "symbol")
+               if s[1] == "XC7Z020-CLG484")
+    return {find(p, "number")[1]: find(p, "name")[1] for sub in find_all(sym, "symbol") for p in find_all(sub, "pin")}
+
+
+# Banks 34/35 (sheet 11): juliancoy left them unused with VCCO and every I/O ball on GND (UG933 "Unconnected VCCO
+# Pins"). Here they are powered (E7) and their I/O balls carry our nets or stay open (E9).
+for _ball, _name in u20_pin_names().items():
+    for _bank in ("34", "35"):
+        if _name.startswith(f"VCCO_{_bank}"):
+            EXPECTED[("U20", _ball)] = f"E7: VCCO_{_bank} on 3V3 (bank {_bank} at 3.3 V)"
+        elif _name.startswith("IO_") and _name.endswith(f"_{_bank}"):
+            EXPECTED[("U20", _ball)] = f"E9: bank {_bank} I/O ball off GND (our net or open)"
 
 PADNETS_PY = """
 import csv, sys, pcbnew
@@ -146,9 +166,17 @@ def main():
         want = net_name(s)
         if not s.startswith("Net-(") and net != want:
             fails.append(f"net {net}: expected the name {want} (source {s})")
+    by_why = collections.defaultdict(list)
     for k, why in EXPECTED.items():
         if k in keys:
-            print(f"expected difference {k[0]}.{k[1]}: here {ours.get(k)}, source {src.get(k)} ({why})")
+            by_why[why].append(k)
+    for why, ks in by_why.items():
+        if len(ks) <= 8:
+            for k in ks:
+                print(f"expected difference {k[0]}.{k[1]}: here {ours.get(k)}, source {src.get(k)} ({why})")
+        else:  # a whole bank: one line
+            print(f"expected difference, {len(ks)} pads ({why}): source {sorted({src.get(k) for k in ks})}, "
+                  f"here {len({ours.get(k) for k in ks})} nets")
     named = {n for n in by_ours if n.startswith("DDR3_")}
     u20 = [k for k in keys if k[0] == "U20"]
     print(f"check_block_netlist: {len(block)} parts, {len(keys)} pads ({len(u20)} U20 balls), {len(by_ours)} nets "
