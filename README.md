@@ -11,6 +11,7 @@ The SoC, the DDR3 and their routing are not laid out here. They are reused, as a
 
 | | |
 |---|---|
+| [STATUS.md](STATUS.md) | **start here:** status, decisions, next steps, how to run the tools |
 | [PLAN.md](PLAN.md) | plan, source survey and decisions |
 | [DDR3_REVIEW.md](DDR3_REVIEW.md) | UG933 review of the candidate DDR3 blocks |
 | [POWER_BUDGET.md](POWER_BUDGET.md) | rail currents (Vivado `report_power`), regulators, thermal |
