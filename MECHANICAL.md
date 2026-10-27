@@ -1,0 +1,123 @@
+# Mechanical reference: outline and baseboard connectors
+
+Copied 2026-10-27 from `efinix_soc_board/MECHANICAL.md` (commit 53f655b). The outline, J3, J6, J9 and J5 are the same
+for every control card on this baseboard. Script and footprint names refer to the Ti135 repo until this repo has its
+own, and "U501/U801" are the Ti135 FPGA and LPDDR4. Here the Zynq (U20) and the DDR3 block take that space. The
+heatsink mounting is in `POWER_BUDGET.md` §Heatsink.
+
+The card plugs into the AC PSU baseboard (`~/dev/ac_psu_kicad`, J11 and J12) the same way as the working Ti60F225
+card. **The outline, J3 (signals), J6 (5 V) and the RJ45 J9 are hard requirements.** Everything here is taken
+from the Ti60 card's fab data:
+
+- `ti60f225_psu_control_card - CADCAM.ZIP` (Proteus, exported 2026-10-24)
+- IPC-D-356 netlist for the hole centres
+- `Mechanical 1` for the outline
+- `Top Assembly` for the jack body
+
+## Coordinate frames
+
+- **Ti60 frame:** Proteus Gerber/IPC coordinates in mm, Y up.
+- **KiCad frame** of this project: `x_kicad = X_ti60 + 100`, `y_kicad = 100 − Y_ti60` (Y down). Put the
+  board's aux origin at KiCad (100, 100) so that Gerbers exported with the aux origin land on the Ti60 coordinates.
+
+## Outline
+
+Rectangle with square corners, 76.000 × 65.127 mm. Values are Gerber line centres (0.2032 mm aperture):
+
+| | Ti60 frame | KiCad frame |
+|---|---|---|
+| left / right | X 31.531 / 107.531 | x 131.531 / 207.531 |
+| bottom / top | Y −16.821 / 48.306 | y 116.821 / 51.694 |
+
+The Agilex 5 card has the same size (76.000 × 65.125).
+
+## J3: 2×19 1.27 mm socket on the bottom (baseboard J11)
+
+- **Numbering:** J3 pin n = baseboard J11 pin n. Signals are in `reference/baseboard_j11_pinout.csv`.
+- **Hole positions:** the hole for baseboard pin n is the Ti60 J11 hole of Ti60 pin n+1 (n odd) or n−1 (n even).
+  Ti60 J11 holes: odd pins at X 33.832, even pins at X 35.102, Y = 24.555 + 1.27·⌊(p−1)/2⌋.
+
+| J3 pin | Ti60 frame | KiCad frame |
+|---|---|---|
+| 1 | (35.102, 24.555) | (135.102, 75.445) |
+| 2 | (33.832, 24.555) | (133.832, 75.445) |
+| 37 | (35.102, 47.415) | (135.102, 52.585) |
+| 38 | (33.832, 47.415) | (133.832, 52.585) |
+
+Seen from the top: pin 2 is left of pin 1 and pin 37 is above pin 1. With the KiCad library footprint
+`Connector_PinSocket_1.27mm:PinSocket_2x19_P1.27mm_Vertical` this is **B.Cu, orientation 180°, at the pin 1
+position**. Note: KiCad's pcbnew flip + orientation 0 gives this numbering (verified by `tools/make_board.py`).
+The Agilex 5 card (after its 2026-10-24 change) is the same within 0.03 mm.
+
+## J6: 2×3 1.27 mm on the bottom (baseboard J12, 5 V supply)
+
+- **Frame:** the baseboard and card frames differ by a pure translation, Ti60 = baseboard IPC + (−11.068, +1.945).
+  It comes from J11 (baseboard J11.1 at IPC (46.17, 22.61) meets the Ti60 hole (35.102, 24.555)), and J12 checks out
+  with it.
+- **Nets (baseboard numbering):** baseboard J12 43/45/47 = ISOGND (row at Ti60 Y −13.754), 44/46/48 = 5V_ISOL (row at
+  Ti60 Y −15.024). On the Ti60 card those rows are its own pins 44/46/48 = GND and 43/45/47 = 5 V, which is consistent.
+- **Numbering:** J6 pin n = baseboard pin 42 + n. Pins 1, 3, 5 = GND; pins 2, 4, 6 = 5V0.
+
+| J6 pin | baseboard pin | net | hole (Ti60 frame) | KiCad frame |
+|---|---|---|---|---|
+| 1 | 43 | GND | (103.072, −13.754) | (203.072, 113.754) |
+| 2 | 44 | 5V0 | (103.072, −15.024) | (203.072, 115.024) |
+| 3 | 45 | GND | (101.802, −13.754) | (201.802, 113.754) |
+| 4 | 46 | 5V0 | (101.802, −15.024) | (201.802, 115.024) |
+| 5 | 47 | GND | (100.532, −13.754) | (200.532, 113.754) |
+| 6 | 48 | 5V0 | (100.532, −15.024) | (200.532, 115.024) |
+
+- **Layout:** seen from the top, pin 2 is below pin 1 and pin 3 is left of pin 1. That is the same handedness as J3,
+  so the library footprint `Connector_PinSocket_1.27mm:PinSocket_2x03_P1.27mm_Vertical` on **B.Cu** fits: pcbnew flip
+  then orientation 90 (verified by `tools/make_board.py`). (An earlier version of this file had the pin order reversed along the row; the
+  nets per row were right.)
+
+## Clearance to the baseboard U8 (5V_ISOL regulator)
+
+- **Card outline in the baseboard IPC frame:** X 42.599…118.599, Y −18.766…46.361.
+- Baseboard U8 (VXO7805-1000, to be replaced by a 2 A part) is at IPC (104.36, −20.1), **1.33 mm outside the card's
+  bottom edge**. Anything on U8 that is taller than the card-to-baseboard gap must stay below Y −18.766 (bb frame).
+- The gap is the mated height of the 1.27 mm female socket (J3/J6, card bottom) on the baseboard's 1.27 mm male header
+  (J11/J12), as on the Ti60 card. A standard 1.27 mm socket body is 4.3 mm (e.g. HC-PM127-4.3H-2x19PZ, LCSC C27985219)
+  plus the male header's insulator (≈ 1.0–1.5 mm): **gap ≈ 5.3 mm** (take the lower value).
+- **Power supplies go on the card's underside**, as on the Ti60 card. Bottom-side budget: the tallest card part
+  (WPN4020 inductor, 2.0 mm) + the tallest baseboard part under it (SOIC-16W isolators, 2.65 mm) = 4.65 mm < 5.3 mm.
+
+## J9: RJ45 magjack HanRun HR911130A, front face and centreline as on the Ti60
+
+- **Part (changed 2026-10-25):** **HanRun HR911130A** (LCSC C54408, 9,124 orderable at JLC on 2026-10-25,
+  0–70 °C). 10/100/1000Base-T magnetics, green and yellow LEDs, tab down, shielded. Fallback with the same
+  footprint family: HR911130C (C50933). The UDE RB1-125B8G1A had 0 at JLC.
+- **Footprint:** `ti135_card:RJ45_Hanrun_HR911130A_Horizontal`, generated by `tools/gen_footprints.py` from the HanRun
+  drawing (Rev A). Origin = midpoint of the 3.25 mm pegs (11.43 apart); body 16.04 × 21.30, front 10.92 in front of the
+  pegs (local −y).
+- **Placement:** the jack's front face and centreline match the Ti60 jack body (front at Ti60 X 111.912, centre
+  Y 38.345). That gives **F.Cu, KiCad orientation 270°, origin at KiCad (200.992, 61.655)**. The front points out of
+  the right edge, overhanging it by 4.38 mm as on the Ti60.
+- **Resulting holes (Ti60 frame):**
+  - pegs (100.992, 32.630) / (100.992, 44.060): same Y as the Ti60 jack's pegs, 1.69 mm further inboard;
+  - pin 1 at (92.102, 32.630);
+  - LED pins at X 105.892;
+  - body X 90.61…111.91 (the Ti60 Würth body is 90.49…111.91).
+- `tools/make_board.py` checks the pad positions when it places the part.
+
+## J5: LCD header (1×14, 2.54 mm), not a hard requirement
+
+The LCD is connected with jumper wires. Keep the Ti60/Agilex position anyway: pin 1 at Ti60 (52.912, −14.454) =
+KiCad (152.912, 114.454), pins along +x.
+
+## J1 (JTAG 1×5) and J2 (UART 1×3), 2.54 mm, top side
+
+The Ti60 positions (below) would put through-hole pins in the LPDDR4 corridor between U501 and U801. These headers
+sit at the west edge instead, in line with J3's pin column: J1 pin 1 at KiCad (133.5, 79.5), J2 pin 1 at (133.5, 107.0),
+pins along +y. The baseboard (`~/dev/ac_psu_kicad/kicad/ac_psu.kicad_pcb`, mapped to the card frame through J11) has
+no top-side parts under x 131.5…136.5, y 77…116 except REF1 (SOT-23, y 92…96), so the pin tails clear it. Check
+against the measured card-to-baseboard gap.
+
+## Other Ti60 positions (for information)
+
+- J1 JTAG 1×5 at X 58.332, Y 29.625…39.785.
+- J8 UART 1×3 at X 52.432, Y 34.805…39.885.
+- J3 1×3 (5 V / GND) at Y −11.054, X 97.892…102.972.
+
+The Ti60 card has no mounting holes; it is held by J11/J12 (and the jack).

@@ -264,10 +264,12 @@ Then the copper is copied, and the net of every copied item is checked against o
 
 1. **Done 2026-10-26:** `git init`, `README.md`, `LICENSE` (MIT), `NOTICE`, this plan, `DDR3_REVIEW.md`,
    `ZYNQ_PCB_NOTES.md`, `tools/ddr3_review.py`, `tools/zsolve*.py`.
-2. Add the submodules `tools/jlc` (jlc-tools) and `tools/p2k` (proteus2kicad, KiCad 10 env), as in the Ti135 repo.
-3. Add the source as a pinned submodule `reference/zynqpcb` (juliancoy/zynqPCB at `5cb7c70`). The import script always
-   reads that commit.
-4. Copy `MECHANICAL.md` and `reference/baseboard_j11_pinout.csv` from the Ti135 repo, with their origin noted.
+2. **Done 2026-10-27:** submodules `tools/jlc` (jlc-tools `06e4105`, as in the Ti135 repo) and `tools/p2k`
+   (proteus2kicad `8828f55`, one commit newer than the Ti135 repo's; KiCad 10 env `tools/p2k/bin/kicad_env.sh`).
+3. **Done 2026-10-27:** `reference/zynqpcb` = juliancoy/zynqPCB at `5cb7c70` (its latest commit). The import script reads
+   that commit.
+4. **Done 2026-10-27:** `MECHANICAL.md` (with an origin note) and `reference/baseboard_j11_pinout.csv` from the Ti135
+   repo (commit 53f655b).
 
 ### Phase 2: schematic
 

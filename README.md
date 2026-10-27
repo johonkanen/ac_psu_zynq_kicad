@@ -21,4 +21,13 @@ The SoC, the DDR3 and their routing are not laid out here. They are reused, as a
 | [REUSE_LOG.md](REUSE_LOG.md) | every change to the reused DDR3 block |
 | `vivado/pinplan/` | Vivado pin plan: `pinplan.py` builds and checks the PS7 + PL pins; results in `zynq_pinplan.csv`, `ps7_mio.csv`, `mio.csv` |
 
-Status: planning.
+Set-up after cloning:
+
+```
+git submodule update --init   # tools/jlc (jlc-tools), tools/p2k (proteus2kicad, KiCad 10 env), reference/zynqpcb (DDR3 source)
+```
+
+KiCad 10 runs through `tools/p2k/bin/kicad_env.sh` (AppImage at `~/kicad/kicad-10.0.7-x86_64.AppImage`). Vivado 2024.2
+runs the pin plan (`vivado/pinplan/pinplan.py`).
+
+Status: planning (phase 0 and the repository set-up done; next: the schematic).
