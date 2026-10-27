@@ -742,6 +742,26 @@
 		)
 		(uuid "556187d8-0f2a-53a8-8130-bbe8e730104e")
 	)
+	(label "ps_clk"
+		(at 363.22 53.34 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "4a970b02-517d-5421-86c8-0b8a8b1b8abc")
+	)
+	(wire
+		(pts
+			(xy 358.14 53.34) (xy 363.22 53.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b71048aa-c056-52e7-80d9-7a5e13225f6c")
+	)
 	(sheet
 		(at 25.4 30.48)
 		(size 63.5 7.62)
@@ -1386,6 +1406,16 @@
 				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
 					(page "8")
 				)
+			)
+		)
+		(pin "ps_clk" output
+			(at 358.14 53.34 0)
+			(uuid "b2b59e75-72fd-508d-9a15-2d2be6ea0fba")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 			)
 		)
 	)

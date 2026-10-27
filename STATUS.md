@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-27** (phase 2: project skeleton, sheets 1 (the imported DDR3 block), 5 (SoC power) and 6 (SoC config) done).
+Last updated: **2026-10-27** (phase 2: project skeleton, sheets 1 (the imported DDR3 block), 5 (SoC power), 6 (SoC config) and 7 (clocks) done).
 Read this first if you are picking the work up (human or agent).
 
 ## What this repository is
@@ -125,12 +125,16 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     - `isolated_pin_label` for the ports that have one pin so far;
     - `label_dangling` on the root for the strapped ports;
     - `pin_not_driven` on PS_CLK.
+- **Sheet 7 `07_clocks`** (`tools/sheets/07_clocks.py`): the 33.333 MHz PS_CLK oscillator.
+  - Y701 YXC OT322533.3333MJBA4SL (C2831392, 1.8–3.3 V CMOS, 3225, ±20 ppm), from the Agilex 3 card's OT3225 family.
+  - The circuit is that card's: EN tied to VDD, supply through FB701 BLM18PG121SN1D (C14709, basic) + C701 470 nF,
+    and R701 33 Ω source-series to the `ps_clk` port.
+  - The PL has no clock input; the PHY's 25 MHz crystal goes on sheet 9.
 - **Next:**
   1. **Draw the new sheets:**
      - power input (J6);
      - TLV62585 rails (cells from the Ti135 repo's `_power.py`);
      - power sequencing + PS_POR_B supervisor, which also drives `DDR3_VTT_EN` (E3);
-     - clocks;
      - QSPI;
      - eMMC;
      - Ethernet (from the Ti135 sheet 09);

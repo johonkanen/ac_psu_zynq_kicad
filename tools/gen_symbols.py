@@ -88,6 +88,7 @@ def build():
         from_std("Device", "LED", "LED", "D"),
         from_std("Device", "FerriteBead_Small", "FerriteBead_Small", "FB"),
         from_std("Connector_Generic", "Conn_01x05", "Conn_01x05", "J"),
+        from_std("Oscillator", "ASE-xxxMHz", "ASE-xxxMHz", "Y"),
         avc4t774(),
         rename(from_std("power", "PWR_FLAG", "PWR_FLAG", "#FLG"), "PWR_FLAG"),
     ]
