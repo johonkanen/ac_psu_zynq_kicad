@@ -9,3 +9,4 @@ mkdir -p reports
 tools/p2k/bin/kicad-cli sch erc -o reports/erc.rpt kicad/zynq_card.kicad_sch 2>&1 | grep -v Font | tail -1
 grep -E "^\[" reports/erc.rpt | sed 's/:.*//' | sort | uniq -c | sort -rn
 python3 tools/check_block_netlist.py
+python3 tools/check_pinplan_netlist.py

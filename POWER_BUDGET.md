@@ -56,7 +56,7 @@ Replace it with `report_power` on the real design.
 | LCD module + backlight (J5) | 3V3 | 0.08 | 0.10 | as on the Ti135 card |
 | J3: 10 k pull-downs on 32 pins | 3V3 | 0.005 | 0.011 | 0.33 mA per output that is high |
 | LEDs, supervisor, UART translator, EEPROM | 3V3 / 1V8 | 0.011 / 0.002 | 0.020 / 0.003 | |
-| ADC block (OPA365, ADS7056, SN74LV4051A) | 3V3_analog (LDO from 5V0) | 0.01 | 0.02 | as on the Ti135 card |
+| ADC block (OPA365, ADS7056, SN74LV4051A) | 3V3_analog (LDO from 5V0) | 0.01 | 0.02 | as on the Ti135 card; the ADS7056 DVDD (SPI I/O, < 1 mA) is on 3V3 here (sheet 12) |
 
 ## Per card rail
 

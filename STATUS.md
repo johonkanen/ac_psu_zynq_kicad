@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-27** (phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC) and 11 (PL banks) done).
+Last updated: **2026-10-27** (phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC), 11 (PL banks), 12 (ADC) and 13 (connectors) done: **the schematic is complete**).
 Read this first if you are picking the work up (human or agent).
 
 ## What this repository is
@@ -60,7 +60,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 - Submodules `tools/jlc`, `tools/p2k` and `reference/zynqpcb`.
 - `MECHANICAL.md` and the baseboard pinout copied from the Ti135 repo.
 
-**Phase 2, the schematic: in progress.**
+**Phase 2, the schematic: done** (2026-10-27; closing check below).
 - **Done: the project and sheet 1.** `p2k_config.py` (project `zynq_card`, 13 sheets), `kicad/` from `p2k make_skeleton`,
   `lib/zynq_card.kicad_sym` from `tools/gen_symbols.py`, `tools/sync_root.py` and `tools/sheets/_common.py` (both copied
   from the Ti135 repo), and `tools/build_schematic.sh`, which rebuilds everything and runs ERC plus the block check.
@@ -213,13 +213,54 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     - `pin_to_pin` × 1: PUDC_B, a bidirectional pin, on the 3V3 rail with its PWR_FLAG. This is the intended tie.
 
     The U20 `missing_unit` entries are gone.
-- **Next:**
-  1. **Draw the new sheets:**
-     - ADC (from the Ti135 sheet 13, DVDD at 3V3);
-     - connectors (J3 + pull-downs, J5, J2 + translator (per-bit direction), J9).
+- **Sheet 12 `12_adc`** (`tools/sheets/12_adc.py`): the Ti135 sheet 13 with its parts and symbols, refs renumbered
+  to 12xx. The ADS7056 symbol comes from the Ti135 library (`from_ti135()` in `tools/gen_symbols.py`), and its
+  footprint is copied into `lib/zynq_card.pretty`.
+  - **U1201 SN74LV4051APWR (C7793)**, on the CD4051B symbol as on the Ti135 card. Checked against TI SCLS428K: it has
+    the same 4051 pinout, pins 7 and 8 are both GND (the symbol's VEE pin goes to GND), and VIH = 0.7 VCC = 2.31 V
+    at 3.3 V (5.5 V tolerant). So the pin plan's part is right, and `adbsel0`–`2` come straight from bank 33 (the
+    Ti135 card needed translators). INH to GND, X0 = GND.
+  - U1202 OPA365AIDBVR, 33 R + 680 p C0G kickback RC, **U1203 ADS7056IRUGR: AVDD 3V3_analog (U341), DVDD 3V3**
+    (SBAS769: DVDD 1.65–3.6 V, independent of AVDD; pin map checked). 33 R series on CS/SCLK/SDO.
+  - Rail monitors: X1 1V0 (100 R), X2 1V8, X3 3V3/2 (1k/1k), X5 1V35; these were VCORE/1V8/3V3/1V1 on the Ti135
+    card. X4/X6/X7 = `isoada2`/`3`/`1` from J3.
+  - Ports: `adc_cs_n`, `adc_sclk`, `adc_sdo`, `adbsel0`–`2` (sheet 11), `isoada1`–`3` (sheet 13).
+- **Sheet 13 `13_connectors`** (`tools/sheets/13_connectors.py`), from the Ti135 sheet 14. The Ti135 level-shift
+  sheet is not needed (bank 34 is 3.3 V).
+  - **J3** (2×19 1.27 mm socket, bottom): pin n = baseboard J11 pin n from `reference/baseboard_j11_pinout.csv`.
+    The script asserts, for each digital pin, that the net is the sheet-11 name and that the pin plan's note says
+    `J3.<n>` with the same direction. All 32 match.
+    - RN1301–RN1308: 4D02WGJ0103TCE (4 × 10 k, C25725) pull-downs on all 32 digital pins (the J3 safe state).
+    - ISOADA1–3 (pins 4/3/1) go to the mux unpulled (a pull-down would load the analog source). ISOGND = GND;
+      pin 38 NC.
+  - **J5:** the Ti135 1×14 pinout, `lcd_*`/`t_*` from bank 33.
+  - **J2:** family pinout 1 RX, 2 TX, 3 GND, with R1301/R1302 1 k series as on the Ti135 card.
+    - U1301 SN74AVC4T774RSVR (C779392): A = J2 at 3V3, B = MIO at 1V8. DIR1 = H (J2 RX → `uart_rx`), DIR2 = L
+      (`uart_tx` → J2 TX).
+    - Bits 3/4 are unused: DIR H, A3/A4 to GND, B3/B4 open. OE to GND. C1301/C1302 are 100 n.
+    - R1303 10 k pulls the J2 RX side high (idle with nothing plugged in). R1304 10 k pulls `uart_tx` to 1V8 (B2 stays
+      defined while MIO48 is tri-stated).
+  - **I2C0:** R1305/R1306 4.7 k to 1V8. **No device on the bus:** no MAC-address EEPROM for now (user, 2026-10-27). The UG933 RC glitch filters are not drawn either.
+  - `vivado/pinplan/mio.csv` MIO48 note corrected: SN74LVC2T45 → SN74AVC4T774 (a note only, no pin change).
+- **Closing check, `tools/check_pinplan_netlist.py`** (new, run by `build_schematic.sh` after the block check). It
+  reads the exported netlist:
+  - every pin-plan signal (52) must be on its ball (`zynq_pinplan.csv`), with its own net name, and reach its far end
+    (J3.n from the note column, J5.n, the ADC parts, the LEDs);
+  - every MIO signal (34) must be on its ball (MIO → ball from the symbol pin names, with the peripheral checked
+    against `ps7_mio.csv`), reaching its part (flash, PHY, eMMC, translators, pulls);
+  - the 20 spare MIO must be open.
 
-     The sheet numbers are in `p2k_config.py`.
-  2. ERC, then a netlist check that every PL/MIO signal lands on the ball from the pin plan.
+  **Result: 0 failures.** A negative test (swapped expectations) gives 3 failures, as it should.
+- **ERC: 0 errors, 4 warnings, all `pin_to_pin` (bidirectional pin on a rail with a PWR_FLAG), all intended ties:**
+  - U20 K16 PUDC_B → 3V3 (sheet 11);
+  - U1201 pin 13 X0 → GND (the mux zero reference);
+  - U1301 A3/A4 → GND (unused translator inputs).
+
+  No `isolated_pin_label` is left. Block check: 0 failures (101 parts, 709 pads, 322 U20 balls).
+- **Next: phase 3 (layout).** Open from phase 2:
+  - **ADS7056IRUGR (C2669798) shows −6 orderable at JLC** (2026-10-27, oversold). Check it before ordering or
+    source it separately;
+  - LCSC numbers for U341, U401, Y901, FB901.
 
 **Suggested way to work on phase 2:**
 - **Script the sheets like the Ti135 repo** (`efinix_soc_board/tools/sheets/NN_*.py` + `_common.py`, with
@@ -258,6 +299,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
       the block's via sizes.
 - [ ] **The DDR3L temperature grade:** standard 0…95 °C (C253882) or IT −40…95 °C (C367428).
 - [ ] **Baseboard U8 upgrade to 1.5–2 A:** confirm it in the `ac_psu_kicad` redraw.
+- [ ] **ADS7056 stock** at JLC (−6 orderable on 2026-10-27).
 - [ ] Optional: report pinguz97's two DDR faults on its issue #3 (public; ask the user first).
 
 ## How to run the tools

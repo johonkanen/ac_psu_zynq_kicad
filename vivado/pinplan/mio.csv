@@ -36,7 +36,7 @@ mio,function,note
 45,sd0_data3,eMMC DAT3
 46,gpio: spare,
 47,gpio: spare,
-48,uart1_tx,console: SN74LVC2T45 1.8 V -> 3.3 V to J2
+48,uart1_tx,console: SN74AVC4T774 (per-bit direction) 1.8 V -> 3.3 V to J2
 49,uart1_rx,console: from J2 through the translator
 50,i2c0_scl,MAC-address EEPROM (optional); 4.7 k to 1V8
 51,i2c0_sda,

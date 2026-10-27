@@ -7,7 +7,7 @@
 Sources: KiCad 10 standard symbols (copied and renamed), and the block's symbols from juliancoy/zynqPCB
 (reference/zynqpcb/DFTBoard-cache.lib, KiCad 5, upgraded with `kicad-cli sym upgrade` into work/): the XC7Z020-CLG484
 (all 9 units, used by sheet 1 and by our SoC sheets), the MT41K256M16 FBGA-96 and the TPS51200. The eMMC, RJ45,
-Ethernet PHY and QSPI flash symbols are the Ti135 card's (efinix_soc_board/tools/gen_symbols.py).
+Ethernet PHY, QSPI flash and ADS7056 symbols are the Ti135 card's (efinix_soc_board/tools/gen_symbols.py).
 The block's passives (R, R_Small, C_Small, LED, FerriteBead_Small) use the KiCad 10 symbols; tools/sheets/_legacy.py
 checks that their pins sit where the KiCad 5 ones did.
 """
@@ -20,6 +20,8 @@ TOOLS = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(TOOLS)
 sys.path.insert(0, os.path.join(TOOLS, "p2k"))
 from p2k.symgen import IN, OUT, PAS, PI, PO, Sym, box, find, find_all, from_std, load, power, rename, run, set_prop  # noqa: E402
+
+TI135_LIB = os.path.expanduser("~/dev/efinix_soc_board/lib/ti135_card.kicad_sym")
 
 JC_LIB = os.path.join(ROOT, "reference", "zynqpcb", "DFTBoard-cache.lib")
 JC_SYM = os.path.join(ROOT, "work", "jc_cache.kicad_sym")
@@ -164,6 +166,13 @@ def qspi_flash():
     return s
 
 
+def from_ti135(name, ref):
+    """Copy a symbol from the Ti135 card's generated library (read-only source)."""
+    sym = copy.deepcopy(next(x for x in find_all(load(TI135_LIB), "symbol") if x[1] == name))
+    set_prop(sym, "Footprint", "")
+    return sym
+
+
 def build():
     cache = jc_cache()
     syms = [from_jc(cache, n) for n in JC_SYMBOLS]
@@ -189,6 +198,13 @@ def build():
         rtl8211fd(),
         hr911130a(),
         emmc(),
+        from_std("Analog_Switch", "CD4051B", "CD4051B", "U"),
+        from_std("Amplifier_Operational", "OPA365xxDBV", "OPA365xxDBV", "U"),
+        from_ti135("ADS7056", "U"),
+        from_std("Device", "R_Pack04", "R_Pack04", "RN"),
+        from_std("Connector_Generic", "Conn_02x19_Odd_Even", "Conn_02x19_Odd_Even", "J"),
+        from_std("Connector_Generic", "Conn_01x14", "Conn_01x14", "J"),
+        from_std("Connector_Generic", "Conn_01x03", "Conn_01x03", "J"),
         rename(from_std("power", "PWR_FLAG", "PWR_FLAG", "#FLG"), "PWR_FLAG"),
     ]
     syms += [power(n, n == "GND") for n in ("GND", "5V0", "1V0", "1V8", "1V35", "3V3", "3V3_analog")]
