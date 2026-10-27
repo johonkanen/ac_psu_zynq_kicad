@@ -232,9 +232,10 @@ Then the copper is copied, and the net of every copied item is checked against o
 1. **Source review:** done 2026-10-26 (`DDR3_REVIEW.md`); **source decided: juliancoy/zynqPCB, both DRAMs**.
    Package decided: CLG484. Still to do on the block before it is frozen:
    - ~~the stack-up and impedance choice~~ **done 2026-10-26: JLC081611-7628** (§4.3);
-   - more CK ≥ DQS margin on byte 0 (+0.3 ps now: lengthen CK slightly or shorten DQS0);
-   - check the four U15 nets by hand (A1, DM3, DQ20, WE#);
-   - re-run `ddr3_review.py` for both DRAMs on the imported block;
+   - ~~CK ≥ DQS margin on byte 0~~ **checked 2026-10-27:** 0.0 ps on this stack-up. Fix planned as `REUSE_LOG.md` E1
+     (CK_P +4.30 mm, CK_N +3.23 mm in the trunk, which also matches CK P/N), made after the import;
+   - ~~the four U15 nets~~ **checked 2026-10-27: connected** (a script limitation, now fixed);
+   - re-run `ddr3_review.py` for both DRAMs on the imported block, and after E1;
    - optional: report pinguz97's F1/F2 on its issue #3 (public: ask first).
 2. ~~Licence~~ **Decided 2026-10-26: MIT** (§3).
 3. ~~512 MB vs 1 GB~~ **Decided 2026-10-26: 1 GB** (2 × MT41K256M16TW-107, 32-bit, the full juliancoy block).
@@ -349,5 +350,5 @@ Then the copper is copied, and the net of every copied item is checked against o
 8. **Stack-up JLC081611-7628** (1.6 mm, 1 oz inner); MDI pairs on F.Cu.
 
 Still open:
-- CK ≥ DQS margin on byte 0, the four U15 nets (phase 0.1);
+- the block edits E1–E4 in `REUSE_LOG.md` (made after the import);
 - the DDR3 temperature grade (phase 0.4).

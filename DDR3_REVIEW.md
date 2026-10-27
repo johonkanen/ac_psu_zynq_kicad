@@ -93,12 +93,40 @@ The VTT comes from a TPS51200. 8 layers, KiCad 5 file with no stack-up, MIT lice
 Notes:
 - The VTT regulator enable is driven from PS_MIO14 (bank 500), with a 20 k pull-up to 3V3. That is fine with bank 500
   at 3.3 V. Not part of a DDR-only block.
-- Four U15 nets (A1, DM3, DQ20, WE#) could not be walked by the script, although DRC shows them connected. The
-  copper probably ends inside a pad off a track end. They need a manual look.
+- Four U15 nets (A1, DM3, DQ20, WE#) could not be walked by the first version of the script. **Resolved 2026-10-27:**
+  in each, a track ends inside a via's pad but up to 0.1 mm off its centre. The copper is connected; the script now
+  joins such ends.
 - **512 MB from this block:** fit only U16 (lanes 0/1) and run 16-bit. The empty U15 site leaves the 13 mm fly-by
   continuation to the VTT resistors, which is still a terminated line, plus unused lane 2/3 stubs (UG933 Table 5-5:
   unused DQ unconnected, pulled up by software). Fitting U15 too gives 1 GB with no layout change.
 - The block (SoC + 2 DRAMs + VTT parts + copper) is 36 × 44 mm.
+
+## juliancoy block on the chosen stack-up (2026-10-27)
+
+Re-run with the JLC081611-7628 speeds:
+
+```
+ddr3_review.py --pkg <Xilinx CSV> --ps-outer 5.86 --ps-outer-diff 5.86 --ps-inner 6.63 --ps-layer SIGNAL4=6.80
+```
+
+Every DDR net is now walked on both DRAMs.
+
+| Check | U16 (lanes 0/1) | U15 (lanes 2/3) | Limit at 1066 (1866 parts) | Verdict |
+|---|---|---|---|---|
+| DQ/DM − DQS | byte 0 −11.0…−0.9, byte 1 −0.3…+14.1 ps | byte 2 −8.3…+2.2, byte 3 −1.5…+19.6 ps | ±91 ps | PASS |
+| DQS P/N | 4.3 / 5.4 ps | 2.5 / 8.9 ps | crossing in the linear region | PASS (DQS3: optional fix E2) |
+| Addr/cmd − CK | +0.6…+29.1 ps | +3.9…+31.9 ps | ±123 ps | PASS |
+| CK P/N | 7.1 ps | 7.2 ps | – | **fix (E1)** |
+| CK − DQS | byte 0 **+0.0 ps**, byte 1 +85.9 ps | byte 2 +155.9, byte 3 +139.5 ps | CK ≥ DQS | **byte 0 has no margin: fix (E1)** |
+
+**Fix E1 (`REUSE_LOG.md`):** lengthen the CK pair in its trunk before U16:
+- CK_P +4.30 mm, CK_N +3.23 mm on In2;
+- result: CK = DQS0 + 25 ps, CK P/N matched;
+- addr/cmd − CK becomes about −24…+7 ps, still centred well inside ±123 ps;
+- there is room beside two straight runs of the trunk.
+
+The 25 ps margin covers the ±3 % propagation tolerance on the ~300 ps path. CK (In2) and DQS0 (In4) sit in identical
+dielectrics in this symmetric stack-up, so their errors largely track each other.
 
 ## Recommendation
 

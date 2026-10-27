@@ -22,11 +22,14 @@ ap.add_argument("--json")
 ap.add_argument("--ps-outer", type=float, default=5.95, help="outer SE speed, ps/mm (default JLC08121H-1080A)")
 ap.add_argument("--ps-outer-diff", type=float, default=5.75)
 ap.add_argument("--ps-inner", type=float, default=6.75, help="inner speed, ps/mm; JLC081611-7628: 6.63 (In2/In4), 6.80 (In6)")
+ap.add_argument("--ps-layer", action="append", default=[], metavar="LAYER=PS",
+                help="per-layer speed in ps/mm, by board layer name (repeatable), e.g. SIGNAL4=6.80")
 ap.add_argument("--pkg", help="Xilinx package delay CSV (bank,ball,site,function,min ps,max ps,...): use its mean "
                 "delay per ball instead of the footprint's pad die length")
 a = ap.parse_args()
 
 PS_OUTER, PS_OUTER_DIFF, PS_INNER = a.ps_outer, a.ps_outer_diff, a.ps_inner
+PS_LAYER = {k: float(v) for k, v in (s.split("=") for s in a.ps_layer)}
 PS_VIA = 7.0            # ps per mm of via barrel (rough; only the barrel between the two layers used)
 DIE_PS_PER_MM = 6.0     # die length was stored as delay / 6 ps/mm
 # UG933 Appendix A, DDR3L, SoC rated 1066, memory rated 1866 (MT41K256M16TW-107): {actual MT/s: (DQ-DQS, Addr-CK)} ps
@@ -54,6 +57,9 @@ else:   # no stack-up in the file: spread the copper layers evenly over the boar
         layer_z[l] = th * i / max(1, len(cu) - 1)
 
 def speed(layer, diff):
+    name = b.GetLayerName(layer)
+    if name in PS_LAYER:
+        return PS_LAYER[name]
     if layer in (pcbnew.F_Cu, pcbnew.B_Cu):
         return PS_OUTER_DIFF if diff else PS_OUTER
     return PS_INNER
@@ -93,6 +99,15 @@ def build_graph(net):
         else:
             add(key(t.GetStart()) + (t.GetLayer(),), key(t.GetEnd()) + (t.GetLayer(),), mm(t.GetLength()), "trk",
                 t.GetLayer())
+    # a track may end anywhere inside a via's pad, not only at its centre: join such ends to the via node
+    for v in b.GetTracks():
+        if v.GetClass() != "PCB_VIA" or v.GetNetname() != net:
+            continue
+        c = key(v.GetPosition())
+        for n in list(G):
+            x, y, l = n
+            if (x, y) != c and v.IsOnLayer(l) and v.HitTest(pcbnew.VECTOR2I(x * 1000, y * 1000)):
+                add(n, c + (l,), math.hypot(x - c[0], y - c[1]) / 1000, "trk", l)
     return G
 
 def pad_nodes(G, pad):
