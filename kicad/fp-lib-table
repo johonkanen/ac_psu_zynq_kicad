@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "DFTcustom")(type "KiCad")(uri "${KIPRJMOD}/../reference/zynqpcb/footprints/DFTcustom.pretty")(options "")(descr "juliancoy/zynqPCB block footprints (MIT, NOTICE): BGA-484, FBGA-96"))
+)

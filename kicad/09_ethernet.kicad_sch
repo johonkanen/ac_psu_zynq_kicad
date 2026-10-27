@@ -1,0 +1,15 @@
+(kicad_sch
+	(version 20260101)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "f17bd4f1-6b7a-40ec-a082-e26e33081a22")
+	(paper "A3")
+	(title_block
+		(title "Zynq-7000 control card - ethernet")
+		(company "Jari Honkanen")
+		(rev "0.1")
+		(comment 1 "XC7Z020-CLG484 control card for the AC lab PSU baseboard")
+	)
+	(lib_symbols)
+	(embedded_fonts no)
+)

@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-27** (phase 0 decisions and phase 1 repository set-up done; next is phase 2, the schematic).
+Last updated: **2026-10-27** (phase 2 started: project skeleton and sheet 1, the imported DDR3 block, done).
 Read this first if you are picking the work up (human or agent).
 
 ## What this repository is
@@ -56,21 +56,43 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 - Submodules `tools/jlc`, `tools/p2k` and `reference/zynqpcb`.
 - `MECHANICAL.md` and the baseboard pinout copied from the Ti135 repo.
 
-**Next: phase 2, the schematic** (PLAN.md §4.2 and §5, phase 2):
-1. **Import the block schematic.** Open juliancoy's KiCad 5 project (`reference/zynqpcb/DFTBoard.pro`, sheet `DDR3.sch`
-   + the XC7Z020 DDR/power units) in KiCad 10, **in `work/`, never in the submodule**.
-   - Copy the DDR3 sheet into `kicad/` with the **block reference designators unchanged**: U20, U15, U16, U8, R46–R76,
-     the DDR decaps.
-   - Keep the global net names (`DDR3_*`, `VREF`, `DDR3_VTT`).
-   - Swap U15/U16 to MT41K256M16TW-107 (REUSE_LOG E4).
-   - Change the TPS51200 EN (REUSE_LOG E3).
-2. **Draw the new sheets:** power input (J6), TLV62585 rails (cells from the Ti135 repo's `_power.py`), power
-   sequencing + PS_POR_B supervisor, SoC power/decoupling (UG933 Tables 3-1/3-2), clocks, boot straps and
-   configuration (`ZYNQ_PCB_NOTES.md` §4–5, §7), QSPI, eMMC, Ethernet (from the Ti135 sheet 09), PL I/O (from
-   `vivado/pinplan/zynq_pinplan.csv`), ADC (from the Ti135 sheet 13, DVDD at 3V3), connectors (J3 + pull-downs, J5,
-   J2 + translator, J1 JTAG, J9).
-3. ERC, then a netlist check: every block pad has juliancoy's net, and every PL/MIO signal lands on the ball from the
-   pin plan.
+**Phase 2, the schematic: in progress.**
+- **Done: the project and sheet 1.** `p2k_config.py` (project `zynq_card`, 13 sheets), `kicad/` from `p2k make_skeleton`,
+  `lib/zynq_card.kicad_sym` from `tools/gen_symbols.py`, `tools/sync_root.py` and `tools/sheets/_common.py` (both copied
+  from the Ti135 repo), and `tools/build_schematic.sh`, which rebuilds everything and runs ERC plus the block check.
+- **Sheet 1 `01_ddr3` is the imported block** (`tools/sheets/01_ddr3.py`).
+  - KiCad 10 cannot save a legacy `.sch` from the CLI: `kicad-cli sch upgrade` fails on save, and the netlist export
+    finds 0 symbols. So the script converts juliancoy's `DDR3.sch` itself, at the source coordinates: refs come from
+    the AR line of `/58818A06/`, and wires, labels and notes are copied 1:1.
+  - The symbols come from `DFTBoard-cache.lib`, upgraded with `kicad-cli sym upgrade`; the XC7Z020 symbol has all 9
+    units. The pin positions of each placed unit are checked against the KiCad 5 symbol. Rails: `+1V35` → `1V35`,
+    `+3V3` → `3V3`.
+  - 62 parts: U20 unit 8 (bank 502), U15, U16, U8, R46–R76, R25, R101, R102, D7 (PGOOD LED), C93–C110, C125–C131.
+  - E3 and E4 are made in the schematic (REUSE_LOG).
+  - **`tools/check_block_netlist.py`: 0 failures.** It covers 393 pads and 84 nets, 72 of them `DDR3_*`. Every pad has
+    the net it has on `DFTBoard.kicad_pcb`, by pad sets and by name, and every footprint matches.
+  - ERC shows only what is expected now: the rails and `DDR3_VTT_EN` are undriven, and U20 units 1–7 and 9 are not
+    placed yet.
+- **Next:**
+  1. **The U20 power unit (9) and the SoC decaps.** juliancoy's `power.sch` holds U20 units 1 and 9 and the SoC decaps
+     that are inside the block copper. Keep the decap refs (< 200) when drawing sheet 5 `soc_power`, so the copper
+     import can map them. Extend `01_ddr3.py`'s converter, or the check, to cover them.
+  2. **Draw the new sheets:**
+     - power input (J6);
+     - TLV62585 rails (cells from the Ti135 repo's `_power.py`);
+     - power sequencing + PS_POR_B supervisor, which also drives `DDR3_VTT_EN` (E3);
+     - SoC power/decoupling (UG933 Tables 3-1/3-2);
+     - clocks;
+     - boot straps and configuration (`ZYNQ_PCB_NOTES.md` §4–5, §7);
+     - QSPI;
+     - eMMC;
+     - Ethernet (from the Ti135 sheet 09);
+     - PL I/O (from `vivado/pinplan/zynq_pinplan.csv`);
+     - ADC (from the Ti135 sheet 13, DVDD at 3V3);
+     - connectors (J3 + pull-downs, J5, J2 + translator, J1 JTAG, J9).
+
+     The sheet numbers are in `p2k_config.py`.
+  3. ERC, then a netlist check that every PL/MIO signal lands on the ball from the pin plan.
 
 **Suggested way to work on phase 2:**
 - **Script the sheets like the Ti135 repo** (`efinix_soc_board/tools/sheets/NN_*.py` + `_common.py`, with

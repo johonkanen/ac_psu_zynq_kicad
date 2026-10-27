@@ -1,0 +1,594 @@
+(kicad_sch
+	(version 20260101)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "46cf5eec-3aeb-4c59-adaf-3a9cf93205ac")
+	(paper "A2")
+	(title_block
+		(title "Zynq-7000 control card")
+		(company "Jari Honkanen")
+		(rev "0.1")
+		(comment 1 "XC7Z020-CLG484 control card for the AC lab PSU baseboard")
+	)
+	(lib_symbols)
+	(text "XC7Z020-CLG484 control card. Plan: PLAN.md, device rules: ZYNQ_PCB_NOTES.md,\nmechanics: MECHANICAL.md, pin plan: vivado/pinplan/zynq_pinplan.csv.\nSheet 1 (ddr3) is the routed block from juliancoy/zynqPCB (MIT, NOTICE); changes in REUSE_LOG.md."
+		(exclude_from_sim no)
+		(at 25.4 22.86 0)
+		(effects
+			(font
+				(size 2 2)
+			)
+			(justify left bottom)
+		)
+		(uuid "1d15d0fc-fff7-486d-aad8-77f1148c7842")
+	)
+	(label "DDR3_VTT_EN"
+		(at 20.32 33.02 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "c319e200-bc24-56af-9915-2deecb998aba")
+	)
+	(wire
+		(pts
+			(xy 25.4 33.02) (xy 20.32 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1f05b2f9-f272-5c9a-bfed-d8e6039848e2")
+	)
+	(sheet
+		(at 25.4 30.48)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "eb1e188e-a553-4db6-a03d-bef207c6272b")
+		(property "Sheetname" "01 ddr3"
+			(at 25.4 29.78 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "01_ddr3.kicad_sch"
+			(at 25.4 38.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "2")
+				)
+			)
+		)
+		(pin "DDR3_VTT_EN" input
+			(at 25.4 33.02 180)
+			(uuid "d64226e1-96bb-520a-8381-78d8bcc3c31a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(sheet
+		(at 160.02 30.48)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "dc5c0555-653a-4aa0-89d0-0f6884844676")
+		(property "Sheetname" "02 pwr_input"
+			(at 160.02 29.78 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "02_pwr_input.kicad_sch"
+			(at 160.02 38.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 294.64 30.48)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "6a92f366-a52e-4f41-a267-f9679def9a63")
+		(property "Sheetname" "03 pwr_rails"
+			(at 294.64 29.78 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "03_pwr_rails.kicad_sch"
+			(at 294.64 38.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 429.26 30.48)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "a1bc9aa4-ebc9-430a-9cc4-da1506650d30")
+		(property "Sheetname" "04 pwr_seq"
+			(at 429.26 29.78 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "04_pwr_seq.kicad_sch"
+			(at 429.26 38.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 25.4 50.8)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "ed15de26-f297-4674-afaf-25aca8c730c1")
+		(property "Sheetname" "05 soc_power"
+			(at 25.4 50.1 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "05_soc_power.kicad_sch"
+			(at 25.4 59.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 160.02 50.8)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "3dae8d0d-33e3-4ef0-b28e-1d4a9336bf06")
+		(property "Sheetname" "06 soc_config"
+			(at 160.02 50.1 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "06_soc_config.kicad_sch"
+			(at 160.02 59.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 294.64 50.8)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "e4f4eda2-daf5-4cdf-a3f5-4f5833d57381")
+		(property "Sheetname" "07 clocks"
+			(at 294.64 50.1 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "07_clocks.kicad_sch"
+			(at 294.64 59.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 429.26 50.8)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "0ebbcc3d-41c3-4da3-8718-184ec0a1ecfa")
+		(property "Sheetname" "08 qspi"
+			(at 429.26 50.1 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "08_qspi.kicad_sch"
+			(at 429.26 59.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "9")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 25.4 71.12)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "b882a27d-4e00-4921-b814-0b159177889e")
+		(property "Sheetname" "09 ethernet"
+			(at 25.4 70.42 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "09_ethernet.kicad_sch"
+			(at 25.4 79.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "10")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 160.02 71.12)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "71e24aa8-bef7-4c45-ace3-64a3a26c99e1")
+		(property "Sheetname" "10 emmc"
+			(at 160.02 70.42 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "10_emmc.kicad_sch"
+			(at 160.02 79.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "11")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 294.64 71.12)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "341430c8-0d7e-4693-b9fa-480b7bdd6e85")
+		(property "Sheetname" "11 soc_pl"
+			(at 294.64 70.42 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "11_soc_pl.kicad_sch"
+			(at 294.64 79.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "12")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 429.26 71.12)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "f8883e3f-4b7a-4793-b3ad-8d2f9b89fad0")
+		(property "Sheetname" "12 adc"
+			(at 429.26 70.42 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "12_adc.kicad_sch"
+			(at 429.26 79.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "13")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 25.4 91.44)
+		(size 63.5 7.62)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "2f032d10-ac2c-4b52-b9e2-88f768c9901b")
+		(property "Sheetname" "13 connectors"
+			(at 25.4 90.74 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "13_connectors.kicad_sch"
+			(at 25.4 99.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "zynq_card"
+				(path "/46cf5eec-3aeb-4c59-adaf-3a9cf93205ac"
+					(page "14")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
