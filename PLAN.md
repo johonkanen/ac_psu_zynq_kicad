@@ -249,9 +249,11 @@ Then the copper is copied, and the net of every copied item is checked against o
    - Vivado 2024.2: synthesis + placement, DRC 0.
    - Vivado 2026.1 did not start: its node-locked license names MAC `00:15:5d:af:66:90`, and WSL2 now has
      `…:6e:fc`. Re-host the license, or keep using 2024.2 (no license needed for the 7Z020).
-6. **Power budget:** VCCINT/VCCPINT 1.0 V, VCCAUX/VCCPAUX 1.8 V, VCCO 3.3 V, VCCO_DDR 1.35 V, VTT/VREF 0.675 V, and the
-   PHY rails, from the Xilinx Power Estimator. Check it against the 5V_ISOL limit in the Ti135 `POWER_BUDGET.md`.
-   Reuse the TLV62585 cells from the Ti135 card for 1V0, 1V8, 3V3 and 1V35. VTT comes from the block's TPS51200.
+6. ~~Power budget~~ **done 2026-10-27** (`POWER_BUDGET.md`, Vivado `report_power`):
+   - 5 V input 0.89 A typical / 1.44 A high, so the card needs the planned 1.5–2 A baseboard U8.
+   - Rails: 4 × TLV62585 (1V0 up to 2.4 A, 1V8, 1V35, 3V3) + the block's TPS51200 for VTT.
+   - **Thermal:** the bare card exceeds Tj 100 °C above about 55 °C ambient; with a small BGA heatsink it holds 85 °C at
+     60 °C ambient (worst-case silicon). Plan a heatsink on U20 and thermal vias. **Open: the enclosure ambient.**
 7. **Software path:** confirm the PS7 config (Vivado board delays from `tools/ddr3_review.py --json`)
    and a Buildroot/PetaLinux image for a Zynq with eMMC on SD0. A ZedBoard or EBAZ4205-class board is enough to try the
    software early.
@@ -332,6 +334,7 @@ Then the copper is copied, and the net of every copied item is checked against o
 | DRAM stock (HA-125 has 0 at JLC) | MT41K256M16TW-107 on the same land (3,915 pcs) |
 | The SoC at JLC: 116 / 309 pcs | order early, as with the Ti135 parts |
 | MIT notice of the source | kept in `NOTICE` |
+| Zynq junction temperature (1.8–3.0 W on a 76 × 65 mm card) | heatsink on U20, thermal vias, CPU clock cap; measure with the XADC temperature sensor (`POWER_BUDGET.md`) |
 
 ## 7. Decisions (2026-10-26)
 

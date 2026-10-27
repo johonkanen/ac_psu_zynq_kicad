@@ -128,6 +128,7 @@ set_property top top [current_fileset]
 synth_design -top top -part {PART}
 opt_design
 place_design
+write_checkpoint -force placed.dcp
 report_drc -file drc.rpt
 report_io -file io.rpt
 report_utilization -file util.rpt
