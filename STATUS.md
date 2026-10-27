@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-27** (phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC), 11 (PL banks), 12 (ADC) and 13 (connectors) done: **the schematic is complete**).
+Last updated: **2026-10-27** (phase 3 step 1: board, stack-up and rules. Before that, phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC), 11 (PL banks), 12 (ADC) and 13 (connectors) done: **the schematic is complete**).
 Read this first if you are picking the work up (human or agent).
 
 ## What this repository is
@@ -21,6 +21,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 | `REUSE_LOG.md` | every change to the copied block: E1–E4 are planned, to be made after the import |
 | `ZYNQ_PCB_NOTES.md` | Zynq-7000 rules: supplies, decoupling, sequencing, PS_POR_B, boot straps, MIO plan (§4.3), PL pin plan (§4.4), config pins, DDR3 rules, stack-up (§6.4), PS7 DDR settings, required resistors |
 | `POWER_BUDGET.md` | rail currents (Vivado `report_power`), 4 × TLV62585 + TPS51200, thermal, heatsink |
+| `LAYOUT_PLAN.md` | phase 3: board setup, the block copper import, the block pose (A recommended), placement |
 | `MECHANICAL.md` | outline, J3/J6/J9/J5/J1/J2 positions (copied from the Ti135 repo) |
 | `NOTICE`, `LICENSE` | MIT; juliancoy's MIT notice for the copied block |
 | `vivado/pinplan/` | Vivado pin plan and power: `pinplan.py`, `ps7.tcl`, `signals.csv`, `groups.csv`, `mio.csv`; results `zynq_pinplan.csv`, `ps7_mio.csv`, `power_summary.csv` |
@@ -257,7 +258,12 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
   - U1301 A3/A4 → GND (unused translator inputs).
 
   No `isolated_pin_label` is left. Block check: 0 failures (101 parts, 709 pads, 322 U20 balls).
-- **Next: phase 3 (layout).** Open from phase 2:
+- **Phase 3 (layout), planned in `LAYOUT_PLAN.md`** (2026-10-27):
+  - **Pose A agreed (user, 2026-10-27):** the source orientation, U20 at about (164, 87), MIO side toward J9.
+  - **Step 1 done:** `tools/make_board.py`, `tools/board_setup.py`, `tools/build_pcb.sh`. Parity 0; the block parts
+    carry juliancoy's own footprints. Details in LAYOUT_PLAN.md step 1.
+  - **Next: step 2, `tools/import_block.py`** (the copper copy, E5–E9 at the import) and `tools/check_block_copper.py`.
+- Open from phase 2:
   - **ADS7056IRUGR (C2669798) shows −6 orderable at JLC** (2026-10-27, oversold). Check it before ordering or
     source it separately;
   - LCSC numbers for U341, U401, Y901, FB901.

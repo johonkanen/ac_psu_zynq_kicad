@@ -1,0 +1,36 @@
+(version 1)
+# Zynq control card DRC rules (written by tools/board_setup.py; do not edit by hand).
+# KiCad applies the LAST matching rule. JLC minimums are in the project (board_setup.py netclasses()).
+# Stack-up JLC081611-7628 (ZYNQ_PCB_NOTES.md §6.4): 0.102 mm = 39.5 ohm on In2/In4, 45.5 ohm on In6, 111 ohm on F.Cu.
+
+# ---- DDR3 outside the block: the block's geometry ---------------------------------------------------
+# Inside the rule area 'ddr3_block' (tools/import_block.py) the copied copper keeps juliancoy's widths (PLAN.md §4.3).
+(rule "ddr3_width"
+	(condition "(A.hasNetclass('ddr3') || A.hasNetclass('ddr3_diff')) && !A.intersectsArea('ddr3_block')")
+	(constraint track_width (min 0.09mm) (opt 0.102mm) (max 0.115mm)))
+(rule "ddr3_diff_gap"
+	(condition "A.hasNetclass('ddr3_diff') && !A.intersectsArea('ddr3_block')")
+	(constraint diff_pair_gap (min 0.09mm) (opt 0.102mm) (max 0.15mm)))
+
+# ---- MDI pairs: F.Cu only, 0.35/0.20 mm = 102 ohm (NASR-M erratum: inner-layer MDI was worse) -------
+(rule "mdi_geometry"
+	(condition "A.hasNetclass('mdi') && A.Layer == 'F.Cu'")
+	(constraint track_width (min 0.33mm) (opt 0.35mm) (max 0.37mm))
+	(constraint diff_pair_gap (min 0.18mm) (opt 0.2mm) (max 0.22mm)))
+(rule "mdi_spacing"
+	(condition "A.Type == 'Track' && A.hasNetclass('mdi') && A.NetName != B.NetName && !B.inDiffPair('*')")
+	(constraint clearance (min 0.2mm)))
+(rule "mdi_layers"
+	(condition "A.Type == 'Track' && A.hasNetclass('mdi') && A.Layer != 'F.Cu'")
+	(constraint disallow track))
+
+# ---- MIO interfaces: no width below 0.09 mm, keep them off the outer layers outside the escapes -------
+(rule "mio_fast_width"
+	(condition "A.hasNetclass('mio_fast')")
+	(constraint track_width (min 0.09mm) (opt 0.1mm) (max 0.2mm)))
+
+# J3 corner pins 37/38: the hole positions come from the Ti60 card / baseboard (MECHANICAL.md) and sit
+# 0.89 mm from the top edge, so their pads are 0.39 mm from it. JLC's routed-edge minimum is 0.3 mm.
+(rule "j3_baseboard_edge"
+	(condition "A.memberOfFootprint('J3')")
+	(constraint edge_clearance (min 0.3mm)))
