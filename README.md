@@ -16,5 +16,8 @@ The SoC, the DDR3 and their routing are not laid out here. They are reused, as a
 | [ZYNQ_PCB_NOTES.md](ZYNQ_PCB_NOTES.md) | Zynq-7000 rules: supplies, sequencing, boot straps, MIO, configuration pins, DDR3 routing |
 | `tools/ddr3_review.py` | die-to-die DDR delay and topology check (KiCad Python) |
 | `tools/zsolve_cases.py` | impedance and propagation speed for the stack-up (uses `tools/zsolve.py`) |
+| `tools/stackup_scan.py` | impedance of one trace width on every layer of the JLC 8-layer templates |
+| [REUSE_LOG.md](REUSE_LOG.md) | every change to the reused DDR3 block |
+| `vivado/pinplan/` | Vivado pin plan: `pinplan.py` builds and checks the PS7 + PL pins; results in `zynq_pinplan.csv`, `ps7_mio.csv`, `mio.csv` |
 
 Status: planning.

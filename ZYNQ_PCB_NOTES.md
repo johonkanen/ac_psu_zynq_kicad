@@ -25,7 +25,7 @@ still need checking against a primary source or the Vivado pin planner.
 | Bank | Type | Contents | VCCO on this card |
 |---|---|---|---|
 | 0 | config | PROGRAM_B, INIT_B, DONE, CFGBVS, JTAG, XADC, DXP/DXN, VCCBATT | 3.3 V |
-| 13, 33, 34, 35 | PL HR (1.2–3.3 V) | user I/O; PUDC_B is IO_L21N_T3_DQS_PUDC_B_34 | **3.3 V** (J3, J5, ADC, LEDs directly; no translators) |
+| 13, 33, 34, 35 | PL HR (1.2–3.3 V) | user I/O; PUDC_B is ball **K16**, IO_L3P_T0_DQS_PUDC_B_34 | **3.3 V** (J3, J5, ADC, LEDs directly; no translators) |
 | 500 | PS MIO0 | MIO[15:0], PS_CLK, PS_POR_B | **1.8 V** (QSPI IS25WP128; decided 2026-10-26) |
 | 501 | PS MIO1 | MIO[53:16], PS_MIO_VREF, PS_SRST_B | **1.8 V** (eMMC VCCQ, RGMII) |
 | 502 | PS DDR | DDR3L x32 (2 × MT41K256M16TW-107, the juliancoy block), dedicated balls | 1.35 V |
@@ -123,17 +123,46 @@ MIO[8:2] are sampled at PS_POR_B release. Every one needs **its own 20 kΩ** pul
 - Linux and the rootfs go on the eMMC;
 - JTAG boot is the recovery path, since the card has no SD socket.
 
-### 4.3 MIO allocation (to be checked in the Vivado pin plan, PLAN.md phase 0.5)
+### 4.3 MIO allocation (Vivado pin plan, 2026-10-27)
 
-| Interface | MIO | Bank | Notes |
+Checked in Vivado 2024.2 by `vivado/pinplan/pinplan.py`. The full table with every strap and pull is
+`vivado/pinplan/mio.csv`; the I/O settings Vivado applied are in `vivado/pinplan/ps7_mio.csv`.
+
+| Interface | MIO | Bank | Settings / notes |
 |---|---|---|---|
-| QSPI0 (single, x4): **ISSI IS25WP128-RHLE** (C1349419, 1.8 V, 128 Mbit, the part shared with the Agilex/Ti135 cards) | 1–6, + 8 as the feedback clock | 500 | UG933: IO0–3 and SS matched to SCLK within ±50 ps. Minimum trace delay from T_QSPICKD < T_CKO,flash + 2·T_pd. To run above ~40 MHz, MIO8 carries only the strap resistor (feedback mode) |
-| GEM0 RGMII | 16–27 | 501 | RTL8211F(DI) with internal delays (`rgmii-id`): DATA/CTL to CLK skew **≤ ±50 ps including package** (UG933). PS_MIO_VREF = VCCO_MIO1/2 = 0.9 V: divider + 10 nF |
-| MDIO0 | 52, 53 | 501 | pull-up on MDIO |
-| SD0 (eMMC, 4-bit) | 40–45 | 501 | **40–60 Ω series resistor (fit 0 Ω first) on CLK, next to the MIO pin.** PCB + package skew of DAT0–3 and CMD **between 50 and 200 ps relative to CLK** (UG933 *SDIO*; match them as a group to CLK and keep CLK the shortest). Zynq-7000 SDIO is 4-bit, SD 2.0 high speed ≤ 50 MHz: no HS200/HS400, so the eMMC DS ball stays unused. RST_n from a GPIO MIO |
-| UART | e.g. 46/47 or 48/49 | 501 | console; 1.8 V, so a translator to the 3.3 V J2 header, or use a PL UART on a 3.3 V HR bank (EMIO) **[decide in the pin plan]** |
-| I2C | free pair | 501 | 4.7 kΩ pull-ups at the far end; the PS I2C has no glitch filter, so add RC filters (UG933 *IIC*) |
-| GPIO | rest | 500/501 | eMMC RST_n, PHY reset, PHY interrupt, LEDs |
+| QSPI0 (single, x4): **ISSI IS25WP128-RHLE** (C1349419, 1.8 V, 128 Mbit, shared with the Agilex/Ti135 cards) | 1 CS#, 2–5 IO0–3, 6 SCLK, **8 feedback clock** | 500 | LVCMOS 1.8 V, fast slew. Ref clock 200 MHz → SCLK ≤ 100 MHz (feedback mode; MIO8 carries only its strap resistor). UG933: IO0–3 and SS matched to SCLK within ±50 ps; minimum trace delay from T_QSPICKD < T_CKO,flash + 2·T_pd |
+| GEM0 RGMII → RTL8211F(DI) | 16 TXC, 17–20 TXD0–3, 21 TX_CTL, 22 RXC, 23–26 RXD0–3, 27 RX_CTL | 501 | **HSTL 1.8 V**, no pull-ups, fast slew. Receivers use **PS_MIO_VREF (F8) = 0.9 V**: 10 k/10 k divider + 10 nF. PHY internal delays (`rgmii-id`): DATA/CTL to CLK ≤ ±50 ps including package (UG933) |
+| MDIO0 | 52 MDC, 53 MDIO | 501 | pull-up on MDIO to 1V8 |
+| SD0 → eMMC (4-bit) | 40 CLK, 41 CMD, 42–45 DAT0–3 | 501 | LVCMOS 1.8 V, fast slew, 50 MHz. **0 Ω (40–60 Ω) series on CLK at the MIO pin**; DAT/CMD to CLK skew 50–200 ps (UG933 *SDIO*). Zynq-7000 SDIO is 4-bit, SD 2.0 high speed ≤ 50 MHz: no HS200/HS400, so DAT4–7 and DS stay unused (pull-ups only). No card detect: `non-removable` in the device tree |
+| UART1 (console) | 48 TX, 49 RX | 501 | **decided 2026-10-27:** PS UART on 1.8 V MIO + an SN74LVC2T45 (or similar 2-bit) translator to the 3.3 V J2 header. The FSBL and U-Boot can print before the PL is configured, which an EMIO/PL UART could not |
+| I2C0 | 50 SCL, 51 SDA | 501 | for an optional MAC-address EEPROM; 4.7 k to 1V8 at the far end; RC glitch filters (UG933 *IIC*) |
+| GPIO | 7 `emmc_rst_n` (output-only pin), 9 `eth_rst_n`, 10 `eth_int_n` | 500 | `eth_rst_n` drives the PHY's 3.3 V PHYRSTB through an open-drain buffer (as on the Ti135 card); `eth_int_n` pulled up to 1V8 **[verify the RTL8211F INTB level]** |
+| spare | 0, 11–15, 28–39, 46, 47 | | MIO14 was juliancoy's VTT enable (REUSE_LOG E3). 28–39 would be USB0 (unused) |
+
+### 4.4 PL pin plan (Vivado, 2026-10-27)
+
+**Result:** `vivado/pinplan/zynq_pinplan.csv` (signal → ball, bank, pin function), all LVCMOS33.
+- **Banks:** bank 34 has the 32 J3 signals (7 user I/O left). Bank 33 has the ADC (6), the LCD/touch (12) and the 2
+  LEDs (20 left). Banks 13 and 35 are untouched (40 each).
+- **Why bank 34 for J3:** on the CLG484 grid (top view), the DDR (bank 502) is on the left edge and the MIO banks are
+  top left. Banks 35/34/33 run down the right edge, and bank 13 is along the bottom. With the DDR side facing away
+  from J3, the right edge faces J3, and bank 34 is in the middle of it.
+- **Kept free inside the banks:** the clock-capable pins (MRCC/SRCC) and the VREF pins, for later clocks.
+  **PUDC_B (K16) is never used as I/O.**
+- **Ball order:** a first pass from the package edge inwards. Re-order it once the parts are placed (pin swaps inside
+  a bank are free, and the flow re-checks them).
+- **Vivado check:** PS7 + all PL pins, synthesised and placed: **DRC 0, no critical warnings**. CFGBVS = VCCO,
+  CONFIG_VOLTAGE 3.3.
+- **ADC:** the ADS7056 DVDD goes to 3.3 V on this card, so its SPI runs on the 3.3 V bank directly. The Ti135 card had
+  DVDD at 1.8 V.
+
+**PS7 DDR settings** (`vivado/pinplan/ps7.tcl`):
+- MT41K256M16 RE-125 preset (the closest 4 Gb x16 DDR3L preset to our TW-107), 32-bit, 533.333 MHz, all three
+  training steps on.
+- Write-levelling start (DQS_TO_CLK) per byte, die to die with REUSE_LOG E1: 0.025 / 0.111 / 0.181 / 0.164 ns.
+- Board delay: 0.305 / 0.262 / 0.313 / 0.321 ns.
+- These go straight into `ps7_init` (write-levelling initial ratios 0x3 / 0xf / 0x18 / 0x16). Vivado's own
+  package-inclusive calculation from the lengths agrees (0.031 / 0.117 / 0.187 / 0.164 ns).
 
 Bank voltages (decided 2026-10-26):
 - **Bank 501 at 1.8 V**, fixed by the eMMC VCCQ and the 1.8 V RGMII.
@@ -157,7 +186,7 @@ QSPI notes:
 | PROGRAM_B_0 | 4.7 kΩ pull-up to VCCO_0 (not floating) | UG933, UG470 **[verify value]** |
 | INIT_B_0 | 4.7 kΩ pull-up to VCCO_0 (open drain) | UG470 **[verify value]** |
 | DONE_0 | 330 Ω pull-up to VCCO_0, optional LED | UG470 **[verify value]** |
-| PUDC_B (IO_L21N_T3_DQS_PUDC_B_34) | **tie to VCCO_34 (High) directly or through ≤ 1 kΩ** → no internal pull-ups during configuration. Never float | UG865 Table 1-5 |
+| PUDC_B (ball K16, IO_L3P_T0_DQS_PUDC_B_34) | **tie to VCCO_34 (High) directly or through ≤ 1 kΩ** → no internal pull-ups during configuration. Never float | UG865 Table 1-5 |
 | TCK, TMS, TDI | pull-ups (UG933 *Boot Mode Pins* note); JTAG at VCCO_0 = 3.3 V. One header serves PS and PL (cascaded, MIO2 = 0) | UG933 |
 | DXP_0 / DXN_0 | tie to GND when unused | UG865, UG933 |
 | VP/VN, VREFP/VREFN | XADC unused: tie to GNDADC; VREFP/VREFN to GND selects the internal reference | UG480 **[verify]** |
@@ -334,8 +363,9 @@ Why it was chosen:
 - [ ] XADC tie-off if it stays unused (UG480).
 - [ ] The PS_POR_B secure-lockdown window (DS187 Figure 1) against the enable chain.
 - [ ] IS25WP128 support in Vivado `program_flash` and U-Boot; the 7Z020 bitstream size (§4.3).
-- [ ] The full MIO and PL pin plan in Vivado (PLAN.md phase 0.5).
-- [ ] The UART path: PS UART on 1.8 V MIO plus a translator, or a PL UART on a 3.3 V bank.
+- [x] ~~The full MIO and PL pin plan in Vivado~~ done 2026-10-27 (§4.3, §4.4).
+- [x] ~~The UART path~~ PS UART1 on MIO48/49 + translator (§4.3).
+- [ ] The RTL8211F INTB output level (3.3 V or the RGMII pad supply) before it lands on a 1.8 V MIO.
 
 ## Sources
 

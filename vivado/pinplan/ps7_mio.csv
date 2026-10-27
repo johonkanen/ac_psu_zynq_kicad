@@ -1,0 +1,55 @@
+mio,peripheral,iotype,direction,pullup,slew
+0,GPIO,LVCMOS 1.8V,inout,enabled,slow
+1,Quad SPI Flash,LVCMOS 1.8V,out,enabled,fast
+2,Quad SPI Flash,LVCMOS 1.8V,inout,disabled,fast
+3,Quad SPI Flash,LVCMOS 1.8V,inout,disabled,fast
+4,Quad SPI Flash,LVCMOS 1.8V,inout,disabled,fast
+5,Quad SPI Flash,LVCMOS 1.8V,inout,disabled,fast
+6,Quad SPI Flash,LVCMOS 1.8V,out,disabled,fast
+7,GPIO,LVCMOS 1.8V,out,disabled,slow
+8,Quad SPI Flash,LVCMOS 1.8V,out,disabled,fast
+9,GPIO,LVCMOS 1.8V,inout,enabled,slow
+10,GPIO,LVCMOS 1.8V,inout,enabled,slow
+11,GPIO,LVCMOS 1.8V,inout,enabled,slow
+12,GPIO,LVCMOS 1.8V,inout,enabled,slow
+13,GPIO,LVCMOS 1.8V,inout,enabled,slow
+14,GPIO,LVCMOS 1.8V,inout,enabled,slow
+15,GPIO,LVCMOS 1.8V,inout,enabled,slow
+16,Enet 0,HSTL 1.8V,out,disabled,fast
+17,Enet 0,HSTL 1.8V,out,disabled,fast
+18,Enet 0,HSTL 1.8V,out,disabled,fast
+19,Enet 0,HSTL 1.8V,out,disabled,fast
+20,Enet 0,HSTL 1.8V,out,disabled,fast
+21,Enet 0,HSTL 1.8V,out,disabled,fast
+22,Enet 0,HSTL 1.8V,in,disabled,fast
+23,Enet 0,HSTL 1.8V,in,disabled,fast
+24,Enet 0,HSTL 1.8V,in,disabled,fast
+25,Enet 0,HSTL 1.8V,in,disabled,fast
+26,Enet 0,HSTL 1.8V,in,disabled,fast
+27,Enet 0,HSTL 1.8V,in,disabled,fast
+28,GPIO,LVCMOS 1.8V,inout,enabled,slow
+29,GPIO,LVCMOS 1.8V,inout,enabled,slow
+30,GPIO,LVCMOS 1.8V,inout,enabled,slow
+31,GPIO,LVCMOS 1.8V,inout,enabled,slow
+32,GPIO,LVCMOS 1.8V,inout,enabled,slow
+33,GPIO,LVCMOS 1.8V,inout,enabled,slow
+34,GPIO,LVCMOS 1.8V,inout,enabled,slow
+35,GPIO,LVCMOS 1.8V,inout,enabled,slow
+36,GPIO,LVCMOS 1.8V,inout,enabled,slow
+37,GPIO,LVCMOS 1.8V,inout,enabled,slow
+38,GPIO,LVCMOS 1.8V,inout,enabled,slow
+39,GPIO,LVCMOS 1.8V,inout,enabled,slow
+40,SD 0,LVCMOS 1.8V,inout,enabled,fast
+41,SD 0,LVCMOS 1.8V,inout,enabled,fast
+42,SD 0,LVCMOS 1.8V,inout,enabled,fast
+43,SD 0,LVCMOS 1.8V,inout,enabled,fast
+44,SD 0,LVCMOS 1.8V,inout,enabled,fast
+45,SD 0,LVCMOS 1.8V,inout,enabled,fast
+46,GPIO,LVCMOS 1.8V,inout,enabled,slow
+47,GPIO,LVCMOS 1.8V,inout,enabled,slow
+48,UART 1,LVCMOS 1.8V,out,enabled,slow
+49,UART 1,LVCMOS 1.8V,in,enabled,slow
+50,I2C 0,LVCMOS 1.8V,inout,enabled,slow
+51,I2C 0,LVCMOS 1.8V,inout,enabled,slow
+52,Enet 0,LVCMOS 1.8V,out,enabled,slow
+53,Enet 0,LVCMOS 1.8V,inout,enabled,slow

@@ -1,0 +1,53 @@
+signal,dir,group,note
+adasel0_iso,out,j3,J3.11
+adasel1_iso,out,j3,J3.10
+adasel2_iso,out,j3,J3.9
+adclk_iso,out,j3,J3.7
+adclk_dab,out,j3,J3.24
+inu_adclk,out,j3,J3.32
+clk1_iso,out,j3,J3.14
+cs1_iso,out,j3,J3.13
+gpio_bypass_rly_isolated,out,j3,J3.8
+gpio_bypass_rly_iso,out,j3,J3.36
+pwm_trans1_iso,out,j3,J3.15
+pwm_trans2_iso,out,j3,J3.16
+pwm_trans3_iso,out,j3,J3.17
+pwm_trans4,out,j3,J3.25
+pwm_trans5,out,j3,J3.35
+pwm_trans6,out,j3,J3.28
+pwm_g1_iso,out,j3,J3.20
+pwm_g2_iso,out,j3,J3.19
+pwm_g3_iso,out,j3,J3.21
+pwm_g4_iso,out,j3,J3.18
+dab_pwm_pri_hi_iso,out,j3,J3.22
+dab_pwm_pri_lo_iso,out,j3,J3.23
+dab_pwm_hi_sec,out,j3,J3.27
+dab_pwm_lo_sec,out,j3,J3.29
+pwm_q5,out,j3,J3.30
+pwm_q6,out,j3,J3.31
+pwm_q7,out,j3,J3.37
+pwm_q8,out,j3,J3.33
+mdata_iso,in,j3,J3.6
+sdata1_iso,in,j3,J3.12
+mdata_dab,in,j3,J3.26
+mdata_inu,in,j3,J3.34
+adc_cs_n,out,adc,ADS7056 (DVDD at 3V3 on this card)
+adc_sclk,out,adc,ADS7056
+adc_sdo,in,adc,ADS7056
+adbsel0,out,adc,SN74LV4051A S0
+adbsel1,out,adc,SN74LV4051A S1
+adbsel2,out,adc,SN74LV4051A S2
+lcd_cs_n,out,lcd,J5
+lcd_reset_n,out,lcd,J5
+lcd_dc,out,lcd,J5
+lcd_sck,out,lcd,J5
+lcd_mosi,out,lcd,J5
+lcd_led,out,lcd,J5
+lcd_miso,in,lcd,J5
+t_cs_n,out,lcd,J5 touch
+t_clk,out,lcd,J5 touch
+t_din,out,lcd,J5 touch
+t_do,in,lcd,J5 touch
+t_irq,in,lcd,J5 touch
+led0_n,out,led,user LED
+led1_n,out,led,user LED

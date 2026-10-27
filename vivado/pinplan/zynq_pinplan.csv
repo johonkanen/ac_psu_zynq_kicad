@@ -1,0 +1,53 @@
+signal,dir,ball,bank,pin_function,iostandard,group,note
+adasel0_iso,out,J22,34,IO_L8N_T1_34,LVCMOS33,j3,J3.11
+adasel1_iso,out,L22,34,IO_L10N_T1_34,LVCMOS33,j3,J3.10
+adasel2_iso,out,M22,34,IO_L15N_T2_DQS_34,LVCMOS33,j3,J3.9
+adclk_iso,out,N22,34,IO_L16P_T2_34,LVCMOS33,j3,J3.7
+adclk_dab,out,P22,34,IO_L16N_T2_34,LVCMOS33,j3,J3.24
+inu_adclk,out,J21,34,IO_L8P_T1_34,LVCMOS33,j3,J3.32
+clk1_iso,out,K21,34,IO_L9N_T1_DQS_34,LVCMOS33,j3,J3.14
+cs1_iso,out,L21,34,IO_L10P_T1_34,LVCMOS33,j3,J3.13
+gpio_bypass_rly_isolated,out,M21,34,IO_L15P_T2_DQS_34,LVCMOS33,j3,J3.8
+gpio_bypass_rly_iso,out,P21,34,IO_L18N_T2_34,LVCMOS33,j3,J3.36
+pwm_trans1_iso,out,R21,34,IO_L17N_T2_34,LVCMOS33,j3,J3.15
+pwm_trans2_iso,out,J20,34,IO_L9P_T1_DQS_34,LVCMOS33,j3,J3.16
+pwm_trans3_iso,out,P20,34,IO_L18P_T2_34,LVCMOS33,j3,J3.17
+pwm_trans4,out,R20,34,IO_L17P_T2_34,LVCMOS33,j3,J3.25
+pwm_trans5,out,R19,34,IO_L22P_T3_34,LVCMOS33,j3,J3.35
+pwm_trans6,out,T19,34,IO_L22N_T3_34,LVCMOS33,j3,J3.28
+pwm_g1_iso,out,J18,34,IO_L7P_T1_34,LVCMOS33,j3,J3.20
+pwm_g2_iso,out,K18,34,IO_L7N_T1_34,LVCMOS33,j3,J3.19
+pwm_g3_iso,out,N18,34,IO_L5N_T0_34,LVCMOS33,j3,J3.21
+pwm_g4_iso,out,P18,34,IO_L20N_T3_34,LVCMOS33,j3,J3.18
+dab_pwm_pri_hi_iso,out,R18,34,IO_L23P_T3_34,LVCMOS33,j3,J3.22
+dab_pwm_pri_lo_iso,out,T18,34,IO_L23N_T3_34,LVCMOS33,j3,J3.23
+dab_pwm_hi_sec,out,J17,34,IO_L2N_T0_34,LVCMOS33,j3,J3.27
+dab_pwm_lo_sec,out,L17,34,IO_L4P_T0_34,LVCMOS33,j3,J3.29
+pwm_q5,out,M17,34,IO_L4N_T0_34,LVCMOS33,j3,J3.30
+pwm_q6,out,N17,34,IO_L5P_T0_34,LVCMOS33,j3,J3.31
+pwm_q7,out,P17,34,IO_L20P_T3_34,LVCMOS33,j3,J3.37
+pwm_q8,out,T17,34,IO_L21N_T3_DQS_34,LVCMOS33,j3,J3.33
+mdata_iso,in,J16,34,IO_L2P_T0_34,LVCMOS33,j3,J3.6
+sdata1_iso,in,L16,34,IO_L3N_T0_DQS_34,LVCMOS33,j3,J3.12
+mdata_dab,in,P16,34,IO_L24P_T3_34,LVCMOS33,j3,J3.26
+mdata_inu,in,R16,34,IO_L24N_T3_34,LVCMOS33,j3,J3.34
+adc_cs_n,out,T22,33,IO_L2P_T0_33,LVCMOS33,adc,ADS7056 (DVDD at 3V3 on this card)
+adc_sclk,out,U22,33,IO_L2N_T0_33,LVCMOS33,adc,ADS7056
+adc_sdo,in,V22,33,IO_L3P_T0_DQS_33,LVCMOS33,adc,ADS7056
+adbsel0,out,W22,33,IO_L3N_T0_DQS_33,LVCMOS33,adc,SN74LV4051A S0
+adbsel1,out,AA22,33,IO_L7P_T1_33,LVCMOS33,adc,SN74LV4051A S1
+adbsel2,out,AB22,33,IO_L7N_T1_33,LVCMOS33,adc,SN74LV4051A S2
+lcd_cs_n,out,T21,33,IO_L1P_T0_33,LVCMOS33,lcd,J5
+lcd_reset_n,out,U21,33,IO_L1N_T0_33,LVCMOS33,lcd,J5
+lcd_dc,out,W21,33,IO_L4N_T0_33,LVCMOS33,lcd,J5
+lcd_sck,out,Y21,33,IO_L9N_T1_DQS_33,LVCMOS33,lcd,J5
+lcd_mosi,out,AA21,33,IO_L8P_T1_33,LVCMOS33,lcd,J5
+lcd_led,out,AB21,33,IO_L8N_T1_33,LVCMOS33,lcd,J5
+lcd_miso,in,U20,33,IO_L5P_T0_33,LVCMOS33,lcd,J5
+t_cs_n,out,V20,33,IO_L5N_T0_33,LVCMOS33,lcd,J5 touch
+t_clk,out,W20,33,IO_L4P_T0_33,LVCMOS33,lcd,J5 touch
+t_din,out,Y20,33,IO_L9P_T1_DQS_33,LVCMOS33,lcd,J5 touch
+t_do,in,AB20,33,IO_L10N_T1_33,LVCMOS33,lcd,J5 touch
+t_irq,in,U19,33,IO_0_33,LVCMOS33,lcd,J5 touch
+led0_n,out,AB19,33,IO_L10P_T1_33,LVCMOS33,led,user LED
+led1_n,out,V18,33,IO_L6P_T0_33,LVCMOS33,led,user LED

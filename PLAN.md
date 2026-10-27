@@ -243,16 +243,12 @@ Then the copper is copied, and the net of every copied item is checked against o
    116 at JLC on 2026-10-26) or -2CLG484I (C157624, 309). Both have the same footprint and pinout. Configure the PS7 DDR
    for DDR3L-1066 (533 MHz), the -1 limit, so one bitstream fits both grades. **Still open: the MT41K256M16 temperature
    range** against the card's target. The standard part (C253882) is 0…95 °C, IT (C367428) is −40…95 °C.
-5. **I/O budget** on the CLG484 HR banks (13, 33, 34, 35), all at 3.3 V:
-   - J3: 32;
-   - J5 LCD: 12;
-   - ADC SPI 3 (ADS7056 DVDD at 3.3 V, or a 1.8 V bank) + mux 3;
-   - UART: 2;
-   - LEDs: 2–3;
-   - spare.
-
-   Roughly 60 of ~200 pins. Do the pin plan in a Vivado dummy project (PS7 with DDR, GEM0, SD0, QSPI, UART, I2C), the
-   way `efinity/pinplan/pinplan.py` did it for the Ti135.
+5. ~~I/O budget and pin plan~~ **done 2026-10-27** (`vivado/pinplan/`, `ZYNQ_PCB_NOTES.md` §4.3–4.4):
+   - 52 PL signals: J3 on bank 34; ADC, LCD and LEDs on bank 33. Banks 13 and 35 are free.
+   - MIO: QSPI 1–6/8, RGMII 16–27, SD0 40–45, UART1 48/49 (+ translator to J2), I2C0 50/51, MDIO 52/53.
+   - Vivado 2024.2: synthesis + placement, DRC 0.
+   - Vivado 2026.1 did not start: its node-locked license names MAC `00:15:5d:af:66:90`, and WSL2 now has
+     `…:6e:fc`. Re-host the license, or keep using 2024.2 (no license needed for the 7Z020).
 6. **Power budget:** VCCINT/VCCPINT 1.0 V, VCCAUX/VCCPAUX 1.8 V, VCCO 3.3 V, VCCO_DDR 1.35 V, VTT/VREF 0.675 V, and the
    PHY rails, from the Xilinx Power Estimator. Check it against the 5V_ISOL limit in the Ti135 `POWER_BUDGET.md`.
    Reuse the TLV62585 cells from the Ti135 card for 1V0, 1V8, 3V3 and 1V35. VTT comes from the block's TPS51200.

@@ -1,0 +1,44 @@
+mio,function,note
+0,gpio: spare,
+1,qspi0_ss_b,IS25WP128 CS#
+2,qspi0_io0,strap BOOT_MODE[3] = 0 (JTAG cascade): 20 k to GND
+3,qspi0_io1,strap BOOT_MODE[1] = 0: 20 k to GND
+4,qspi0_io2,strap BOOT_MODE[2] = 0: 20 k to GND
+5,qspi0_io3,strap BOOT_MODE[0] = 1 (QSPI boot): 20 k to VCCO_MIO0
+6,qspi0_sclk,strap BOOT_MODE[4] = 0 (PLL on): 20 k to GND
+7,gpio: emmc_rst_n,strap VMODE[0] = 1 (bank 500 1.8 V): 20 k to VCCO_MIO0; MIO7 is output-only
+8,qspi_fbclk,strap VMODE[1] = 1 (bank 501 1.8 V): 20 k to VCCO_MIO0; nothing else on this pin (feedback mode)
+9,gpio: eth_rst_n,to the RTL8211F PHYRSTB through an open-drain buffer (3.3 V input)
+10,gpio: eth_int_n,RTL8211F INTB (open drain): pull-up to 1V8 [verify INTB level]
+11,gpio: spare,
+12,gpio: spare,
+13,gpio: spare,
+14,gpio: spare,"was the VTT enable on juliancoy; not used here (REUSE_LOG E3)"
+15,gpio: spare,
+16,enet0_tx_clk,RGMII (HSTL 1.8 V)
+17,enet0_txd0,RGMII
+18,enet0_txd1,RGMII
+19,enet0_txd2,RGMII
+20,enet0_txd3,RGMII
+21,enet0_tx_ctl,RGMII
+22,enet0_rx_clk,RGMII
+23,enet0_rxd0,RGMII
+24,enet0_rxd1,RGMII
+25,enet0_rxd2,RGMII
+26,enet0_rxd3,RGMII
+27,enet0_rx_ctl,RGMII
+28-39,gpio: spare,USB0 not used
+40,sd0_clk,eMMC CLK: 0 ohm (40-60 ohm) series at the MIO pin
+41,sd0_cmd,eMMC CMD
+42,sd0_data0,eMMC DAT0
+43,sd0_data1,eMMC DAT1
+44,sd0_data2,eMMC DAT2
+45,sd0_data3,eMMC DAT3
+46,gpio: spare,
+47,gpio: spare,
+48,uart1_tx,console: SN74LVC2T45 1.8 V -> 3.3 V to J2
+49,uart1_rx,console: from J2 through the translator
+50,i2c0_scl,MAC-address EEPROM (optional); 4.7 k to 1V8
+51,i2c0_sda,
+52,enet0_mdc,MDIO0
+53,enet0_mdio,MDIO0: pull-up to 1V8
