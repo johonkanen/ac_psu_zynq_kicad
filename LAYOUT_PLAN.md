@@ -72,40 +72,50 @@ Result (`tools/build_pcb.sh --rebuild`):
   block parts with library footprints: they keep the KiCad 5 versions on purpose), J9's silk over the edge (the jack
   overhangs by design) and U1203's 0.1 mm reference text (the ADS7056 footprint from the Ti135 library).
 
-## Step 2: the copper import (`tools/import_block.py`)
+## Step 2: the copper import (`tools/import_block.py`): done 2026-10-27
 
-PLAN.md §4.2 step 2, plus what the schematic phase has added since:
+`tools/build_pcb.sh --rebuild` runs make_board → board_setup → import_block, then DRC and the copper check. The
+method is in the script's docstring; in short:
+1. **Block parts** (the 101 that `tools/check_block_netlist.py` knows) take the source pose through one rigid
+   transform (`--at`/`--rot`; default pose A) and are locked. Every pad is checked against the moved source pad.
+2. **Selection by connectivity.** A geometric graph of the source copper. Copied: each copper group that touches a
+   block pad (on U20 only the balls on a rail or a block net), plus pad-less rail copper (stitching), clipped to the
+   block outline. Not copied: juliancoy's MIO/PL escapes, and rail copper that serves only his other parts (about 40
+   of them sit inside the block area: his regulators, sensors' decaps).
+3. **Nets by pad;** pad-less copper by name (`+1V0/+1V8/+1V35/+3V3` → ours, GND, DDR3_VTT, VCCAUX).
+4. **The REUSE_LOG copper edits (E3, E5–E9)** are made by the import: the changed balls are detached, their own
+   fan-outs re-netted or dropped, stubs pruned. Per ball: REUSE_LOG.md, "Copper import".
+5. **Zones.** The plan was to copy only the zones inside the block, but **juliancoy's rails under U20 are board-wide
+   pours on the signal layers** (+1V8 on In2 and In4, +3V3 on In6, with 1V0/VCCAUX islands above them). So every
+   zone on a block net is copied, clipped to the block outline (11 zones). The In1/In3/In5 GND planes are copies of
+   his (his 0.102 mm minimum fill width reaches the vias under the BGA; KiCad's 0.25 mm default left 12 GND vias
+   unconnected) over our whole board.
+6. With the block: the outline on User.1 and as rule area `ddr3_block`, H1/H2 (NPTH 3.2 mm) with their keep-outs.
 
-1. Read `reference/zynqpcb/DFTBoard.kicad_pcb` (KiCad upgrades it on load; the legacy zone fills are dropped and
-   refilled here).
-2. **Select:** the block footprints by ref (the ones `tools/check_block_netlist.py` knows, minus C107); every track,
-   arc and via whose net is a block net and that lies inside the block outline.
-3. **Zones:** juliancoy's zones on block nets that lie inside the block (`+1V35` × 2, `DDR3_VTT`, `+1V0`, the VCCAUX
-   pieces) are copied. **The board-wide zones** (GND, +1V8, +3V3, +5V, GNDA: they span the whole 117 × 58 mm source)
-   are **not** copied; our planes are drawn on our outline in phase 4 and connect to the copied vias.
-4. **Transform:** one rigid move + rotation (0/90/180/270°, never mirrored), taken from the pose (step 3). The
-   `User.1` block outline and the two heatsink holes go with it.
-5. **Nets by pad:** a copied item takes the net of the source pad it connects to, looked up as (ref, pad) on our
-   board. Copper with no pad path (stitching vias, pours) is mapped by name: `+1V35` → `1V35`, `+1V0` → `1V0`,
-   `+1V8` → `1V8`, `+3V3` → `3V3`, `GND` → `GND`.
-6. **The REUSE_LOG copper edits, made by the import:**
-   - **E7/E9:** the fan-out of the VCCO_MIO balls (+3V3 → 1V8), the VCCO_34/35 balls (GND → 3V3) and the 100
-     bank 34/35 I/O balls (GND → ours / open) take the net of our ball, never the source's. Where a source via joins
-     such a ball to a GND plane, the via is dropped or its plane connection removed; the script lists every one;
-   - **E8:** the G10 (RSVDGND) connection is dropped;
-   - **E5:** the H10 (VCCPLL) via is cut from +1V8 and gets the `VCCPLL` net; the planelet to C528 is drawn in
-     phase 4;
-   - **E6:** C59/C122 pads take 1V8 (by pad, automatic).
-7. Write into `kicad/zynq_card.kicad_pcb`; print every item it could not map. **Expected: none.**
-
-Check, `tools/check_block_copper.py` (new):
-- per DDR net: length, layer list and via count against the source (`tools/ddr_survey.py`): **0 differences**;
-- `tools/ddr3_review.py` for U16 and U15 on our board: the same numbers as `DDR3_REVIEW.md`;
-- DRC with schematic parity: no unconnected item inside the block except the E5 planelet and the nets that leave
-  it (rails, MIO, PL).
+**Result at pose A** (U20 at (164, 87)):
+- Block outline 37.6 × 45.6 mm (from U20: x −22.1…+15.5, y −34.7…+10.9). Its north edge is 0.65 mm from the board
+  edge. H1 (178.93, 101.93), H2 (149.07, 72.07).
+- Copied 9,030 tracks, 463 vias, 11 zones.
+- **`tools/check_block_copper.py`: 0 failures.** All 82 signal nets match the source item by item (8,709 segments,
+  184 vias); the only difference is E3 (23 items).
+- **`tools/ddr3_review.py`, U16 and U15:** lengths, layers and via counts identical to the source. The delays differ
+  by ≤ 5 ps (via barrels now from the real stack-up). All PASS at the derated limits; byte 0 CK ≥ DQS is +2.6 ps,
+  so E1 is still needed.
+- **DRC: parity 0, no clearance errors.** Inherited from the source (identical copper): 14 dangling 1V35 vias (F.Cu
+  only, as on juliancoy), VREF and DQS2_P stubs. The rest is unrouted nets, block-footprint library mismatches and
+  silk.
+- Left for phase 4: the H10 via + VCCPLL planelet (E5); 3V3 to the 12 VCCO_34/35 balls; the J3 and other escapes.
+- Render: `reports/pose_a_top.png` (`kicad-cli pcb render`).
 
 Then the **block edits E1 (CK trunk) and optional E2** by hand in pcbnew, checked with `ddr3_review.py` as
 REUSE_LOG says. They are inside the block and do not depend on the pose, so they can wait until the pose is fixed.
+
+**`ddr3_review.py` run** (the Vivado package delays come from `vivado/pinplan/build/pkgpins.csv`, in fs; convert to a
+ps CSV with columns bank, ball, site, function, min, max):
+```
+tools/p2k/bin/kipy tools/ddr3_review.py kicad/zynq_card.kicad_pcb --soc U20 --dram U16 --pkg work/pkg_delays_ps.csv \
+    --ps-outer 5.86 --ps-outer-diff 5.86 --ps-inner 6.63 --ps-layer In6.Cu=6.80
+```
 
 ## Step 3: the block pose
 

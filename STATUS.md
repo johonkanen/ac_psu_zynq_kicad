@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-27** (phase 3 step 1: board, stack-up and rules. Before that, phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC), 11 (PL banks), 12 (ADC) and 13 (connectors) done: **the schematic is complete**).
+Last updated: **2026-10-27** (phase 3 steps 1–2: board, rules, and the block copper imported. Before that, phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC), 11 (PL banks), 12 (ADC) and 13 (connectors) done: **the schematic is complete**).
 Read this first if you are picking the work up (human or agent).
 
 ## What this repository is
@@ -26,7 +26,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 | `NOTICE`, `LICENSE` | MIT; juliancoy's MIT notice for the copied block |
 | `vivado/pinplan/` | Vivado pin plan and power: `pinplan.py`, `ps7.tcl`, `signals.csv`, `groups.csv`, `mio.csv`; results `zynq_pinplan.csv`, `ps7_mio.csv`, `power_summary.csv` |
 | `reference/` | `zynqpcb/` (the block source, submodule), `baseboard_j11_pinout.csv` (the J3 authority), `stackup_scan_0p102mm.txt`, `vendor/README.md` (Xilinx PDFs to fetch; not in git) |
-| `tools/` | `ddr3_review.py`, `stackup_scan.py`, `zsolve.py`/`zsolve_cases.py`, `ddr_survey.py`; submodules `jlc/` and `p2k/` |
+| `tools/` | board: `make_board.py`, `board_setup.py`, `import_block.py`, `check_block_copper.py`, `build_pcb.sh`; `ddr3_review.py`, `stackup_scan.py`, `zsolve.py`/`zsolve_cases.py`, `ddr_survey.py`; submodules `jlc/` and `p2k/` |
 
 ## Decisions (do not reopen without the user)
 
@@ -262,7 +262,23 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
   - **Pose A agreed (user, 2026-10-27):** the source orientation, U20 at about (164, 87), MIO side toward J9.
   - **Step 1 done:** `tools/make_board.py`, `tools/board_setup.py`, `tools/build_pcb.sh`. Parity 0; the block parts
     carry juliancoy's own footprints. Details in LAYOUT_PLAN.md step 1.
-  - **Next: step 2, `tools/import_block.py`** (the copper copy, E5–E9 at the import) and `tools/check_block_copper.py`.
+  - **Step 2 done:** `tools/import_block.py` copies the block at pose A (`tools/build_pcb.sh --rebuild`).
+    `tools/check_block_copper.py`: all 82 block signal nets identical to the source except E3. `ddr3_review.py` on
+    both DRAMs: same lengths/vias, all PASS derated. E3/E6/E7 (MIO)/E8/E9 copper done by the import; E5 planelet and
+    VCCO_34/35 connections left for phase 4 (REUSE_LOG.md). Details in LAYOUT_PLAN.md step 2.
+  - **Start here next session (left off 2026-10-27, after step 2):**
+    1. **Step 3, confirm pose A** (LAYOUT_PLAN.md step 3). Make trial boards with
+       `tools/p2k/bin/kipy tools/import_block.py --at X Y --rot R --out work/pose_<name>.kicad_pcb`: pose A (164, 87)
+       plus one or two x/y offsets, and pose B (DDR east, `--rot` 90 or 270, U20 at about (152, 86)). Place the rest
+       on each and quick-route the non-block nets (KiCadRoutingTools, as in the Ti135 repo's `placement/`), then
+       compare open nets and vias. The pose trials are independent, so they can run as parallel agents in worktrees.
+       The user confirms the pose.
+    2. **E1** (CK trunk, REUSE_LOG.md) in pcbnew on the chosen pose; check with `ddr3_review.py` (command in
+       LAYOUT_PLAN.md step 2; `work/pkg_delays_ps.csv` is regenerated from `vivado/pinplan/build/pkgpins.csv`, fs → ps).
+       Target: byte 0 CK − DQS ≥ +20 ps (now +2.6), CK P/N ≤ 1 ps.
+    3. **Step 4, placement** of our parts (LAYOUT_PLAN.md step 4): port the Ti135 `placement/` inputs.
+    - Note: `tools/build_pcb.sh --rebuild` recreates the board from scratch (make_board → board_setup →
+      import_block); safe until routing outside the block starts.
 - Open from phase 2:
   - **ADS7056IRUGR (C2669798) shows −6 orderable at JLC** (2026-10-27, oversold). Check it before ordering or
     source it separately;

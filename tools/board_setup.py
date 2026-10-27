@@ -97,7 +97,7 @@ NETCLASSES = [
     # (class clearance 0.1: the PHY's QFN pads are on 0.4 mm pitch; the 0.2 mm track spacing is a rule)
     ("mdi", 0.35, 0.1, 0.48, 0.25, 0.35, 0.2),
     ("PWR", 0.3, 0.1, 0.48, 0.25, 0.1, 0.2),
-    ("PWR_CORE", 0.5, 0.15, 0.48, 0.25, 0.1, 0.2),
+    ("PWR_CORE", 0.5, 0.1, 0.48, 0.25, 0.1, 0.2),
 ]
 PATTERNS = [
     ("ddr3", r"^DDR3_(A[0-9]+|BA[0-2]|DQ[0-9]+|DM[0-3]|CKE|ODT|RAS#|CAS#|WE#|CS#|DRST#)$"),
