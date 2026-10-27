@@ -132,13 +132,14 @@ _MOVE = {"left": lambda p, n: left(p, n), "right": lambda p, n: right(p, n),  # 
          "up": lambda p, n: up(p, n), "down": lambda p, n: down(p, n)}  # noqa: F405
 
 
-def attach(sh, placed, num, kind, name=None, n=3, shape="passive"):
+def attach(sh, placed, num, kind, name=None, n=3, shape="passive", side=None):
     """Connect pin `num` outward from the symbol: kind 'label' / 'hlabel' (name), 'power' (rail name) or 'nc'.
+    side overrides side_of() (a unit whose pins are all on one side has no extent to judge from).
     Returns the end point of the stub."""
     if kind == "nc":
         sh.no_connect(*placed.pin(num))
         return placed.pin(num)
-    d = side_of(placed, num)
+    d = side or side_of(placed, num)
     p = placed.pin(num)
     q = _MOVE[d](p, n)
     sh.wire(p, q)
@@ -163,9 +164,10 @@ def series_r(sh, ref, x, y, value, left_kind, left_name, right_kind, right_name,
             sh.label(name, *q, _ROT[d])
 
 
-def pull_r(sh, ref, x, y, net, rail, value):
-    """Vertical resistor: net label at one end, rail (power symbol) at the other (GND below, supplies above)."""
-    _, t, b = vert2(sh, "R", ref, x, y, value, text="right")  # noqa: F405
+def pull_r(sh, ref, x, y, net, rail, value, top=1):
+    """Vertical resistor: net label at one end, rail (power symbol) at the other (GND below, supplies above).
+    top: the pin number drawn at the top (a block part keeps the source's pad on each net)."""
+    _, t, b = vert2(sh, "R", ref, x, y, value, top=top, text="right")  # noqa: F405
     if rail == "GND":
         sh.wire(t, up(t, 2)); sh.label(net, *up(t, 2), 90)  # noqa: F405
         sh.wire(b, down(b, 2)); power_at(sh, "GND", down(b, 2), "down")  # noqa: F405

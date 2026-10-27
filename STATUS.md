@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-27** (phase 2: project skeleton, sheet 1 (the imported DDR3 block) and sheet 5 (SoC power) done).
+Last updated: **2026-10-27** (phase 2: project skeleton, sheets 1 (the imported DDR3 block), 5 (SoC power) and 6 (SoC config) done).
 Read this first if you are picking the work up (human or agent).
 
 ## What this repository is
@@ -39,7 +39,9 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 | MIO banks | **both at 1.8 V** (MIO7/MIO8 pulled up); PS_CLK 33.333 MHz 1.8 V oscillator |
 | Bank 0 (config/JTAG) | **1.8 V, as on juliancoy** (2026-10-27): CFGBVS to GND, JTAG J1 at 1.8 V; the block copper for VCCO_0/RSVDVCC/R9/R10 stays |
 | VCCPLL | **own 120 Ω bead FB501 + 10 µF + 0.47 µF** from 1V8 (UG933 must; juliancoy had it on raw +1V8). juliancoy's VCCAUX bead FB1 becomes a **0 Ω jumper** (2026-10-27, REUSE_LOG E5) |
-| Console | **PS UART1 on MIO48/49 + a 2-bit translator** to the 3.3 V J2 |
+| Console | **PS UART1 on MIO48/49 + a translator with per-bit direction** to the 3.3 V J2 (not an LVC2T45) |
+| JTAG | **J1 1×5 at 3.3 V** for FTDI mini-modules (no VREF), shifted to bank 0 by SN74AVC4T774RSVR (C779392), as on the Agilex 3 card (`~/dev/ti60f225_control_card`) |
+| RSVDGND | **open** per UG865 v1.9 (REUSE_LOG E8) |
 | ADC | ADS7056 DVDD at **3.3 V** (SPI straight to the 3.3 V bank) |
 | Boot | **QSPI boot** (the BootROM cannot boot from eMMC); Linux on eMMC; JTAG for recovery |
 | Stack-up | **JLC081611-7628**, 1.6 mm, 1 oz inner. GND on In1/In3/In5, signals on F/In2/In4/In6 (juliancoy's roles). 0.102 mm = 39.5 Ω on In2/In4, 45.5 Ω on In6; F/B are poor impedance layers (fan-out, power, slow signals; MDI pairs 0.35/0.20 mm on F.Cu = 102 Ω) |
@@ -98,29 +100,44 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
   - The VCCO pins are on the bank units (sheets 6, 11). Their caps are on sheet 5 as rail rows.
 - **Vivado pin plan** re-run with `CFGBVS GND` / `CONFIG_VOLTAGE 1.8`: DRC 0, no critical warnings, pin plan
   unchanged.
-- **Sheet 6 needs from U20 unit 1** (source nets, bank 0 at 1.8 V):
-  - VCCO_0 R12 and RSVDVCC T7/T8/T10 → 1V8;
-  - CFGBVS T13 → GND;
-  - VCCADC K11 → 1V8 and GNDADC K12 → GND (as the source);
-  - VCCBATT G9, DXP/DXN N11/N12, VP/VN L11/M12, VREFP/VREFN M11/L12 → GND;
-  - RSVDGND G10 → GND on the source (UG865 says leave open: **[verify]**);
-  - PROGRAM_B T11 and INIT_B T14 → R9/R10 4.7 k to 1V8 (block parts: keep the refs and add sheet 6 to the check's
-    `SHEETS`);
-  - DONE T12 is open on the source: add a 330 Ω pull-up / LED (C6xx/R6xx);
-  - TCK G11, TMS G12, TDI H13, TDO G14 → J1 at 1.8 V, with pull-ups.
+- **Sheet 6 `06_soc_config`** (`tools/sheets/06_soc_config.py`): U20 units 1 (bank 0), 6 and 7 (MIO banks 500/501), and the
+  following parts:
+  - boot straps R601–R607 (20 k; QSPI boot, JTAG cascaded, PLLs on, VMODE 1.8/1.8);
+  - PS_POR_B pull-up R608. The supervisor's open-drain output (sheet 4) drives the `ps_por_n` port;
+  - PS_MIO_VREF divider R609/R610 + C601 (with a PWR_FLAG) and the PS_SRST_B pull-up R611;
+  - juliancoy's R9/R10 (PROGRAM_B/INIT_B, block refs, source pads) and DONE 330 Ω R612 **[verify UG470]**;
+  - J1 (1×5 family pinout, 3.3 V) → U601 SN74AVC4T774RSVR → bank 0, with R613–R616 and C602/C603: the Agilex 3
+    card's circuit;
+  - RSVDGND open (E8). XADC and bank-0 tie-offs as on the source.
+  - **Sheet ports for the other sheets** (they must use these names):
+    - `ps_clk` (sheet 7), `ps_por_n` (sheet 4);
+    - `qspi_cs_n`, `qspi_sclk`, `qspi_io0`–`3` (sheet 8);
+    - `rgmii_txc`, `rgmii_txd0`–`3`, `rgmii_tx_ctl`, `rgmii_rxc`, `rgmii_rxd0`–`3`, `rgmii_rx_ctl`, `mdc`, `mdio`,
+      `eth_rst_n`, `eth_int_n` (sheet 9);
+    - `sd_clk`, `sd_cmd`, `sd_dat0`–`3`, `emmc_rst_n` (sheet 10);
+    - `uart_tx`, `uart_rx` (J2 translator), `i2c_scl`, `i2c_sda`.
+
+    Their pulls go with the parts: eth_int_n, MDIO and I2C pull-ups to 1V8; the SD0 CLK 0 Ω series at the MIO pin.
+  - Block check: sheet 6 is in `SHEETS`. On its U20 units only the rail/GND balls and the balls on a block part's net
+    are compared; the MIO/JTAG signal balls are ours. J-refs are never block parts. Result: **0 failures** (101 parts,
+    583 pads, 196 U20 balls). The expected differences are E3 (B6), E5, E6, E7 (the VCCO_MIO balls) and E8 (G10).
+  - New ERC entries, all for sheets not drawn yet:
+    - `isolated_pin_label` for the ports that have one pin so far;
+    - `label_dangling` on the root for the strapped ports;
+    - `pin_not_driven` on PS_CLK.
 - **Next:**
   1. **Draw the new sheets:**
      - power input (J6);
      - TLV62585 rails (cells from the Ti135 repo's `_power.py`);
      - power sequencing + PS_POR_B supervisor, which also drives `DDR3_VTT_EN` (E3);
      - clocks;
-     - boot straps and configuration (`ZYNQ_PCB_NOTES.md` §4–5, §7);
      - QSPI;
      - eMMC;
      - Ethernet (from the Ti135 sheet 09);
-     - PL I/O (from `vivado/pinplan/zynq_pinplan.csv`);
+     - PL I/O (from `vivado/pinplan/zynq_pinplan.csv`; PUDC_B K16 to VCCO_34; VCCO_34/35 balls to 3V3 = E7, add them
+       to the check's EXPECTED);
      - ADC (from the Ti135 sheet 13, DVDD at 3V3);
-     - connectors (J3 + pull-downs, J5, J2 + translator, J1 JTAG, J9).
+     - connectors (J3 + pull-downs, J5, J2 + translator (per-bit direction), J9).
 
      The sheet numbers are in `p2k_config.py`.
   2. ERC, then a netlist check that every PL/MIO signal lands on the ball from the pin plan.

@@ -135,7 +135,7 @@ Checked in Vivado 2024.2 by `vivado/pinplan/pinplan.py`. The full table with eve
 | GEM0 RGMII → RTL8211F(DI) | 16 TXC, 17–20 TXD0–3, 21 TX_CTL, 22 RXC, 23–26 RXD0–3, 27 RX_CTL | 501 | **HSTL 1.8 V**, no pull-ups, fast slew. Receivers use **PS_MIO_VREF (F8) = 0.9 V**: 10 k/10 k divider + 10 nF. PHY internal delays (`rgmii-id`): DATA/CTL to CLK ≤ ±50 ps including package (UG933) |
 | MDIO0 | 52 MDC, 53 MDIO | 501 | pull-up on MDIO to 1V8 |
 | SD0 → eMMC (4-bit) | 40 CLK, 41 CMD, 42–45 DAT0–3 | 501 | LVCMOS 1.8 V, fast slew, 50 MHz. **0 Ω (40–60 Ω) series on CLK at the MIO pin**; DAT/CMD to CLK skew 50–200 ps (UG933 *SDIO*). Zynq-7000 SDIO is 4-bit, SD 2.0 high speed ≤ 50 MHz: no HS200/HS400, so DAT4–7 and DS stay unused (pull-ups only). No card detect: `non-removable` in the device tree |
-| UART1 (console) | 48 TX, 49 RX | 501 | **decided 2026-10-27:** PS UART on 1.8 V MIO + an SN74LVC2T45 (or similar 2-bit) translator to the 3.3 V J2 header. The FSBL and U-Boot can print before the PL is configured, which an EMIO/PL UART could not |
+| UART1 (console) | 48 TX, 49 RX | 501 | **decided 2026-10-27:** PS UART on 1.8 V MIO + a translator to the 3.3 V J2 header. TX and RX go opposite ways, so it needs per-bit direction: **not** an SN74LVC2T45 (one DIR for both bits); e.g. an SN74AVC4T774 as on J1, or 2 × SN74LVC1T45. The FSBL and U-Boot can print before the PL is configured, which an EMIO/PL UART could not |
 | I2C0 | 50 SCL, 51 SDA | 501 | for an optional MAC-address EEPROM; 4.7 k to 1V8 at the far end; RC glitch filters (UG933 *IIC*) |
 | GPIO | 7 `emmc_rst_n` (output-only pin), 9 `eth_rst_n`, 10 `eth_int_n` | 500 | `eth_rst_n` drives the PHY's 3.3 V PHYRSTB through an open-drain buffer (as on the Ti135 card); `eth_int_n` pulled up to 1V8 **[verify the RTL8211F INTB level]** |
 | spare | 0, 11–15, 28–39, 46, 47 | | MIO14 was juliancoy's VTT enable (REUSE_LOG E3). 28–39 would be USB0 (unused) |
@@ -188,11 +188,11 @@ QSPI notes:
 | INIT_B_0 | 4.7 kΩ pull-up to VCCO_0 (open drain); R10 in the block | UG470 **[verify value]** |
 | DONE_0 | 330 Ω pull-up to VCCO_0, optional LED (unconnected on juliancoy) | UG470 **[verify value]** |
 | PUDC_B (ball K16, IO_L3P_T0_DQS_PUDC_B_34) | **tie to VCCO_34 (High) directly or through ≤ 1 kΩ** → no internal pull-ups during configuration. Never float | UG865 Table 1-5 |
-| TCK, TMS, TDI | pull-ups (UG933 *Boot Mode Pins* note); JTAG at VCCO_0 = **1.8 V** (J1 VREF = 1V8; the Xilinx/Digilent cables follow VREF). One header serves PS and PL (cascaded, MIO2 = 0) | UG933 |
+| TCK, TMS, TDI | pull-ups (UG933 *Boot Mode Pins* note); JTAG at VCCO_0 = **1.8 V**; J1 is 3.3 V (FTDI mini-modules, no VREF) through an SN74AVC4T774RSVR shifter, the Agilex 3 card's circuit (sheet 6). One header serves PS and PL (cascaded, MIO2 = 0) | UG933 |
 | DXP_0 / DXN_0 | tie to GND when unused | UG865, UG933 |
 | VP/VN, VREFP/VREFN | XADC unused: tie to GNDADC; VREFP/VREFN to GND selects the internal reference | UG480 **[verify]** |
 | RSVDVCC[3:1] | **tie to VCCO_0** | UG865 Table 1-5 |
-| RSVDGND | do not connect; juliancoy ties G10 to GND **[verify UG865]** | UG865 Table 1-5 |
+| RSVDGND | **do not connect** (UG865 v1.9; juliancoy ties G10 to GND, REUSE_LOG E8) | UG865 Table 1-5 |
 | VCCBATT_0 | GND or VCCAUX (no encryption) | DS187 |
 
 **PUDC_B High plus the 10 kΩ pull-downs on every J3 pin** keep the PWM/gate outputs low until the bitstream drives them.
@@ -350,7 +350,7 @@ Why it was chosen:
 | CFGBVS_0 | to GND (VCCO_0 = 1.8 V) | direct |
 | PUDC_B | to VCCO_34 | ≤ 1 kΩ |
 | PROGRAM_B / INIT_B / DONE | pull-ups to VCCO_0 | 4.7 k / 4.7 k / 330 Ω **[verify UG470]** |
-| TCK/TMS/TDI | pull-ups to VCCO_0 | 4.7–10 kΩ |
+| TCK/TMS/TDI | on the 3.3 V side of the JTAG shifter: TCK 1 k down, TMS/TDI 10 k up; TDO 10 k up to 1V8 | 1 k / 10 kΩ |
 | PS_DDR_VRP / VRN | to GND / to VCCO_DDR | 2 × Z0 (80 Ω for 40 Ω) |
 | DRAM ZQ | to GND | 240 Ω 1 % |
 | DDR_DRST_B | to GND | 4.7 kΩ |

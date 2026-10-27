@@ -5,8 +5,9 @@
 
 Exports the netlist of kicad/zynq_card.kicad_sch (kicad-cli) and the pad nets of reference/zynqpcb/DFTBoard.kicad_pcb
 (pcbnew, via tools/p2k/bin/kipy; cached in work/jc_pcb_padnets.csv). The block parts are every part of sheet 1
-(ddr3) and the parts of sheet 5 (soc_power) with a reference below 200 (the source's: U20 unit 9 and the SoC decaps);
-U20 counts with the pins of the units drawn on those sheets. For them:
+(ddr3) and the parts of sheets 5 (soc_power) and 6 (soc_config) with a reference below 200 (the source's: U20, the SoC
+decaps, R9/R10). U20 counts with the units drawn on those sheets: every pin on sheets 1 and 5; on sheet 6 only the
+balls on a source rail or on a net of another block part (FULL_U20, RAILS). For them:
 - connectivity: two pads share a net here exactly when they share one on the source board;
 - names: the DDR3_* nets, VREF, DDR3_VTT and the rails come out under the expected names (NET_MAP: +1V0/+1V8/+1V35/
   +3V3 -> ours; the source's sheet-local nets get our sheet path);
@@ -31,7 +32,12 @@ SCH = os.path.join(ROOT, "kicad", "zynq_card.kicad_sch")
 SHEETS = {
     "/01 ddr3/": ("01_ddr3.kicad_sch", "/DDR3/"),
     "/05 soc_power/": ("05_soc_power.kicad_sch", "/Power/"),
+    "/06 soc_config/": ("06_soc_config.kicad_sch", None),
 }
+# U20 units on these sheets are compared pin by pin. On the other block sheets only the U20 balls on a source rail
+# (their fan-out is block copper) or on a net of another block part are: the signal balls are routed here.
+FULL_U20 = {"/01 ddr3/", "/05 soc_power/"}
+RAILS = {"GND", "+1V0", "+1V8", "+1V35", "+3V3", "/Power/VCCAUX"}
 
 # source net -> our net: rails renamed; local labels of juliancoy's sheets get our sheet path (net_name())
 NET_MAP = {
@@ -40,12 +46,18 @@ NET_MAP = {
     "+1V35": "1V35",
     "+3V3": "3V3",
     "DDR3_VTT_EN": "/DDR3_VTT_EN",  # E3: a sheet port (U8 EN + R25), named by the root sheet
+    "PROGRAM_B": "/06 soc_config/cfg_program_n",  # R9
+    "INIT_B": "/06 soc_config/cfg_init_n",  # R10
 }
 # (ref, pad): reason. The net differs from the source by design.
 EXPECTED = {
     ("U20", "H10"): "E5: VCCPLL through FB501, not straight on +1V8",
     ("C59", "1"): "E6: MIO1 (E12) cap, the MIO banks are 1.8 V here",
     ("C122", "1"): "E6: MIO0 (C6) cap, the MIO banks are 1.8 V here",
+    **{("U20", b): "E7: VCCO_MIO0 on 1V8 (bank 500 at 1.8 V)" for b in ("B3", "C6")},
+    **{("U20", b): "E7: VCCO_MIO1 on 1V8 (bank 501 at 1.8 V)" for b in ("A10", "B13", "D9", "E12")},
+    ("U20", "G10"): "E8: RSVDGND left open (UG865 v1.9: do not connect)",
+    ("U20", "B6"): "E3: PS_MIO14 no longer drives DDR3_VTT_EN (spare MIO)",
 }
 
 PADNETS_PY = """
@@ -97,9 +109,16 @@ def main():
     src, src_fp = source_pads()
     comps, ours = our_netlist()
     block = {r for r, c in comps.items() if c["sheet"] in SHEETS and is_block(r, c["sheet"])}
-    # U20 is on several sheets: compare only the pins of the units drawn on the block sheets
+    # U20 is on several sheets: compare the pins of the units drawn on the block sheets (FULL_U20, RAILS)
     sheet_pins = u20_pins()
-    keys = sorted(k for k in ours if k[0] in block and (k[0] != "U20" or k[1] in sheet_pins))
+    block_nets = {n for (r, _), n in src.items() if r in block and r != "U20" and n}
+
+    def compared(pad):
+        sheet = sheet_pins.get(pad)
+        net = src.get(("U20", pad))
+        return sheet in FULL_U20 or (sheet and (net in RAILS or net in block_nets))
+
+    keys = sorted(k for k in ours if k[0] in block and (k[0] != "U20" or compared(k[1])))
     fails = []
     for r in sorted(block):
         if r not in src_fp:
@@ -140,8 +159,9 @@ def main():
 
 
 def is_block(ref, sheet):
-    """Sheet 1 is all block; elsewhere the block parts keep the source's references, all below 200."""
-    if ref.startswith("#"):
+    """Sheet 1 is all block; elsewhere the block parts keep the source's references, all below 200 (but the
+    family connectors J1..J9 are ours)."""
+    if ref.startswith(("#", "J")):
         return False
     num = ref.lstrip("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     return sheet == "/01 ddr3/" or (num.isdigit() and int(num) < 200)
@@ -151,20 +171,20 @@ def net_name(src_net):
     if src_net in NET_MAP:
         return NET_MAP[src_net]
     for ours, (_, theirs) in SHEETS.items():
-        if src_net.startswith(theirs):
+        if theirs and src_net.startswith(theirs):
             return ours + src_net[len(theirs):]
     return src_net
 
 
 def u20_pins():
-    """Pin numbers of the U20 units placed on the block sheets."""
+    """{pin number: our sheet path} of the U20 units placed on the block sheets."""
     sys.path.insert(0, os.path.join(TOOLS, "p2k"))
     from p2k.sexpr import find_all, load
-    pins = set()
-    for fname, _ in SHEETS.values():
+    pins = {}
+    for path, (fname, _) in SHEETS.items():
         for s in find_all(load(os.path.join(ROOT, "kicad", fname)), "symbol"):
             if any(p[1] == "Reference" and p[2] == "U20" for p in find_all(s, "property")):
-                pins |= {p[1] for p in find_all(s, "pin")}
+                pins.update({p[1]: path for p in find_all(s, "pin")})
     return pins
 
 

@@ -18,7 +18,7 @@ import sys
 TOOLS = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(TOOLS)
 sys.path.insert(0, os.path.join(TOOLS, "p2k"))
-from p2k.symgen import Sym, find, find_all, from_std, load, power, rename, run, set_prop  # noqa: E402
+from p2k.symgen import PI, Sym, box, find, find_all, from_std, load, power, rename, run, set_prop  # noqa: E402
 
 JC_LIB = os.path.join(ROOT, "reference", "zynqpcb", "DFTBoard-cache.lib")
 JC_SYM = os.path.join(ROOT, "work", "jc_cache.kicad_sym")
@@ -62,6 +62,20 @@ def from_jc(cache, name):
     return sym
 
 
+def avc4t774():
+    """SN74AVC4T774RSVR (C779392), the JTAG shifter of the Agilex 3 card (~/dev/ti60f225_control_card): RSV
+    (UQFN-16) pin numbers, the same as the SN74AXC4T774RSV (TI SCES898C Table 4-1). DIRx/OE are referenced to VCCA."""
+    io, inp = "bidirectional", "input"
+    left = [(14, "VCCA", PI), (15, "DIR1", inp), (16, "DIR2", inp), (5, "DIR3", inp), (6, "DIR4", inp),
+            (7, "~{OE}", inp), (1, "A1", io), (2, "A2", io), (3, "A3", io), (4, "A4", io), (8, "GND", PI)]
+    right = [(13, "VCCB", PI), None, None, None, None, None, (12, "B1", io), (11, "B2", io), (10, "B3", io),
+             (9, "B4", io)]
+    s = box("SN74AVC4T774", "U", left, right, value="SN74AVC4T774RSVR",
+            desc="4-bit dual-supply translator, per-bit direction, UQFN-16 (RSV). DIRx = H: A to B")
+    set_prop(s, "Datasheet", "https://www.ti.com/lit/ds/symlink/sn74avc4t774.pdf")
+    return s
+
+
 def build():
     cache = jc_cache()
     syms = [from_jc(cache, n) for n in JC_SYMBOLS]
@@ -73,6 +87,8 @@ def build():
         from_std("Device", "C_Polarized", "C_Polarized", "C"),
         from_std("Device", "LED", "LED", "D"),
         from_std("Device", "FerriteBead_Small", "FerriteBead_Small", "FB"),
+        from_std("Connector_Generic", "Conn_01x05", "Conn_01x05", "J"),
+        avc4t774(),
         rename(from_std("power", "PWR_FLAG", "PWR_FLAG", "#FLG"), "PWR_FLAG"),
     ]
     syms += [power(n, n == "GND") for n in ("GND", "1V0", "1V8", "1V35", "3V3")]
