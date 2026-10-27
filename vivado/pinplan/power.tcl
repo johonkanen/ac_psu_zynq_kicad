@@ -39,4 +39,9 @@ row $f th_max_50_bare maximum 50 - none 22
 row $f th_typ_60_hs   typical 60 - none 10
 row $f th_max_60_hs   maximum 60 - none 10
 row $f th_max_70_hs   maximum 70 - none 10
+# the enclosure's worst case is 40 C ambient (user, 2026-10-27)
+row $f th_typ_40_bare typical 40 - none 22
+row $f th_max_40_bare maximum 40 - none 22
+row $f th_typ_40_hs   typical 40 - none 10
+row $f th_max_40_hs   maximum 40 - none 10
 close $f

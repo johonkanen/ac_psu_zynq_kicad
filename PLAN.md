@@ -252,8 +252,10 @@ Then the copper is copied, and the net of every copied item is checked against o
 6. ~~Power budget~~ **done 2026-10-27** (`POWER_BUDGET.md`, Vivado `report_power`):
    - 5 V input 0.89 A typical / 1.44 A high, so the card needs the planned 1.5–2 A baseboard U8.
    - Rails: 4 × TLV62585 (1V0 up to 2.4 A, 1V8, 1V35, 3V3) + the block's TPS51200 for VTT.
-   - **Thermal:** the bare card exceeds Tj 100 °C above about 55 °C ambient; with a small BGA heatsink it holds 85 °C at
-     60 °C ambient (worst-case silicon). Plan a heatsink on U20 and thermal vias. **Open: the enclosure ambient.**
+   - **Thermal:** the ambient is 40 °C worst case. A heatsink is required: worst-case silicon is not stable bare. With
+     **Wakefield 960-23-33-D-AB-0** (diagonal push pins), Tj is 61 °C (+4 °C for the PL).
+   - **Heatsink holes:** 2 × NPTH Ø3.2 mm at (+14.93, +14.93) / (−14.93, −14.93) mm from U20, on the block-frame
+     diagonal that is free of block copper (`POWER_BUDGET.md` §Heatsink).
 7. **Software path:** confirm the PS7 config (Vivado board delays from `tools/ddr3_review.py --json`)
    and a Buildroot/PetaLinux image for a Zynq with eMMC on SD0. A ZedBoard or EBAZ4205-class board is enough to try the
    software early.
@@ -287,8 +289,10 @@ Then the copper is copied, and the net of every copied item is checked against o
    - Leave room on the J9 (east) side for the PHY, which is routed here.
    - Several block poses can be scored quickly: for each candidate, run the import and a quick route of the non-block
      nets (KiCadRoutingTools `route.py`, as in the Ti135 placement work).
-3. Place the rest around the block: power cells on B.Cu (as on the Ti135 card), ADC south, J3 pull-downs at J3.
-4. The bottom-side parts must stay under the 5.3 mm card-to-baseboard gap. The block has U8 (TPS51200) and parts on
+3. **Heatsink:** add the two NPTH Ø3.2 mm push-pin holes with the block, at ±14.93 mm on its free diagonal, plus the
+   Ø6 mm keep-outs. Keep the 24 × 23.5 mm base area clear of anything taller than the package.
+4. Place the rest around the block: power cells on B.Cu (as on the Ti135 card), ADC south, J3 pull-downs at J3.
+5. The bottom-side parts must stay under the 5.3 mm card-to-baseboard gap. The block has U8 (TPS51200) and parts on
    B.Cu; check them against the baseboard parts below.
 
 ### Phase 4: routing (only outside the block)

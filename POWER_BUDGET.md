@@ -111,31 +111,74 @@ Other regulators:
 The Zynq is the hot part: 1.8–3.0 W on chip. The CLG484 is a wire-bond package with no lid, and its leakage rises
 steeply with temperature.
 
-Vivado still-air estimates. "bare" is θJA 22 °C/W, estimated for this 76 × 65 mm card; Vivado's own 4" × 4" board
-gives 17.3 °C/W. "heatsink" is θJA 10 °C/W, a small BGA heatsink with thermal tape. The PL allowance is not included:
-add about +5 °C bare.
+**Enclosure ambient: 40 °C worst case, with room above the card for a heatsink** (user, 2026-10-27).
+
+Package data (UG865 Table 5-1, XC7Z020-CLG484): **θJB 7.4, θJC 3.35, θJA 18.2 °C/W** (JEDEC board, still air);
+13.9 °C/W at 250 LFM.
+
+Vivado still-air estimates (`vivado/pinplan/power_summary.csv`):
+- **bare:** θJA 22 °C/W, estimated for this 76 × 65 mm card (smaller than the JEDEC and Vivado boards);
+- **heatsink:** θJA 10 °C/W. Estimate: the case path (θJC 3.35 + about 0.5 for thermal tape + about 9–10 for the
+  23 × 23 × 33 mm pin-fin in natural convection) runs in parallel with the board path (about 22), which gives
+  8–9 °C/W. 10 is used as the conservative value.
+
+The PL allowance (+0.25 / +0.40 W) is not in the Vivado model: add θJA × P, i.e. +2.5…4 °C with the heatsink and
++5…9 °C bare.
 
 | Case | Ambient | Tj | Verdict (I grade, Tj ≤ 100 °C) |
 |---|---|---|---|
-| typical silicon, bare | 40 °C (Vivado θJA 17.3) | 71 °C | OK |
-| typical silicon, bare | 50 °C | 93 °C | marginal |
-| typical silicon, bare | 60 °C | 108 °C | **over** |
-| worst silicon, bare | 50 °C | thermal runaway (Vivado caps at 125 °C) | **over** |
-| typical silicon, heatsink | 60 °C | 79 °C | OK |
+| typical silicon, bare | 40 °C | 81 °C (+5…9 for the PL) | marginal |
+| **worst silicon, bare** | 40 °C | **thermal runaway** (Vivado caps at 125 °C) | **over** |
+| typical silicon, heatsink | 40 °C | 57 °C (+3) | OK |
+| **worst silicon, heatsink** | **40 °C** | **61 °C (+4)** | **OK, about 35 °C margin** |
 | worst silicon, heatsink | 60 °C | 85 °C | OK |
 | worst silicon, heatsink | 70 °C | 99.6 °C | at the limit |
 
-**Consequences for the layout:**
-- **Plan a heatsink:** a 19 × 19 mm BGA heatsink on the top of U20 with thermal tape or a clip. Keep the area around
-  the SoC on F.Cu free of tall parts, and check the height in the enclosure.
-- **Thermal vias:** GND vias in the BGA's centre GND balls into In1/In3/In5, plus copper pours on F/B around the SoC.
-  This lowers θJA, especially for the bare case.
-- **CPU clock:** cap it in software (cpufreq) if the enclosure runs hot; at 333 MHz the PS dynamic roughly halves.
-- **Measure** the Zynq die temperature on the first board: XADC on-chip temperature, readable from Linux.
+**Decided 2026-10-27: a heatsink is fitted. It is required, not optional:** on this card, worst-case silicon without
+it is not stable even at 40 °C.
+
+### Heatsink: Wakefield-Vette 960-23-33-D-AB-0
+
+The same part the Agilex card reserved:
+- DigiKey 345-1804-ND; 23 × 23 mm footprint, 33 mm pin fins, black anodised aluminium;
+- 2.8 °C/W at 200 LFM (sink only);
+- **two plastic push pins on the diagonal** with compression springs.
+
+Drawing: Wakefield-Vette *960 Series Plastic Push Pin Heat Sinks*, 23 mm page.
+
+| Item | Value |
+|---|---|
+| PCB holes | **2 × Ø3.18 mm (0.125")**, on the diagonal at **(+14.93, +14.93) and (−14.93, −14.93) mm** from the heatsink centre, i.e. a 29.85 mm square pitch. Place the centre on U20's centre |
+| Heatsink base | 24.00 × 23.50 mm; with the pin tabs it is 36.71 mm across the diagonal. The CLG484 body is 19 × 19 mm, so the base overhangs 2.5 mm per side: nothing taller than the package (about 1.5 mm) under the base |
+| Hole type on this card | **NPTH Ø3.2 mm** (JLC NPTH ±0.05 mm), with a copper keep-out ring on all layers. The Agilex card uses plated GND vias, 5 mm pad / 3.0 mm drill |
+| Keep-out | Ø6 mm around each hole on F.Cu and B.Cu for the pin head, spring and barb; no tracks within 0.5 mm of the hole wall on any layer |
+| Which diagonal | In the juliancoy block frame, **(+,+)/(−,−)** around U20: no block copper within 3 mm. The other diagonal cuts the DDR3_VTT_EN trace. Keep the same diagonal relative to the block when it is placed (it rotates with the block) |
+| Interface | thermal tape or pad between heatsink and package (the "-0" suffix means no interface material is fitted) |
+
+**Checked against the Agilex card** (`~/dev/agilex3_soc_control_card`, read only from here):
+- **Position: OK.** The holes are at (+14.98, +14.84) and (−14.88, −15.01) mm from U7, i.e. the ±14.93 mm pattern
+  within 0.1 mm. Commit `3b15c92` "move heat sink pins to match 960-23-33-D-AB-0".
+- **Size: wrong.** The holes are **3.0 mm drills, smaller than the Ø3.18 mm the push pins need.** The pins may not go
+  in, or may crack.
+- Its own board note still says "heatsink mounting holes are just a sketch". To report to that card's session: the
+  drill should be about 3.2 mm (NPTH, or PTH finished at ≥ 3.18 mm).
+
+Still to check:
+- **[verify]** the push-pin grip range for our stack: 1.6 mm PCB + about 1.5 mm CLG484 + tape. The datasheet has no
+  number; Mouser's page on the 960 pins gives a 4–9.4 mm stack-up range.
+- **[verify]** how far the barbs stick out below the card: they must clear the baseboard parts within the 5.3 mm
+  card-to-baseboard gap (`MECHANICAL.md`).
+
+### Other thermal measures
+
+- **Thermal vias:** GND vias in the BGA's centre GND balls into In1/In3/In5, plus GND pours on F/B around the SoC.
+- **CPU clock:** a software cap (cpufreq) is still available as a fallback.
+- **Measure** the die temperature on the first board with the XADC on-chip sensor, readable from Linux.
 
 ## Open
 
-- [ ] **The enclosure ambient** around the control card, and the space above it for a heatsink.
+- [x] ~~The enclosure ambient~~ 40 °C worst case, room for a heatsink (2026-10-27): Wakefield 960-23-33-D-AB-0.
+- [ ] Push-pin grip range and barb protrusion against the baseboard gap.
 - [ ] Re-run `vivado/pinplan/power.tcl` on the real design: replace the PL allowance, and set the real CPU clock.
 - [ ] Check the DDR3L, eMMC and QSPI currents against their data sheets.
 - [ ] Measure the 5V_ISOL current and the die temperature on the first board.
