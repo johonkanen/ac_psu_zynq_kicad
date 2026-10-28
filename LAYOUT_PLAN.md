@@ -169,23 +169,27 @@ applied.
 
 Rotation 270 puts the DDR east; rotation 90 puts the block off the board, and the import now refuses that.
 
-| Trial | U20, rotation | Best seed: open nets | Seeds (6) | Vias / copper of the best |
-|---|---|---|---|---|
-| A0 | (164, 87), 0 | 29 | 29–71 | 763 / 7.36 m |
-| Aw | (161, 87), 0 | 32 | 32–43 | 745 / 6.85 m |
-| Ae | (167, 87), 0 | 28 | 28–73 | 742 / 6.57 m |
-| B0 | (152, 86), 270 | 36 | 36–51 | 758 / 7.67 m |
-| B1 | (150, 84), 270 | 36 | 36–46 | 745 / 6.80 m |
+Open nets of the best seed, and of the next three, with the block copper protected (`KICAD_RIP_PREEXISTING=0`,
+rerun 2026-10-28). The first runs let the router rip block copper: it ripped `DDR3_DQ21` and the VRP net for RGMII
+and restored them, and those scores (in brackets) were too kind to A0.
 
-- **A beats B** at the best seed and across the seeds. A0/Aw/Ae are within the seed spread of each other.
-- **These scores let the router rip block copper:** it ripped `DDR3_DQ21` and the VRP net for RGMII, then restored
-  them. `pose_trial.sh` now runs the judge with `KICAD_RIP_PREEXISTING=0`. A clean rerun of the judges (no
-  re-placement: `judge_seeds.py work/pose/NAME/wk/judge.json ...`, one trial at a time, memory) was stopped for
-  lack of memory and is still to do.
+| Trial | U20, rotation | Best seed (first run) | Next three seeds | Vias / copper of the best |
+|---|---|---|---|---|
+| A0 | (164, 87), 0 | 35 (29) | 38, 39, 40 | 751 / 6.95 m |
+| Aw | (161, 87), 0 | 32 (32) | 34, 37, 40 | 736 / 6.55 m |
+| Ae | (167, 87), 0 | 26 (28) | 38, 40, 40 | 741 / 6.67 m |
+| B0 | (152, 86), 270 | 37 (36) | 43, 44, 47 | 740 / 7.37 m |
+| B1 | (150, 84), 270 | 43 (36) | 45, 46, 53 | 748 / 7.01 m |
+
+- **A beats B** at the best seed and across the seeds. A0/Aw/Ae overlap within the seed spread (only Ae's best seed
+  stands out).
+- Seeds at 68–83 open nets with about 4.3 m of copper are routes that stopped early; they are not placements.
+- Still without `KICAD_PYTHON` (the router then blocks the block pours' outlines, not their fills): the same at
+  every pose.
 - **Open at every pose, whatever the pose:**
   - QSPI (MIO1-6, balls A1-A4/E4/F6, the U20 row facing the DDR) is walled in by byte-0 DDR copper
     (`boxed_in_static`). juliancoy escapes these balls on F.Cu between the DDR traces to one via each and runs on
-    B.Cu (8.7–17.7 mm per net). Our import drops his MIO escapes, so these must be copied (a new REUSE_LOG entry).
+    B.Cu (8.7–17.7 mm per net). Our import dropped his MIO escapes; they are now copied (REUSE_LOG E10).
   - 3V3_analog and 5V0, which the chain does not route.
 - **Kept: A0**, the pose the board already has. The user confirms it; Ae (+3 mm east) is equal within the noise.
 
@@ -209,20 +213,48 @@ Rotation 270 puts the DDR east; rotation 90 puts the block off the board, and th
   - `prep.sh [BOARD [RUN_DIR [--drop-soc-decaps]]]`: strips the copper first (the placer refuses a routed board;
     the zones survive, unfilled). A seed goes back onto the board with its copper through
     `tools/apply_placement.py`, which never moves a locked part.
-- **178 parts from A0's best judged seed** (`work/pose/A0/wk/s4`). Then **C501–C529/FB501** were placed in a second
-  run with every other part locked, on B.Cu, as group `soc_decaps` (seed 3 of 4: the others put a decap in the
-  eMMC's escape rows).
+- **First pass:** 178 parts from A0's best judged seed (`work/pose/A0/wk/s4`), then C501–C529/FB501 in a second
+  run with every other part locked, on B.Cu, as group `soc_decaps`. **It scattered the groups:** the intent had no
+  proximity claims, so 36 Ethernet parts sat 11–65 mm from U901, two J3 arrays 70 mm from J3, the ADC chain spread
+  over 30 mm.
+- **Second pass (the board now):**
+  1. **`tools/place_analog.py`**, ported from the Ti135 card: the ADC chain and the 3V3_analog LDO take the Ti135
+     card's final positions relative to J3. That card copied the Agilex 5 card and adjusted by hand, on our outline,
+     with the same circuit and J1/J2/J3/J5 at the same coordinates. 15 of 20 parts sit exactly on their Ti135 spots.
+     The mux (U1201), its decap and two monitor resistors would be inside our block area, so they go to the nearest
+     free spot (2.5–4.8 mm). C342 sits at the LDO output. The 8 J3 pull-down arrays go to B.Cu in a column beside J3,
+     each level with its pins. These parts are locked. (`~/dev/ti60f225_control_card` is not a usable source: another
+     baseboard connector, two ADC chains, no NCP163.)
+  2. **A KRT re-place of the other 143 parts with proximity claims** (`placement/touchup.py`). Locked: the analog
+     section, the block, the connectors, H1/H2, our SoC decaps. Each part claims the pads of the chip it serves on a
+     shared non-GND net (its group's chips first, then the anchors of the groups it is `near`), 3 mm for a cap and
+     5 mm for the rest, `--claim-weight 20` as on the Ti135 card. The power groups get no claims: their templates
+     hold them. 6 seeds; the judge's best is s1 (`work/place2`).
+  - **Result against the first pass:** claimed parts' median distance to their partner pins 11.1 → 4.0 mm, parts
+    more than 1 mm past their claim 75 → 35. Farthest member from its group anchor: Ethernet 65 → 23 mm, J3 arrays
+    71 → 22, supervisor 43 → 7, JTAG 18 → 7. Quick route: 68 joins needed (the first pass's A0 seeds: 58–69).
+    Unmet claims are mostly the config straps, whose balls are inside the block keep-out.
 - **Checks:**
   - DRC: parity 0; no courtyard, clearance or short errors. 499 unconnected (unchanged), silk overlaps 199.
+    20 dangling vias: the source's 14 plus the 6 QSPI escape vias (E10), which wait for phase 4.
   - `tools/check_block_copper.py`: 0 failures. It now picks the block parts as the import does: our locked
     connectors share refs with juliancoy's parts.
-  - `check_floorplan`: 0 errors.
+  - No part off the board.
 - Renders: `reports/rough_placement_top.png` / `_bottom.png`.
 - **To fix by hand (step 4.4):**
-  - PHY passives placed in the NW corner by J3, about 40 mm from U901: C920–C922, C930–C935, R925, R928;
-  - the SoC decaps: they sit south/south-east of the block, and C502/C514/C522 are down by J5. They belong under
-    and around U20 on B.Cu;
+  - U801 (QSPI flash) landed south of U20 at about (164, 107); its escape vias are at U20's north-east, so it
+    belongs east of the block near (182, 80);
+  - Y901 is about 10 mm from the PHY; C601 (PS_MIO_VREF) sits by J3;
+  - the config straps R601–R612: to the block edge nearest their balls;
+  - the SoC decaps: they sit south/south-east of the block, some down by J5. They belong under and around U20 on
+    B.Cu (port the Ti135 card's `place_free.py` / `place_bga_decaps.py`, which avoid the real vias and tracks);
   - the rest of the step-4.4 list.
+- **What KRT is good for here** (survey, 2026-10-28; the Ti135 card's experience agrees): coarse placement by
+  function and side, the buck templates, scoring alternatives, and re-placing a few parts with the rest locked and
+  claims to their pins. Not for parts among existing copper (its placer sees courtyards, not vias or tracks), not
+  for layouts copied from a sibling card, and not without claims (it scatters the helpers). Its quick-route scores
+  rank alternatives, but they are noisy (one pose's seeds span 26–40 open nets) and do not predict routability.
+  Always run the router with `KICAD_RIP_PREEXISTING=0` and `KICAD_PYTHON=tools/p2k/bin/kipy`.
 
 Placement rules:
 - **Power cells on B.Cu, south and east** (y > 98 and/or x > 180), near J6 and away from the DDR. Nothing switching

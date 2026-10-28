@@ -26,4 +26,4 @@ for sk in "$H"/sketches_B/U*.json; do
         --write-intent intent.json \
         | grep -E "^  (ground return|NOTE)" | grep -v ESTIMATED || true
 done
-[[ -n "$DROP" ]] || cp intent.json "$H/intent.json"
+[[ -n "${1:-}" ]] || cp intent.json "$H/intent.json"     # the real board's intent only

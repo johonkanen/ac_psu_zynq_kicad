@@ -25,6 +25,8 @@ mirrored), --out another board file (pose trials in work/; the .kicad_pro/.kicad
    - in a group that also serves unchanged pads, the items on the changed pad are dropped (E3: the PS_MIO14 branch).
    Then every track end that lost its connection, and every signal via that no longer joins two layers, is pruned
    back, repeatedly (stubs to juliancoy's parts too).
+   **Escapes (E10):** for our signal balls in ESCAPES (QSPI, walled in by the DDR copper), juliancoy's F.Cu escape
+   from the ball to its first via is copied too, on our net. Phase 4 routes on from the via.
 5. **Zones.** The source zones on block nets are copied, clipped to the block outline (several of juliancoy's rails
    are board-wide pours on the signal layers: +1V8 on In2/In4, +3V3 on In6). The GND planes on In1/In3/In5 become our
    own, over the whole board. The others (+5V, GNDA, his regulators' nodes) are not copied.
@@ -64,6 +66,11 @@ HOLE_FP = "MountingHole:MountingHole_3.2mm_M3"
 # source net -> ours for copper with no pad (the rest goes by pad); check_block_netlist's map plus GND and VTT
 RAIL_MAP = {**{k: v for k, v in NET_MAP.items() if k.startswith("+")}, "GND": "GND", "DDR3_VTT": "DDR3_VTT",
             "/Power/VCCAUX": "/05 soc_power/VCCAUX"}
+
+# our U20 signal balls whose fan-out is copied from the source, ball -> our net (REUSE_LOG E10): the QSPI balls face
+# the DDR and are walled in by byte-0 copper; juliancoy (same MIO1-6 use) escapes each on F.Cu to one via
+ESCAPES = {"A1": "/qspi_cs_n", "A2": "/qspi_io0", "A3": "/qspi_io3", "A4": "/qspi_sclk", "E4": "/qspi_io2",
+           "F6": "/qspi_io1"}
 
 mm, iu = pcbnew.ToMM, pcbnew.FromMM
 
@@ -161,6 +168,31 @@ class Graph:
                             todo.append(j)
             out.append(grp)
         return out
+
+
+def escape_walk(g, pad):
+    """The source copper from a ball (item `pad`) along F.Cu tracks to the first via: the set of items, or why it is
+    not a plain escape (a branch, another pad, a second via, a track on another layer)."""
+    items, todo, vias = set(), [pad], set()
+    while todo:
+        k = todo.pop()
+        for j, _ in g.adj[k]:
+            if j == pad or j in items:
+                continue
+            o = g.items[j]
+            if o.GetClass() == "PAD":
+                return f"reaches another pad ({o.GetParentFootprint().GetReference()}.{o.GetNumber()})"
+            if o.GetClass() == "PCB_VIA":
+                vias.add(j)
+                items.add(j)
+                continue
+            if o.GetLayer() != pcbnew.F_Cu:
+                return f"a track on {o.GetLayerName()} before the via"
+            items.add(j)
+            todo.append(j)
+    if len(vias) != 1:
+        return f"{len(vias)} vias, not one"
+    return items
 
 
 # ---- geometry ---------------------------------------------------------------------------------------------------
@@ -382,8 +414,25 @@ def main():
         log.append(f"changed balls/pads, {what}, {'on a net' if connected else 'open'}: {len(pads)}"
                    + (f" ({' '.join(pads)})" if len(pads) <= 16 else ""))
 
-    # nets: by pad, else by name
+    # juliancoy's escapes of our signal balls that the block walls in (ESCAPES, REUSE_LOG E10): ball -> first via
     fails = []
+    u20pads = {pad_of[j][1].GetNumber(): j for j in pad_of if pad_of[j][0].GetReference() == "U20"}
+    for ball, want in ESCAPES.items():
+        j = u20pads[ball]
+        net = our_net[("U20", ball)]
+        if net != want:
+            fails.append(f"escape U20.{ball}: our net is {net}, not {want}")
+            continue
+        esc = escape_walk(g, j)
+        if isinstance(esc, str):
+            fails.append(f"escape U20.{ball} ({pad_of[j][1].GetNetname()}): {esc}")
+            continue
+        for i in esc:
+            net_of[i] = net
+        kept |= esc
+        log.append(f"escape U20.{ball} -> {net}: {len(esc) - 1} F.Cu segments + 1 via")
+
+    # nets: by pad, else by name
     for grp in g.groups(kept):
         pads = {j for i in grp for j, _ in g.adj[i] if j in keep_pads}
         nets = {our_net[(pad_of[j][0].GetReference(), pad_of[j][1].GetNumber())] for j in pads}
