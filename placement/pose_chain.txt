@@ -1,0 +1,7 @@
+# Pose trial route (LAYOUT_PLAN.md step 3), run by judge_seeds.py from ~/dev/KiCadRoutingTools.
+# 1. the seed's poses onto the trial board, which carries the block copper ({run} is wk/, the board is beside it);
+# 2. the signal nets outside the block on the five signal layers. GND (In1/In3/In5 planes) and the rails are left out:
+#    they become pours, and their parts sit the same distance from the block at every pose.
+@REPO@/tools/p2k/bin/kipy @REPO@/tools/apply_placement.py {in} --board {run}/../board.kicad_pcb --out {out}
+python3 -X utf8 py_router/route.py {in} {out} --nets '*' '!GND' '!1V0' '!1V8' '!1V35' '!3V3' '!5V0' '!3V3_analog' \
+    '!/05 soc_power/VCCAUX' '!*VCCPLL*' '!DDR3_VTT' '!*VREF*' --layers F.Cu In2.Cu In4.Cu In6.Cu B.Cu --json-out {dir}/route.json

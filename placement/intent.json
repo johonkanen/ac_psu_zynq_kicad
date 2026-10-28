@@ -1,0 +1,1655 @@
+{
+ "assembly": {
+  "sides": "both",
+  "why": "observed: 161 pad-bearing part(s) on F and 150 on B, 2 reflow pass(es). every footprint BLOCK (#726): blocks sharing one reference are keyed with an ordinal suffix and counted separately. `pad_bearing` restricts that to blocks carrying at least one pad that is not a paste/mask aperture (#1143), and it is the count the populated-side verdict is taken from -- a zero-pad graphic on the back does not make a board double-sided."
+ },
+ "blocks": [
+  {
+   "group": "sheet:c0a1ecfa",
+   "name": "sheet:c0a1ecfa",
+   "note": "the board is a pile, so its members' bounding box is staging, not a zone (#1103)",
+   "refs": [
+    "C801",
+    "R801",
+    "U801"
+   ],
+   "side": "F"
+  },
+  {
+   "group": "sheet:68c9901b",
+   "name": "sheet:68c9901b",
+   "note": "members are spread across the board and their bounding box overlaps another block, so no zone is claimed. Add one only if this really is a contiguous area",
+   "refs": [
+    "C1301",
+    "C1302",
+    "J2",
+    "J3",
+    "J5",
+    "R1301",
+    "R1302",
+    "R1303",
+    "R1304",
+    "R1305",
+    "R1306",
+    "RN1301",
+    "RN1302",
+    "RN1303",
+    "RN1304",
+    "RN1305",
+    "RN1306",
+    "RN1307",
+    "RN1308",
+    "U1301"
+   ]
+  },
+  {
+   "group": "sheet:7bdd6e85",
+   "name": "sheet:7bdd6e85",
+   "note": "the board is a pile, so its members' bounding box is staging, not a zone (#1103)",
+   "refs": [
+    "D1101",
+    "D1102",
+    "R1101",
+    "R1102"
+   ],
+   "side": "F"
+  },
+  {
+   "group": "sheet:9336bf06",
+   "name": "sheet:9336bf06",
+   "note": "members are spread across the board and their bounding box overlaps another block, so no zone is claimed. Add one only if this really is a contiguous area",
+   "refs": [
+    "C601",
+    "C602",
+    "C603",
+    "J1",
+    "R10",
+    "R601",
+    "R602",
+    "R603",
+    "R604",
+    "R605",
+    "R606",
+    "R607",
+    "R608",
+    "R609",
+    "R610",
+    "R611",
+    "R612",
+    "R613",
+    "R614",
+    "R615",
+    "R616",
+    "R9",
+    "U601"
+   ]
+  },
+  {
+   "group": "sheet:9def9a63",
+   "name": "sheet:9def9a63",
+   "note": "the board is a pile, so its members' bounding box is staging, not a zone (#1103)",
+   "refs": [
+    "C301",
+    "C302",
+    "C303",
+    "C304",
+    "C311",
+    "C312",
+    "C313",
+    "C321",
+    "C322",
+    "C323",
+    "C331",
+    "C332",
+    "C333",
+    "C341",
+    "C342",
+    "L301",
+    "L311",
+    "L321",
+    "L331",
+    "R301",
+    "R302",
+    "R311",
+    "R312",
+    "R321",
+    "R322",
+    "R331",
+    "R332",
+    "U301",
+    "U311",
+    "U321",
+    "U331",
+    "U341"
+   ]
+  },
+  {
+   "group": "sheet:a26c99e1",
+   "name": "sheet:a26c99e1",
+   "note": "the board is a pile, so its members' bounding box is staging, not a zone (#1103)",
+   "refs": [
+    "C1001",
+    "C1002",
+    "C1003",
+    "C1004",
+    "C1005",
+    "R1001",
+    "R1010",
+    "R1011",
+    "R1012",
+    "R1013",
+    "R1014",
+    "R1015",
+    "R1016",
+    "R1017",
+    "R1018",
+    "R1019",
+    "U1001"
+   ],
+   "side": "F"
+  },
+  {
+   "group": "sheet:06650d30",
+   "name": "sheet:06650d30",
+   "note": "the board is a pile, so its members' bounding box is staging, not a zone (#1103)",
+   "refs": [
+    "C401",
+    "R401",
+    "R402",
+    "R403",
+    "R404",
+    "U401"
+   ],
+   "side": "F"
+  },
+  {
+   "group": "sheet:9177889e",
+   "name": "sheet:9177889e",
+   "note": "members are spread across the board and their bounding box overlaps another block, so no zone is claimed. Add one only if this really is a contiguous area",
+   "refs": [
+    "C901",
+    "C910",
+    "C911",
+    "C920",
+    "C921",
+    "C922",
+    "C930",
+    "C931",
+    "C932",
+    "C933",
+    "C934",
+    "C935",
+    "C936",
+    "C940",
+    "C941",
+    "C950",
+    "C951",
+    "FB901",
+    "J9",
+    "R901",
+    "R902",
+    "R903",
+    "R904",
+    "R905",
+    "R906",
+    "R907",
+    "R908",
+    "R909",
+    "R910",
+    "R911",
+    "R912",
+    "R920",
+    "R921",
+    "R922",
+    "R923",
+    "R924",
+    "R925",
+    "R926",
+    "R927",
+    "R928",
+    "R929",
+    "R930",
+    "R931",
+    "R932",
+    "R933",
+    "R950",
+    "U901",
+    "U902",
+    "Y901"
+   ],
+   "side": "F"
+  },
+  {
+   "group": "sheet:84844676",
+   "name": "sheet:84844676",
+   "note": "the board is a pile, so its members' bounding box is staging, not a zone (#1103)",
+   "refs": [
+    "C201",
+    "C202",
+    "C203",
+    "J6"
+   ]
+  },
+  {
+   "group": "sheet:33d57381",
+   "name": "sheet:33d57381",
+   "note": "the board is a pile, so its members' bounding box is staging, not a zone (#1103)",
+   "refs": [
+    "C701",
+    "FB701",
+    "R701",
+    "Y701"
+   ],
+   "side": "F"
+  },
+  {
+   "group": "sheet:07c6272b",
+   "name": "sheet:07c6272b",
+   "note": "derived from the board; tighten or delete",
+   "refs": [
+    "C100",
+    "C101",
+    "C102",
+    "C103",
+    "C104",
+    "C105",
+    "C106",
+    "C109",
+    "C110",
+    "C125",
+    "C126",
+    "C127",
+    "C128",
+    "C129",
+    "C130",
+    "C131",
+    "C93",
+    "C94",
+    "C95",
+    "C96",
+    "C97",
+    "C98",
+    "C99",
+    "D7",
+    "R101",
+    "R102",
+    "R25",
+    "R46",
+    "R47",
+    "R48",
+    "R49",
+    "R50",
+    "R51",
+    "R52",
+    "R53",
+    "R54",
+    "R55",
+    "R56",
+    "R57",
+    "R58",
+    "R59",
+    "R60",
+    "R61",
+    "R62",
+    "R63",
+    "R64",
+    "R65",
+    "R66",
+    "R67",
+    "R68",
+    "R69",
+    "R70",
+    "R71",
+    "R72",
+    "R73",
+    "R74",
+    "R75",
+    "R76",
+    "U15",
+    "U16",
+    "U20",
+    "U8"
+   ],
+   "zone": [
+    141.43,
+    51.87,
+    177.07,
+    96.9
+   ]
+  },
+  {
+   "group": "sheet:a8c730c1",
+   "name": "sheet:a8c730c1",
+   "note": "members are spread across the board and their bounding box overlaps another block, so no zone is claimed. Add one only if this really is a contiguous area",
+   "refs": [
+    "C11",
+    "C114",
+    "C116",
+    "C117",
+    "C118",
+    "C119",
+    "C121",
+    "C122",
+    "C14",
+    "C15",
+    "C17",
+    "C18",
+    "C19",
+    "C20",
+    "C23",
+    "C24",
+    "C26",
+    "C28",
+    "C29",
+    "C30",
+    "C31",
+    "C33",
+    "C34",
+    "C4",
+    "C46",
+    "C47",
+    "C5",
+    "C50",
+    "C501",
+    "C502",
+    "C503",
+    "C504",
+    "C505",
+    "C506",
+    "C507",
+    "C508",
+    "C509",
+    "C510",
+    "C511",
+    "C512",
+    "C513",
+    "C514",
+    "C515",
+    "C516",
+    "C517",
+    "C518",
+    "C519",
+    "C520",
+    "C521",
+    "C522",
+    "C523",
+    "C524",
+    "C525",
+    "C526",
+    "C527",
+    "C528",
+    "C529",
+    "C55",
+    "C57",
+    "C59",
+    "C61",
+    "C65",
+    "C67",
+    "C8",
+    "C9",
+    "FB1",
+    "FB501"
+   ],
+   "side": "B"
+  },
+  {
+   "group": "sheet:9b89fad0",
+   "name": "sheet:9b89fad0",
+   "note": "the board is a pile, so its members' bounding box is staging, not a zone (#1103)",
+   "refs": [
+    "C1201",
+    "C1202",
+    "C1203",
+    "C1204",
+    "C1205",
+    "C1206",
+    "R1201",
+    "R1202",
+    "R1203",
+    "R1204",
+    "R1205",
+    "R1206",
+    "R1210",
+    "R1211",
+    "R1212",
+    "U1201",
+    "U1202",
+    "U1203"
+   ],
+   "side": "F"
+  }
+ ],
+ "board": "fixed.kicad_pcb",
+ "context": {
+  "basis": {
+   "assembly.sides": "observed_baseline",
+   "blocks[sheet:06650d30].side": "observed_baseline",
+   "blocks[sheet:07c6272b].zone": "observed_baseline",
+   "blocks[sheet:33d57381].side": "observed_baseline",
+   "blocks[sheet:7bdd6e85].side": "observed_baseline",
+   "blocks[sheet:9177889e].side": "observed_baseline",
+   "blocks[sheet:9b89fad0].side": "observed_baseline",
+   "blocks[sheet:a26c99e1].side": "observed_baseline",
+   "blocks[sheet:a8c730c1].side": "observed_baseline",
+   "blocks[sheet:c0a1ecfa].side": "observed_baseline",
+   "defaults.zone_tolerance_mm": "derived_default",
+   "edge_connectors[J1].edge": "observed_baseline",
+   "edge_connectors[J1].overhang_mm": "observed_baseline",
+   "edge_connectors[J2].edge": "observed_baseline",
+   "edge_connectors[J2].overhang_mm": "observed_baseline",
+   "edge_connectors[J3].edge": "observed_baseline",
+   "edge_connectors[J3].overhang_mm": "observed_baseline",
+   "edge_connectors[J6].edge": "observed_baseline",
+   "edge_connectors[J6].overhang_mm": "observed_baseline",
+   "edge_connectors[J9].edge": "observed_baseline",
+   "edge_connectors[J9].overhang_mm": "observed_baseline",
+   "envelope.tolerance_mm": "derived_default"
+  },
+  "budget_withheld": {
+   "oob_count": "the board is a pile: its off-board count is staging, not a baseline (#1103)",
+   "overlap_area": "the board is a pile: its overlap is staging, not a baseline (#1103)"
+  },
+  "cutouts": [],
+  "decap_census": {
+   "beyond_radius": 22,
+   "beyond_radius_refs": [
+    "C201",
+    "C202",
+    "C203",
+    "C301",
+    "C302",
+    "C303",
+    "C332",
+    "C341",
+    "C501",
+    "C502",
+    "C503",
+    "C504",
+    "C505",
+    "C506",
+    "C507",
+    "C513",
+    "C514",
+    "C515",
+    "C528",
+    "C529",
+    "C601",
+    "C96"
+   ],
+   "ics": 9,
+   "max_mm": 4.895162678604258,
+   "max_mm_display": 4.8952,
+   "median_mm": 1.3051,
+   "metric": "cap footprint centroid to IC bounding box, clamped to 0 inside (placement.groups.decap_tethers)",
+   "no_rail_chip": 0,
+   "no_rail_chip_refs": [],
+   "population": 132,
+   "search_radius_mm": 5.0,
+   "source": "auto-tethers",
+   "tethers": 110,
+   "unaccounted": 0,
+   "worst_beyond_mm": 28.3131
+  },
+  "edge_contours": 0,
+  "file_locked": [
+   "C100",
+   "C101",
+   "C102",
+   "C103",
+   "C104",
+   "C105",
+   "C106",
+   "C109",
+   "C11",
+   "C110",
+   "C114",
+   "C116",
+   "C117",
+   "C118",
+   "C119",
+   "C121",
+   "C122",
+   "C125",
+   "C126",
+   "C127",
+   "C128",
+   "C129",
+   "C130",
+   "C131",
+   "C14",
+   "C15",
+   "C17",
+   "C18",
+   "C19",
+   "C20",
+   "C23",
+   "C24",
+   "C26",
+   "C28",
+   "C29",
+   "C30",
+   "C31",
+   "C33",
+   "C34",
+   "C4",
+   "C46",
+   "C47",
+   "C5",
+   "C50",
+   "C55",
+   "C57",
+   "C59",
+   "C61",
+   "C65",
+   "C67",
+   "C8",
+   "C9",
+   "C93",
+   "C94",
+   "C95",
+   "C96",
+   "C97",
+   "C98",
+   "C99",
+   "D7",
+   "FB1",
+   "H1",
+   "H2",
+   "J1",
+   "J2",
+   "J3",
+   "J5",
+   "J6",
+   "J9",
+   "R10",
+   "R101",
+   "R102",
+   "R25",
+   "R46",
+   "R47",
+   "R48",
+   "R49",
+   "R50",
+   "R51",
+   "R52",
+   "R53",
+   "R54",
+   "R55",
+   "R56",
+   "R57",
+   "R58",
+   "R59",
+   "R60",
+   "R61",
+   "R62",
+   "R63",
+   "R64",
+   "R65",
+   "R66",
+   "R67",
+   "R68",
+   "R69",
+   "R70",
+   "R71",
+   "R72",
+   "R73",
+   "R74",
+   "R75",
+   "R76",
+   "R9",
+   "U15",
+   "U16",
+   "U20",
+   "U8"
+  ],
+  "note": "read-only, describing the board as it is. The outline is not editable by this toolchain: size, cutouts and slots are mechanical decisions the user owns",
+  "pose_claims_withheld": {
+   "kept": "KiCad-locked parts; a brief / mechanical.json merged after this",
+   "reason": "the board is a pile (100% of the unlocked footprints lie outside the board outline (109 locked part(s) not counted: a lock is a placement decision)): staging poses are not claims",
+   "refs_off_board": [
+    "C1001",
+    "C1002",
+    "C1003",
+    "C1004",
+    "C1005",
+    "C1201",
+    "C1202",
+    "C1203",
+    "C1204",
+    "C1205",
+    "C1206",
+    "C1301",
+    "C1302",
+    "C201",
+    "C202",
+    "C203",
+    "C301",
+    "C302",
+    "C303",
+    "C304",
+    "C311",
+    "C312",
+    "C313",
+    "C321",
+    "C322",
+    "C323",
+    "C331",
+    "C332",
+    "C333",
+    "C341",
+    "C342",
+    "C401",
+    "C501",
+    "C502",
+    "C503",
+    "C504",
+    "C505",
+    "C506",
+    "C507",
+    "C508",
+    "C509",
+    "C510",
+    "C511",
+    "C512",
+    "C513",
+    "C514",
+    "C515",
+    "C516",
+    "C517",
+    "C518",
+    "C519",
+    "C520",
+    "C521",
+    "C522",
+    "C523",
+    "C524",
+    "C525",
+    "C526",
+    "C527",
+    "C528",
+    "C529",
+    "C601",
+    "C602",
+    "C603",
+    "C701",
+    "C801",
+    "C901",
+    "C910",
+    "C911",
+    "C920",
+    "C921",
+    "C922",
+    "C930",
+    "C931",
+    "C932",
+    "C933",
+    "C934",
+    "C935",
+    "C936",
+    "C940",
+    "C941",
+    "C950",
+    "C951",
+    "D1101",
+    "D1102",
+    "FB501",
+    "FB701",
+    "FB901",
+    "L301",
+    "L311",
+    "L321",
+    "L331",
+    "R1001",
+    "R1010",
+    "R1011",
+    "R1012",
+    "R1013",
+    "R1014",
+    "R1015",
+    "R1016",
+    "R1017",
+    "R1018",
+    "R1019",
+    "R1101",
+    "R1102",
+    "R1201",
+    "R1202",
+    "R1203",
+    "R1204",
+    "R1205",
+    "R1206",
+    "R1210",
+    "R1211",
+    "R1212",
+    "R1301",
+    "R1302",
+    "R1303",
+    "R1304",
+    "R1305",
+    "R1306",
+    "R301",
+    "R302",
+    "R311",
+    "R312",
+    "R321",
+    "R322",
+    "R331",
+    "R332",
+    "R401",
+    "R402",
+    "R403",
+    "R404",
+    "R601",
+    "R602",
+    "R603",
+    "R604",
+    "R605",
+    "R606",
+    "R607",
+    "R608",
+    "R609",
+    "R610",
+    "R611",
+    "R612",
+    "R613",
+    "R614",
+    "R615",
+    "R616",
+    "R701",
+    "R801",
+    "R901",
+    "R902",
+    "R903",
+    "R904",
+    "R905",
+    "R906",
+    "R907",
+    "R908",
+    "R909",
+    "R910",
+    "R911",
+    "R912",
+    "R920",
+    "R921",
+    "R922",
+    "R923",
+    "R924",
+    "R925",
+    "R926",
+    "R927",
+    "R928",
+    "R929",
+    "R930",
+    "R931",
+    "R932",
+    "R933",
+    "R950",
+    "RN1301",
+    "RN1302",
+    "RN1303",
+    "RN1304",
+    "RN1305",
+    "RN1306",
+    "RN1307",
+    "RN1308",
+    "U1001",
+    "U1201",
+    "U1202",
+    "U1203",
+    "U1301",
+    "U301",
+    "U311",
+    "U321",
+    "U331",
+    "U341",
+    "U401",
+    "U601",
+    "U801",
+    "U901",
+    "U902",
+    "Y701",
+    "Y901"
+   ],
+   "withheld": [
+    "edge_connectors[].edge read off a pose",
+    "blocks[].zone",
+    "legality_budget.oob_count"
+   ]
+  },
+  "reconciliation": []
+ },
+ "decaps": {},
+ "defaults": {
+  "zone_tolerance_mm": 0.5
+ },
+ "edge_connectors": [
+  {
+   "edge": "west",
+   "overhang_mm": {
+    "max": 0.5,
+    "min": 0.0
+   },
+   "ref": "J1"
+  },
+  {
+   "edge": "west",
+   "overhang_mm": {
+    "max": 0.5,
+    "min": 0.0
+   },
+   "ref": "J2"
+  },
+  {
+   "edge": "north",
+   "overhang_mm": {
+    "max": 0.739,
+    "min": 0.0
+   },
+   "ref": "J3"
+  },
+  {
+   "edge": "south",
+   "overhang_mm": {
+    "max": 0.5,
+    "min": 0.0
+   },
+   "ref": "J6"
+  },
+  {
+   "edge": "east",
+   "overhang_mm": {
+    "max": 5.381,
+    "min": 0.0
+   },
+   "ref": "J9"
+  }
+ ],
+ "envelope": {
+  "rect": [
+   131.531,
+   51.694,
+   207.531,
+   116.821
+  ],
+  "tolerance_mm": 0.5
+ },
+ "keepouts": [
+  {
+   "name": "ddr3_block",
+   "rect": [
+    141.905,
+    52.345,
+    179.505,
+    97.905
+   ],
+   "sides": [
+    "F",
+    "B"
+   ],
+   "allow": [
+    "C100",
+    "C101",
+    "C102",
+    "C103",
+    "C104",
+    "C105",
+    "C106",
+    "C109",
+    "C11",
+    "C110",
+    "C114",
+    "C116",
+    "C117",
+    "C118",
+    "C119",
+    "C121",
+    "C122",
+    "C125",
+    "C126",
+    "C127",
+    "C128",
+    "C129",
+    "C130",
+    "C131",
+    "C14",
+    "C15",
+    "C17",
+    "C18",
+    "C19",
+    "C20",
+    "C23",
+    "C24",
+    "C26",
+    "C28",
+    "C29",
+    "C30",
+    "C31",
+    "C33",
+    "C34",
+    "C4",
+    "C46",
+    "C47",
+    "C5",
+    "C50",
+    "C55",
+    "C57",
+    "C59",
+    "C61",
+    "C65",
+    "C67",
+    "C8",
+    "C9",
+    "C93",
+    "C94",
+    "C95",
+    "C96",
+    "C97",
+    "C98",
+    "C99",
+    "D7",
+    "FB1",
+    "H1",
+    "H2",
+    "R10",
+    "R101",
+    "R102",
+    "R25",
+    "R46",
+    "R47",
+    "R48",
+    "R49",
+    "R50",
+    "R51",
+    "R52",
+    "R53",
+    "R54",
+    "R55",
+    "R56",
+    "R57",
+    "R58",
+    "R59",
+    "R60",
+    "R61",
+    "R62",
+    "R63",
+    "R64",
+    "R65",
+    "R66",
+    "R67",
+    "R68",
+    "R69",
+    "R70",
+    "R71",
+    "R72",
+    "R73",
+    "R74",
+    "R75",
+    "R76",
+    "R9",
+    "U15",
+    "U16",
+    "U20",
+    "U8"
+   ],
+   "why": "the copied SoC + DDR3 block (REUSE_LOG.md): its copper is fixed, so nothing of ours inside"
+  },
+  {
+   "name": "heatsink_H1",
+   "circle": [
+    178.93,
+    101.93,
+    3.0
+   ],
+   "sides": [
+    "F",
+    "B"
+   ],
+   "allow": [
+    "H1"
+   ],
+   "why": "heatsink push pin head and barb (POWER_BUDGET.md)"
+  },
+  {
+   "name": "heatsink_H2",
+   "circle": [
+    149.07,
+    72.07,
+    3.0
+   ],
+   "sides": [
+    "F",
+    "B"
+   ],
+   "allow": [
+    "H2"
+   ],
+   "why": "heatsink push pin head and barb (POWER_BUDGET.md)"
+  }
+ ],
+ "kind": "floorplan-intent",
+ "legality_budget": {},
+ "min_reader": 14,
+ "must_lock": [],
+ "proximity": [
+  {
+   "basis": "pad_edge",
+   "context": {
+    "basis": "the farthest crystal leg on the human corpus, 75th percentile (placement_survey.py)",
+    "limit": "derived_default",
+    "role": "crystal",
+    "source": "placement.crystals"
+   },
+   "max_mm": 8.1,
+   "near": "U901",
+   "pads": {
+    "U901": [
+     "36",
+     "37"
+    ],
+    "Y901": [
+     "1",
+     "3"
+    ]
+   },
+   "ref": "Y901"
+  },
+  {
+   "basis": "pad_edge",
+   "context": {
+    "basis": "the farthest load cap on the human corpus, 75th percentile (placement_survey.py)",
+    "limit": "derived_default",
+    "role": "crystal load cap",
+    "source": "placement.crystals"
+   },
+   "max_mm": 2.2,
+   "near": "Y901",
+   "pads": {
+    "C910": [
+     "1"
+    ],
+    "Y901": [
+     "1"
+    ]
+   },
+   "ref": "C910"
+  },
+  {
+   "basis": "pad_edge",
+   "context": {
+    "basis": "the farthest load cap on the human corpus, 75th percentile (placement_survey.py)",
+    "limit": "derived_default",
+    "role": "crystal load cap",
+    "source": "placement.crystals"
+   },
+   "max_mm": 2.2,
+   "near": "Y901",
+   "pads": {
+    "C911": [
+     "1"
+    ],
+    "Y901": [
+     "3"
+    ]
+   },
+   "ref": "C911"
+  }
+ ],
+ "schema": 1,
+ "units": "mm",
+ "templates": [
+  {
+   "anchor": "U301",
+   "members": [
+    {
+     "ref": "C301",
+     "at": [
+      -0.0025,
+      -2.04
+     ],
+     "rot": 0.0,
+     "pads": {
+      "C301": [
+       "1"
+      ],
+      "U301": [
+       "3"
+      ]
+     },
+     "note": "C1 (CIN): VIN pad at VIN 3, axis along the pin rows' normal, GND pad toward the GND band"
+    },
+    {
+     "ref": "L301",
+     "at": [
+      -3.5625,
+      1.31
+     ],
+     "rot": 270.0,
+     "pads": {
+      "L301": [
+       "1"
+      ],
+      "U301": [
+       "2"
+      ]
+     },
+     "note": "L1 straight out from SW 2, VOUT pad toward -y"
+    },
+    {
+     "ref": "C302",
+     "at": [
+      0.5075,
+      2.035
+     ],
+     "rot": 0.0,
+     "pads": {
+      "C302": [
+       "1"
+      ],
+      "L301": [
+       "2"
+      ]
+     },
+     "note": "C2 (COUT): VOUT pad under L1's output pad, GND pad toward the GND band"
+    },
+    {
+     "ref": "C303",
+     "at": [
+      0.5075,
+      4.105
+     ],
+     "rot": 0.0,
+     "pads": {
+      "C303": [
+       "1",
+       "2"
+      ],
+      "C302": [
+       "1",
+       "2"
+      ]
+     },
+     "note": "second COUT beside C2"
+    },
+    {
+     "ref": "R302",
+     "at": [
+      2.2325,
+      -0.0
+     ],
+     "rot": 0.0,
+     "pads": {
+      "R302": [
+       "1"
+      ],
+      "U301": [
+       "5"
+      ]
+     },
+     "note": "R2 (FB to GND) at FB 5"
+    },
+    {
+     "ref": "R301",
+     "at": [
+      2.2725,
+      -1.51
+     ],
+     "rot": 270.0,
+     "pads": {
+      "R301": [
+       "2"
+      ],
+      "R302": [
+       "1"
+      ]
+     },
+     "note": "R1 (VOUT to FB) beside R2; VOUT sense routed from C2"
+    }
+   ],
+   "tolerance_mm": 0.3,
+   "fitted": {
+    "legs_gap_mm": {
+     "C301": 0.64,
+     "L301": 0.813,
+     "C302": 0.92,
+     "C303": 1.24,
+     "R302": 0.402,
+     "R301": 0.41
+    },
+    "legs_mm": {
+     "C301": [
+      0.64
+     ],
+     "L301": [
+      0.812
+     ],
+     "C302": [
+      0.92
+     ],
+     "C303": [
+      0.62,
+      0.62
+     ],
+     "R302": [
+      0.402
+     ],
+     "R301": [
+      0.41
+     ]
+    },
+    "off_chip_mm": {
+     "C301": 0.11,
+     "L301": 0.102,
+     "C302": 0.105,
+     "C303": 2.175,
+     "R302": 0.102,
+     "R301": 0.602
+    },
+    "gap_mm": 0.1,
+    "ground_return_mm": {
+     "C301": 1.835,
+     "C302": 1.476,
+     "C303": 2.096
+    },
+    "decap_limits": []
+   },
+   "kind": "switching stage",
+   "source": "TI TLV62585 SLVSDE5F, 10.1 Layout Guidelines and Figure 24 (PDRL). Figure -> footprint frame: figure up = -x (outward from the VIN 3 / SW 2 / GND 1 pin row), left = +y, right = -y, down = +x (a turn). L1 straight out from SW, C1 (CIN) left of the chip with VIN up / GND down, C2 (COUT) right with VOUT up / GND down, R1/R2 at FB; GND copper between the two pin rows joins the GND pin and both cap grounds. -- B.Cu variant: sides and turns mirrored in y, because the fitter keeps footprint-frame offsets while the flip mirrors the pads"
+  },
+  {
+   "anchor": "U311",
+   "members": [
+    {
+     "ref": "C311",
+     "at": [
+      -0.0025,
+      -2.04
+     ],
+     "rot": 0.0,
+     "pads": {
+      "C311": [
+       "1"
+      ],
+      "U311": [
+       "3"
+      ]
+     },
+     "note": "C1 (CIN): VIN pad at VIN 3, axis along the pin rows' normal, GND pad toward the GND band"
+    },
+    {
+     "ref": "L311",
+     "at": [
+      -3.5625,
+      1.31
+     ],
+     "rot": 270.0,
+     "pads": {
+      "L311": [
+       "1"
+      ],
+      "U311": [
+       "2"
+      ]
+     },
+     "note": "L1 straight out from SW 2, VOUT pad toward -y"
+    },
+    {
+     "ref": "C312",
+     "at": [
+      0.5075,
+      2.035
+     ],
+     "rot": 0.0,
+     "pads": {
+      "C312": [
+       "1"
+      ],
+      "L311": [
+       "2"
+      ]
+     },
+     "note": "C2 (COUT): VOUT pad under L1's output pad, GND pad toward the GND band"
+    },
+    {
+     "ref": "R312",
+     "at": [
+      2.2325,
+      -0.0
+     ],
+     "rot": 0.0,
+     "pads": {
+      "R312": [
+       "1"
+      ],
+      "U311": [
+       "5"
+      ]
+     },
+     "note": "R2 (FB to GND) at FB 5"
+    },
+    {
+     "ref": "R311",
+     "at": [
+      2.2725,
+      -1.51
+     ],
+     "rot": 270.0,
+     "pads": {
+      "R311": [
+       "2"
+      ],
+      "R312": [
+       "1"
+      ]
+     },
+     "note": "R1 (VOUT to FB) beside R2; VOUT sense routed from C2"
+    }
+   ],
+   "tolerance_mm": 0.3,
+   "fitted": {
+    "legs_gap_mm": {
+     "C311": 0.64,
+     "L311": 0.813,
+     "C312": 0.92,
+     "R312": 0.402,
+     "R311": 0.41
+    },
+    "legs_mm": {
+     "C311": [
+      0.64
+     ],
+     "L311": [
+      0.812
+     ],
+     "C312": [
+      0.92
+     ],
+     "R312": [
+      0.402
+     ],
+     "R311": [
+      0.41
+     ]
+    },
+    "off_chip_mm": {
+     "C311": 0.11,
+     "L311": 0.102,
+     "C312": 0.105,
+     "R312": 0.102,
+     "R311": 0.602
+    },
+    "gap_mm": 0.1,
+    "ground_return_mm": {
+     "C311": 1.835,
+     "C312": 1.476
+    },
+    "decap_limits": []
+   },
+   "kind": "switching stage",
+   "source": "TI TLV62585 SLVSDE5F, 10.1 Layout Guidelines and Figure 24 (PDRL). Figure -> footprint frame: figure up = -x (outward from the VIN 3 / SW 2 / GND 1 pin row), left = +y, right = -y, down = +x (a turn). L1 straight out from SW, C1 (CIN) left of the chip with VIN up / GND down, C2 (COUT) right with VOUT up / GND down, R1/R2 at FB; GND copper between the two pin rows joins the GND pin and both cap grounds. -- B.Cu variant: sides and turns mirrored in y, because the fitter keeps footprint-frame offsets while the flip mirrors the pads"
+  },
+  {
+   "anchor": "U321",
+   "members": [
+    {
+     "ref": "C321",
+     "at": [
+      -0.0025,
+      -2.04
+     ],
+     "rot": 0.0,
+     "pads": {
+      "C321": [
+       "1"
+      ],
+      "U321": [
+       "3"
+      ]
+     },
+     "note": "C1 (CIN): VIN pad at VIN 3, axis along the pin rows' normal, GND pad toward the GND band"
+    },
+    {
+     "ref": "L321",
+     "at": [
+      -3.5625,
+      1.31
+     ],
+     "rot": 270.0,
+     "pads": {
+      "L321": [
+       "1"
+      ],
+      "U321": [
+       "2"
+      ]
+     },
+     "note": "L1 straight out from SW 2, VOUT pad toward -y"
+    },
+    {
+     "ref": "C322",
+     "at": [
+      0.5075,
+      2.035
+     ],
+     "rot": 0.0,
+     "pads": {
+      "C322": [
+       "1"
+      ],
+      "L321": [
+       "2"
+      ]
+     },
+     "note": "C2 (COUT): VOUT pad under L1's output pad, GND pad toward the GND band"
+    },
+    {
+     "ref": "R322",
+     "at": [
+      2.2325,
+      -0.0
+     ],
+     "rot": 0.0,
+     "pads": {
+      "R322": [
+       "1"
+      ],
+      "U321": [
+       "5"
+      ]
+     },
+     "note": "R2 (FB to GND) at FB 5"
+    },
+    {
+     "ref": "R321",
+     "at": [
+      2.2725,
+      -1.51
+     ],
+     "rot": 270.0,
+     "pads": {
+      "R321": [
+       "2"
+      ],
+      "R322": [
+       "1"
+      ]
+     },
+     "note": "R1 (VOUT to FB) beside R2; VOUT sense routed from C2"
+    }
+   ],
+   "tolerance_mm": 0.3,
+   "fitted": {
+    "legs_gap_mm": {
+     "C321": 0.64,
+     "L321": 0.813,
+     "C322": 0.92,
+     "R322": 0.402,
+     "R321": 0.41
+    },
+    "legs_mm": {
+     "C321": [
+      0.64
+     ],
+     "L321": [
+      0.812
+     ],
+     "C322": [
+      0.92
+     ],
+     "R322": [
+      0.402
+     ],
+     "R321": [
+      0.41
+     ]
+    },
+    "off_chip_mm": {
+     "C321": 0.11,
+     "L321": 0.102,
+     "C322": 0.105,
+     "R322": 0.102,
+     "R321": 0.602
+    },
+    "gap_mm": 0.1,
+    "ground_return_mm": {
+     "C321": 1.835,
+     "C322": 1.476
+    },
+    "decap_limits": []
+   },
+   "kind": "switching stage",
+   "source": "TI TLV62585 SLVSDE5F, 10.1 Layout Guidelines and Figure 24 (PDRL). Figure -> footprint frame: figure up = -x (outward from the VIN 3 / SW 2 / GND 1 pin row), left = +y, right = -y, down = +x (a turn). L1 straight out from SW, C1 (CIN) left of the chip with VIN up / GND down, C2 (COUT) right with VOUT up / GND down, R1/R2 at FB; GND copper between the two pin rows joins the GND pin and both cap grounds. -- B.Cu variant: sides and turns mirrored in y, because the fitter keeps footprint-frame offsets while the flip mirrors the pads"
+  },
+  {
+   "anchor": "U331",
+   "members": [
+    {
+     "ref": "C331",
+     "at": [
+      -0.0025,
+      -2.04
+     ],
+     "rot": 0.0,
+     "pads": {
+      "C331": [
+       "1"
+      ],
+      "U331": [
+       "3"
+      ]
+     },
+     "note": "C1 (CIN): VIN pad at VIN 3, axis along the pin rows' normal, GND pad toward the GND band"
+    },
+    {
+     "ref": "L331",
+     "at": [
+      -3.5625,
+      1.31
+     ],
+     "rot": 270.0,
+     "pads": {
+      "L331": [
+       "1"
+      ],
+      "U331": [
+       "2"
+      ]
+     },
+     "note": "L1 straight out from SW 2, VOUT pad toward -y"
+    },
+    {
+     "ref": "C332",
+     "at": [
+      0.5075,
+      2.035
+     ],
+     "rot": 0.0,
+     "pads": {
+      "C332": [
+       "1"
+      ],
+      "L331": [
+       "2"
+      ]
+     },
+     "note": "C2 (COUT): VOUT pad under L1's output pad, GND pad toward the GND band"
+    },
+    {
+     "ref": "R332",
+     "at": [
+      2.2325,
+      -0.0
+     ],
+     "rot": 0.0,
+     "pads": {
+      "R332": [
+       "1"
+      ],
+      "U331": [
+       "5"
+      ]
+     },
+     "note": "R2 (FB to GND) at FB 5"
+    },
+    {
+     "ref": "R331",
+     "at": [
+      2.2725,
+      -1.51
+     ],
+     "rot": 270.0,
+     "pads": {
+      "R331": [
+       "2"
+      ],
+      "R332": [
+       "1"
+      ]
+     },
+     "note": "R1 (VOUT to FB) beside R2; VOUT sense routed from C2"
+    }
+   ],
+   "tolerance_mm": 0.3,
+   "fitted": {
+    "legs_gap_mm": {
+     "C331": 0.64,
+     "L331": 0.813,
+     "C332": 0.92,
+     "R332": 0.402,
+     "R331": 0.41
+    },
+    "legs_mm": {
+     "C331": [
+      0.64
+     ],
+     "L331": [
+      0.812
+     ],
+     "C332": [
+      0.92
+     ],
+     "R332": [
+      0.402
+     ],
+     "R331": [
+      0.41
+     ]
+    },
+    "off_chip_mm": {
+     "C331": 0.11,
+     "L331": 0.102,
+     "C332": 0.105,
+     "R332": 0.102,
+     "R331": 0.602
+    },
+    "gap_mm": 0.1,
+    "ground_return_mm": {
+     "C331": 1.835,
+     "C332": 1.476
+    },
+    "decap_limits": []
+   },
+   "kind": "switching stage",
+   "source": "TI TLV62585 SLVSDE5F, 10.1 Layout Guidelines and Figure 24 (PDRL). Figure -> footprint frame: figure up = -x (outward from the VIN 3 / SW 2 / GND 1 pin row), left = +y, right = -y, down = +x (a turn). L1 straight out from SW, C1 (CIN) left of the chip with VIN up / GND down, C2 (COUT) right with VOUT up / GND down, R1/R2 at FB; GND copper between the two pin rows joins the GND pin and both cap grounds. -- B.Cu variant: sides and turns mirrored in y, because the fitter keeps footprint-frame offsets while the flip mirrors the pads"
+  }
+ ]
+}

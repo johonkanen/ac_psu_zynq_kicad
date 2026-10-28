@@ -1,6 +1,7 @@
 # Status and handoff
 
-Last updated: **2026-10-27** (phase 3 steps 1–2: board, rules, and the block copper imported. Before that, phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC), 11 (PL banks), 12 (ADC) and 13 (connectors) done: **the schematic is complete**).
+Last updated: **2026-10-28** (phase 3: pose trials (step 3) and a rough placement of every part (step 4) at pose A0.
+Before that, phase 3 steps 1–2: board, rules, and the block copper imported (2026-10-27). Before that, phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC), 11 (PL banks), 12 (ADC) and 13 (connectors) done: **the schematic is complete**).
 Read this first if you are picking the work up (human or agent).
 
 ## What this repository is
@@ -26,7 +27,8 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 | `NOTICE`, `LICENSE` | MIT; juliancoy's MIT notice for the copied block |
 | `vivado/pinplan/` | Vivado pin plan and power: `pinplan.py`, `ps7.tcl`, `signals.csv`, `groups.csv`, `mio.csv`; results `zynq_pinplan.csv`, `ps7_mio.csv`, `power_summary.csv` |
 | `reference/` | `zynqpcb/` (the block source, submodule), `baseboard_j11_pinout.csv` (the J3 authority), `stackup_scan_0p102mm.txt`, `vendor/README.md` (Xilinx PDFs to fetch; not in git) |
-| `tools/` | board: `make_board.py`, `board_setup.py`, `import_block.py`, `check_block_copper.py`, `build_pcb.sh`; `ddr3_review.py`, `stackup_scan.py`, `zsolve.py`/`zsolve_cases.py`, `ddr_survey.py`; submodules `jlc/` and `p2k/` |
+| `placement/` | placement inputs (KiCadRoutingTools): `groups.json`, `sketches_B/`, `flip_bottom.py`, `fix_intent.py`, `prep.sh`, `intent.json`; pose trials `pose_trial.sh` + `pose_chain.txt` (LAYOUT_PLAN.md steps 3–4) |
+| `tools/` | board: `make_board.py`, `board_setup.py`, `import_block.py`, `check_block_copper.py`, `apply_placement.py`, `build_pcb.sh`; `ddr3_review.py`, `stackup_scan.py`, `zsolve.py`/`zsolve_cases.py`, `ddr_survey.py`; submodules `jlc/` and `p2k/` |
 
 ## Decisions (do not reopen without the user)
 
@@ -266,19 +268,44 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     `tools/check_block_copper.py`: all 82 block signal nets identical to the source except E3. `ddr3_review.py` on
     both DRAMs: same lengths/vias, all PASS derated. E3/E6/E7 (MIO)/E8/E9 copper done by the import; E5 planelet and
     VCCO_34/35 connections left for phase 4 (REUSE_LOG.md). Details in LAYOUT_PLAN.md step 2.
-  - **Start here next session (left off 2026-10-27, after step 2):**
-    1. **Step 3, confirm pose A** (LAYOUT_PLAN.md step 3). Make trial boards with
-       `tools/p2k/bin/kipy tools/import_block.py --at X Y --rot R --out work/pose_<name>.kicad_pcb`: pose A (164, 87)
-       plus one or two x/y offsets, and pose B (DDR east, `--rot` 90 or 270, U20 at about (152, 86)). Place the rest
-       on each and quick-route the non-block nets (KiCadRoutingTools, as in the Ti135 repo's `placement/`), then
-       compare open nets and vias. The pose trials are independent, so they can run as parallel agents in worktrees.
-       The user confirms the pose.
-    2. **E1** (CK trunk, REUSE_LOG.md) in pcbnew on the chosen pose; check with `ddr3_review.py` (command in
-       LAYOUT_PLAN.md step 2; `work/pkg_delays_ps.csv` is regenerated from `vivado/pinplan/build/pkgpins.csv`, fs → ps).
-       Target: byte 0 CK − DQS ≥ +20 ps (now +2.6), CK P/N ≤ 1 ps.
-    3. **Step 4, placement** of our parts (LAYOUT_PLAN.md step 4): port the Ti135 `placement/` inputs.
-    - Note: `tools/build_pcb.sh --rebuild` recreates the board from scratch (make_board → board_setup →
-      import_block); safe until routing outside the block starts.
+  - **Step 3, pose trials (2026-10-28):** `placement/pose_trial.sh NAME X Y ROT` (import at the pose onto a copper-free
+    base, place 6 seeds, quick-route the signal nets outside the block). Best open nets: A0 (164, 87) 29, Aw (161, 87)
+    32, Ae (167, 87) 28, B0 (152, 86, rot 270) 36, B1 (150, 84, rot 270) 36. **A beats B; A0/Aw/Ae are within the
+    noise.** Those runs let the router rip (and restore) block copper; `pose_trial.sh` now forbids it
+    (`KICAD_RIP_PREEXISTING=0`). The clean judge rerun was stopped for lack of memory. Details in LAYOUT_PLAN.md
+    step 3.
+  - **QSPI cannot be routed at any pose:** the MIO1-6 balls (A1-A4/E4/F6) face the DDR and are walled in by byte-0
+    copper. juliancoy escapes them on F.Cu to one via each; our import drops those escapes. They must be copied with the
+    block (new REUSE_LOG entry, below).
+  - **Step 4, rough placement done (2026-10-28) at A0:** A0's best seed for 178 parts, then the SoC decaps in a
+    second run (B.Cu, outside the block keep-out). DRC: parity 0, no courtyard/clearance errors; block copper check
+    0 failures; `check_floorplan` 0 errors. Renders `reports/rough_placement_top.png`/`_bottom.png`.
+  - Fixes in passing:
+    - `import_block.py` and `board_setup.py` take `P2K_PCB` (the trial base board). The STATUS command from 2026-10-27
+      could not work: the import read the real board, which has copper;
+    - `import_block.py`: a trial's `.kicad_pro` was overwritten by the save (KiCad's default 0.2 mm classes); and a
+      block outside the board is now refused (rot 90 at (152, 86) was 14 mm off the west edge);
+    - `check_block_copper.py` picks the block parts as the import does (our locked connectors share refs with
+      juliancoy's);
+    - `build_pcb.sh --rebuild` now puts the placement back (`tools/apply_placement.py`); checked: every pose, side and
+      lock round-trips.
+  - **Start here next session (left off 2026-10-28):**
+    1. **Rerun the pose judges with the block copper protected** (no re-placement), one trial at a time (memory):
+       `cd ~/dev/KiCadRoutingTools; KICAD_RIP_PREEXISTING=0 .venv/bin/python -X utf8 py_placer/judge_seeds.py
+       <repo>/work/pose/NAME/wk/judge.json --chain <repo>/placement/pose_chain.txt --intent
+       <repo>/work/pose/NAME/intent.json --jobs 2`. The boards are in `work/` (not in git); `pose_trial.sh` remakes
+       them. **The user confirms the pose** (the board is at A0).
+    2. **QSPI escapes:** copy juliancoy's MIO1-6 fan-outs in `import_block.py`, log them in REUSE_LOG.md, and check
+       the QSPI nets route.
+    3. **E1** (CK trunk, REUSE_LOG.md) in pcbnew; check with `ddr3_review.py` (command in LAYOUT_PLAN.md step 2;
+       `work/pkg_delays_ps.csv` is regenerated from `vivado/pinplan/build/pkgpins.csv`, fs → ps). Target: byte 0
+       CK − DQS ≥ +20 ps (now +2.6), CK P/N ≤ 1 ps.
+    4. **Step 4.4 by hand** (LAYOUT_PLAN.md):
+       - move the PHY passives that landed by J3 (C920–C922, C930–C935, R925, R928) back to U901;
+       - the SoC decaps under/around U20 on B.Cu;
+       - FB501/C528/C529 at H10, Y701 at PS_CLK, R1001 at the SD0 CLK ball, Y901 tight to the PHY.
+    - Note: `tools/build_pcb.sh --rebuild` recreates the board (make_board → board_setup → import_block →
+      apply_placement); safe until routing outside the block starts.
 - Open from phase 2:
   - **ADS7056IRUGR (C2669798) shows −6 orderable at JLC** (2026-10-27, oversold). Check it before ordering or
     source it separately;
@@ -308,7 +335,8 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
   - E3: TPS51200 EN;
   - E4: the DRAM part swap;
   - E5–E9: copper parts of the schematic changes (VCCPLL planelet, MIO/bank 34/35 VCCO balls, RSVDGND, banks 34/35
-    I/O balls off GND).
+    I/O balls off GND);
+  - new: juliancoy's QSPI escapes (MIO1-6, F.Cu to one via each), so the QSPI balls can be routed (2026-10-28).
 
   Then re-run `tools/ddr3_review.py` for both DRAMs.
 - [ ] **[verify] items:**

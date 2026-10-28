@@ -156,6 +156,39 @@ rest with the placer, and quick-route the non-block nets for each (KiCadRoutingT
 Keep the pose with the fewest open nets and vias. **Expected: A.** The user confirms the pose before step 4 is
 applied.
 
+### Pose trials (2026-10-28)
+
+`placement/pose_trial.sh NAME X Y ROT` runs one trial in `work/pose/NAME`:
+1. the block is imported onto a copper-free base board (`work/pose/base.kicad_pcb`, make_board + board_setup through
+   `P2K_PCB`) at the pose;
+2. our SoC decaps are dropped, since they are placed by hand and touch only rails;
+3. `placement/prep.sh` runs, then `place_simple` places 6 seeds;
+4. `judge_seeds` routes the best seeds with `placement/pose_chain.txt`. The chain applies the seed to the board with
+   the block copper and routes the signal nets outside the block on F/In2/In4/In6/B. GND and the rails are left out
+   because they become pours.
+
+Rotation 270 puts the DDR east; rotation 90 puts the block off the board, and the import now refuses that.
+
+| Trial | U20, rotation | Best seed: open nets | Seeds (6) | Vias / copper of the best |
+|---|---|---|---|---|
+| A0 | (164, 87), 0 | 29 | 29–71 | 763 / 7.36 m |
+| Aw | (161, 87), 0 | 32 | 32–43 | 745 / 6.85 m |
+| Ae | (167, 87), 0 | 28 | 28–73 | 742 / 6.57 m |
+| B0 | (152, 86), 270 | 36 | 36–51 | 758 / 7.67 m |
+| B1 | (150, 84), 270 | 36 | 36–46 | 745 / 6.80 m |
+
+- **A beats B** at the best seed and across the seeds. A0/Aw/Ae are within the seed spread of each other.
+- **These scores let the router rip block copper:** it ripped `DDR3_DQ21` and the VRP net for RGMII, then restored
+  them. `pose_trial.sh` now runs the judge with `KICAD_RIP_PREEXISTING=0`. A clean rerun of the judges (no
+  re-placement: `judge_seeds.py work/pose/NAME/wk/judge.json ...`, one trial at a time, memory) was stopped for
+  lack of memory and is still to do.
+- **Open at every pose, whatever the pose:**
+  - QSPI (MIO1-6, balls A1-A4/E4/F6, the U20 row facing the DDR) is walled in by byte-0 DDR copper
+    (`boxed_in_static`). juliancoy escapes these balls on F.Cu between the DDR traces to one via each and runs on
+    B.Cu (8.7–17.7 mm per net). Our import drops his MIO escapes, so these must be copied (a new REUSE_LOG entry).
+  - 3V3_analog and 5V0, which the chain does not route.
+- **Kept: A0**, the pose the board already has. The user confirms it; Ae (+3 mm east) is equal within the noise.
+
 ## Step 4: placement of the rest
 
 | Step | Tool / by hand |
@@ -164,6 +197,32 @@ applied.
 | 2. Seeds, quick-route the best few, keep the best | `place_simple.py`, `judge_seeds.py` |
 | 3. Apply, check courtyards, edge, keep-outs (heatsink base and holes) | `tools/apply_placement.py`, `check_assembly` |
 | 4. By hand: our SoC decaps (C501–C527) on B.Cu under/around U20 without touching the block's vias; FB501/C528/C529 next to H10 (C529 within 5.1 mm); Y701 at PS_CLK; R1001 at the SD0 CLK ball; Y901 tight to the PHY; RN1301–RN1308 at J3 | pcbnew |
+
+**Rough placement: done 2026-10-28** (at pose A0, before the user confirmed it):
+- **Inputs, ported from the Ti135 repo** (`placement/`):
+  - `groups.json`: 20 groups;
+  - `sketches_B/U3x1.json`: the TLV62585 cells, from the Ti135 B.Cu templates (U301 as is, the 1-output-cap cells
+    from its U331);
+  - `flip_bottom.py`: the power cells to B.Cu;
+  - `fix_intent.py`: keep-outs for the block rect (only the block parts and H1/H2 allowed) and Ø6 mm rings at
+    H1/H2, plus the Y701 oscillator fix;
+  - `prep.sh [BOARD [RUN_DIR [--drop-soc-decaps]]]`: strips the copper first (the placer refuses a routed board;
+    the zones survive, unfilled). A seed goes back onto the board with its copper through
+    `tools/apply_placement.py`, which never moves a locked part.
+- **178 parts from A0's best judged seed** (`work/pose/A0/wk/s4`). Then **C501–C529/FB501** were placed in a second
+  run with every other part locked, on B.Cu, as group `soc_decaps` (seed 3 of 4: the others put a decap in the
+  eMMC's escape rows).
+- **Checks:**
+  - DRC: parity 0; no courtyard, clearance or short errors. 499 unconnected (unchanged), silk overlaps 199.
+  - `tools/check_block_copper.py`: 0 failures. It now picks the block parts as the import does: our locked
+    connectors share refs with juliancoy's parts.
+  - `check_floorplan`: 0 errors.
+- Renders: `reports/rough_placement_top.png` / `_bottom.png`.
+- **To fix by hand (step 4.4):**
+  - PHY passives placed in the NW corner by J3, about 40 mm from U901: C920–C922, C930–C935, R925, R928;
+  - the SoC decaps: they sit south/south-east of the block, and C502/C514/C522 are down by J5. They belong under
+    and around U20 on B.Cu;
+  - the rest of the step-4.4 list.
 
 Placement rules:
 - **Power cells on B.Cu, south and east** (y > 98 and/or x > 180), near J6 and away from the DDR. Nothing switching
@@ -182,7 +241,10 @@ Placement rules:
 
 ## Open points for phase 3
 
-- **The pose** (step 3): A agreed by the user (2026-10-27), to be confirmed by the quick-route score.
+- **The pose** (step 3): A agreed by the user (2026-10-27). The trials put A ahead of B, and the board is at A0;
+  the user confirms it, after the clean judge rerun.
+- **QSPI escapes:** copy juliancoy's MIO1-6 fan-outs (F.Cu to one via) with the block; without them the QSPI balls
+  cannot be routed.
 - **JLC quote** for the block's via sizes and 0.102/0.102 mm on 1 oz inner (STATUS.md open items): needed before
   `board_setup.py` freezes the rules.
 - **Heatsink barbs** against the baseboard parts: once the pose is fixed, the two hole positions are known in the

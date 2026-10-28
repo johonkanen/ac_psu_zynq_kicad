@@ -3,7 +3,8 @@
 
     tools/p2k/bin/kipy tools/import_block.py [--at X Y] [--rot DEG] [--out BOARD]
 
-Run on a board fresh from tools/make_board.py (it refuses a board that already has copper). --at is U20's centre on
+Run on a board fresh from tools/make_board.py (it refuses a board that already has copper); P2K_PCB names another
+one, as for make_board and board_setup. --at is U20's centre on
 our board (default: pose A, LAYOUT_PLAN.md step 3), --rot a rotation of the whole block (0/90/180/270, never
 mirrored), --out another board file (pose trials in work/; the .kicad_pro/.kicad_dru are copied beside it).
 
@@ -52,6 +53,7 @@ from p2k.build_pcb import load_fp  # noqa: E402
 
 SOURCE = os.path.join(ROOT, "reference", "zynqpcb", "DFTBoard.kicad_pcb")
 PCB = os.path.join(ROOT, "kicad", "zynq_card.kicad_pcb")
+BASE = os.environ.get("P2K_PCB", PCB)   # the board read: make_board's output (P2K_PCB, as tools/make_board.py)
 POSE_A = (164.0, 87.0)          # U20 centre, LAYOUT_PLAN.md step 3
 MARGIN = 0.5                    # around the block parts and DDR3 copper
 SRC_LAYERS = {pcbnew.F_Cu: "TOP_GND", pcbnew.In1_Cu: "GND0", pcbnew.In2_Cu: "SIGNAL1", pcbnew.In3_Cu: "GND1",
@@ -225,7 +227,7 @@ def main():
     src = pcbnew.LoadBoard(SOURCE)
     for lay, name in SRC_LAYERS.items():
         assert src.GetLayerName(lay) == name, (lay, src.GetLayerName(lay))
-    board = pcbnew.LoadBoard(PCB)
+    board = pcbnew.LoadBoard(BASE)
     if len(board.GetTracks()) or any(z.GetZoneName() == "ddr3_block" for z in board.Zones()):
         sys.exit("import_block: the board already has copper; rebuild it with tools/make_board.py first")
     ours = {fp.GetReference(): fp for fp in board.GetFootprints()}
@@ -468,6 +470,11 @@ def main():
     outline = rect_poly(x0, y0, x1, y1)
     area = rule_area(board, outline, [lay for lay in SRC_LAYERS], "ddr3_block", keepout=False)
     pose.apply(area)
+    bb = area.GetBoundingBox()
+    if not (edge.GetLeft() <= bb.GetLeft() and bb.GetRight() <= edge.GetRight()
+            and edge.GetTop() <= bb.GetTop() and bb.GetBottom() <= edge.GetBottom()):
+        sys.exit(f"import_block: the block outline x {mm(bb.GetLeft()):.2f}..{mm(bb.GetRight()):.2f}, "
+                 f"y {mm(bb.GetTop()):.2f}..{mm(bb.GetBottom()):.2f} is not inside the board")
     for k in range(4):
         p0, p1 = outline.CVertex(k), outline.CVertex((k + 1) % 4)
         s = pcbnew.PCB_SHAPE(board)
@@ -497,11 +504,11 @@ def main():
     board.BuildConnectivity()           # the filler needs it to tell islands from connected copper
     filler = pcbnew.ZONE_FILLER(board)
     filler.Fill(board.Zones())
-    if a.out != PCB:
+    pcbnew.SaveBoard(a.out, board)
+    if a.out != PCB:        # after the save, which writes the .kicad_pro of the board it read (P2K_PCB's)
         for ext in (".kicad_pro", ".kicad_dru"):
             shutil.copy(os.path.splitext(PCB)[0] + ext, os.path.splitext(a.out)[0] + ext)
         shutil.copy(os.path.join(ROOT, "kicad", "fp-lib-table"), os.path.dirname(os.path.abspath(a.out)))
-    pcbnew.SaveBoard(a.out, board)
     for line in log:
         print("import_block: " + line)
     print(f"import_block: {len(block)} block parts at U20 ({a.at[0]:g}, {a.at[1]:g}), rotation {a.rot:g}; "

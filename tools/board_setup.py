@@ -23,7 +23,7 @@ ROOT = os.path.dirname(TOOLS)
 sys.path.insert(0, os.path.join(TOOLS, "p2k"))
 from p2k.sexpr import Sym, find, load, save  # noqa: E402
 
-PCB = os.path.join(ROOT, "kicad", "zynq_card.kicad_pcb")
+PCB = os.environ.get("P2K_PCB", os.path.join(ROOT, "kicad", "zynq_card.kicad_pcb"))   # the stack-up goes here
 PRO = os.path.join(ROOT, "kicad", "zynq_card.kicad_pro")
 DRU = os.path.join(ROOT, "kicad", "zynq_card.kicad_dru")
 

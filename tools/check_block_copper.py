@@ -55,8 +55,10 @@ def main():
     pose = Pose(s20.GetPosition(), o20.GetPosition(), rot)
     area = next(z for z in ours.Zones() if z.GetZoneName() == "ddr3_block").GetBoundingBox()
 
-    block = {fp.GetReference() for fp in ours.GetFootprints() if fp.IsLocked()
-             and src.FindFootprintByReference(fp.GetReference()) is not None and fp.GetReference() != "U20"}
+    # the block parts as tools/import_block.py picks them (our locked connectors share refs with juliancoy's)
+    block = {r for r in (fp.GetReference() for fp in ours.GetFootprints())
+             if src.FindFootprintByReference(r) is not None and r != "U20" and not r.startswith(("J", "H"))
+             and int(r.lstrip("ABCDEFGHIJKLMNOPQRSTUVWXYZ") or 999) < 200}
     opads = {(fp.GetReference(), p.GetNumber()): p.GetNetname() for fp in ours.GetFootprints() for p in fp.Pads()}
     mapping = collections.defaultdict(set)
     for fp in src.GetFootprints():
