@@ -27,8 +27,8 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 | `NOTICE`, `LICENSE` | MIT; juliancoy's MIT notice for the copied block |
 | `vivado/pinplan/` | Vivado pin plan and power: `pinplan.py`, `ps7.tcl`, `signals.csv`, `groups.csv`, `mio.csv`; results `zynq_pinplan.csv`, `ps7_mio.csv`, `power_summary.csv` |
 | `reference/` | `zynqpcb/` (the block source, submodule), `baseboard_j11_pinout.csv` (the J3 authority), `stackup_scan_0p102mm.txt`, `vendor/README.md` (Xilinx PDFs to fetch; not in git) |
-| `placement/` | placement inputs (KiCadRoutingTools): `groups.json`, `sketches_B/`, `flip_bottom.py`, `fix_intent.py`, `prep.sh`, `intent.json`, `touchup.py` (lock + proximity claims); pose trials `pose_trial.sh` + `pose_chain.txt` (LAYOUT_PLAN.md steps 3–4) |
-| `tools/` | board: `make_board.py`, `board_setup.py`, `import_block.py`, `check_block_copper.py`, `apply_placement.py`, `place_analog.py`, `build_pcb.sh`; `ddr3_review.py`, `stackup_scan.py`, `zsolve.py`/`zsolve_cases.py`, `ddr_survey.py`; submodules `jlc/` and `p2k/` |
+| `placement/` | placement inputs (KiCadRoutingTools): `groups.json`, `sketches_B/`, `flip_bottom.py`, `fix_intent.py`, `prep.sh`, `intent.json`, `touchup.py` (lock + proximity claims), `hand_fixes.sh` (step 4.4); pose trials `pose_trial.sh` + `pose_chain.txt` (LAYOUT_PLAN.md steps 3–4) |
+| `tools/` | board: `make_board.py`, `board_setup.py`, `import_block.py`, `check_block_copper.py`, `apply_placement.py`, `place_analog.py`, `place_free.py`, `build_pcb.sh`; `ddr3_review.py`, `stackup_scan.py`, `zsolve.py`/`zsolve_cases.py`, `ddr_survey.py`; submodules `jlc/` and `p2k/` |
 
 ## Decisions (do not reopen without the user)
 
@@ -286,7 +286,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     - DRC: parity 0, no courtyard/clearance errors; block copper check 0 failures; no part off the board. Renders
       `reports/rough_placement_top.png`/`_bottom.png`.
   - **Pose trials rerun with the block copper protected:** best open nets Ae 26, Aw 32, A0 35, B0 37, B1 43. A beats
-    B; the A offsets overlap within the seed spread. **The user confirms the pose** (the board is at A0).
+    B; the A offsets overlap within the seed spread. **A0 kept (user, 2026-10-28).**
   - **QSPI escapes copied (REUSE_LOG E10):** `import_block.py` copies juliancoy's F.Cu run from each QSPI ball to its
     via. On a trial board 3 of the 6 QSPI nets then route; the rest stop at U801's inner CSP balls.
   - Fixes in passing:
@@ -299,14 +299,12 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     - `build_pcb.sh --rebuild` now puts the placement back (`tools/apply_placement.py`); checked: every pose, side and
       lock round-trips.
   - **Start here next session (left off 2026-10-28):**
-    1. **The user confirms the pose** (A0 now; Ae, 3 mm east, scored best once; a pose change is `--rebuild` with
-       `import_block.py --at`, then re-running the two placement passes).
+    1. **Pose A0 confirmed by the user (2026-10-28).**
     2. **E1** (CK trunk, REUSE_LOG.md) in pcbnew; check with `ddr3_review.py` (command in LAYOUT_PLAN.md step 2;
        `work/pkg_delays_ps.csv` is regenerated from `vivado/pinplan/build/pkgpins.csv`, fs → ps). Target: byte 0
        CK − DQS ≥ +20 ps (now +2.6), CK P/N ≤ 1 ps.
-    3. **Step 4.4 by hand / small scripts** (LAYOUT_PLAN.md step 4, "To fix by hand"): U801 east of the block near
-       its escape vias, Y901 at the PHY, C601, the config straps; the SoC decaps under U20 (port the Ti135 card's
-       `place_free.py`/`place_bga_decaps.py`); FB501/C528/C529 at H10, Y701 at PS_CLK, R1001 at the SD0 CLK ball.
+    3. **Step 4.4 fixes: done 2026-10-28** (`placement/hand_fixes.sh`, `tools/place_free.py`; results in
+       LAYOUT_PLAN.md step 4). Left: bottom-side heights against the baseboard, silkscreen, a look at the PHY area.
     4. **U801 fan-out:** its inner CSP balls (C2, C4, D2, D4) need vias between the 1.0 mm-pitch balls (the router
        wanted below-standard vias); decide with the flash placement.
     - Note: `tools/build_pcb.sh --rebuild` recreates the board (make_board → board_setup → import_block →

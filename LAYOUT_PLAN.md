@@ -191,7 +191,7 @@ and restored them, and those scores (in brackets) were too kind to A0.
     (`boxed_in_static`). juliancoy escapes these balls on F.Cu between the DDR traces to one via each and runs on
     B.Cu (8.7–17.7 mm per net). Our import dropped his MIO escapes; they are now copied (REUSE_LOG E10).
   - 3V3_analog and 5V0, which the chain does not route.
-- **Kept: A0**, the pose the board already has. The user confirms it; Ae (+3 mm east) is equal within the noise.
+- **Kept: A0** (user, 2026-10-28), the pose the board already has; Ae (+3 mm east) is equal within the noise.
 
 ## Step 4: placement of the rest
 
@@ -241,14 +241,28 @@ and restored them, and those scores (in brackets) were too kind to A0.
     connectors share refs with juliancoy's parts.
   - No part off the board.
 - Renders: `reports/rough_placement_top.png` / `_bottom.png`.
-- **To fix by hand (step 4.4):**
-  - U801 (QSPI flash) landed south of U20 at about (164, 107); its escape vias are at U20's north-east, so it
-    belongs east of the block near (182, 80);
-  - Y901 is about 10 mm from the PHY; C601 (PS_MIO_VREF) sits by J3;
-  - the config straps R601–R612: to the block edge nearest their balls;
-  - the SoC decaps: they sit south/south-east of the block, some down by J5. They belong under and around U20 on
-    B.Cu (port the Ti135 card's `place_free.py` / `place_bga_decaps.py`, which avoid the real vias and tracks);
-  - the rest of the step-4.4 list.
+- **Step 4.4 fixes, done 2026-10-28** (`placement/hand_fixes.sh` → `tools/place_free.py`, ported from the Ti135
+  card and made two-sided). Each part goes to the nearest spot to its target that clears the real copper on its side:
+  other nets' vias (both sides), tracks, pads, courtyards, the edge, the heatsink rings. On F nothing of ours enters the
+  block area; on B only U20's courtyard is open, so nothing lands under the DDR. The order is the priority. Results:
+  - **VCCPLL (E5):** C529 1.9 mm from H10, FB501 3.0, C528 3.5 (B.Cu);
+  - **our 0402 SoC decaps** (470 n, then 4.7 u): 0–3.1 mm from their rails' balls, under U20 between the block's
+    vias;
+  - **config:** C601/R609/R610 (PS_MIO_VREF) 2.6–3.6 mm from F8; R608 (PS_POR_B) 1.1 mm from B5; R611, R612, the
+    MIO straps at their balls; the four QSPI straps under U801 (same nets);
+  - **U801 (QSPI flash):** F, south-east of the block at (183.8, 93.9), 17.7 mm from its escape vias. The block's east
+    edge is the eMMC's; north of it is the PHY's;
+  - **Y901:** B.Cu, 2.5 mm from the PHY's crystal pins, load caps 1.6 mm from it (F around the PHY is full);
+  - **Y701 (PS_CLK):** F just south of the block (166.5, 99.7), 16 mm from F7, with FB701/C701 at its supply and
+    R701 at its output (source series). On B it would sit under the DDR;
+  - **R1001 (SD0 CLK 0 R):** B, 4.1 mm from E14;
+  - **bulk caps too tall for B.Cu** (330 µF tantalum 3.1 mm, 100/47 µF 1210 ≈ 2.5 mm): F at the block's south and
+    east edges, 10–18 mm from their rails' balls.
+  - Zones refilled: no pour has more pieces than before. DRC: parity 0, no clearance/courtyard/mask errors; block
+    copper check 0 failures.
+- **Still open for step 4:** the bottom-side heights against the baseboard parts (MECHANICAL.md); silkscreen
+  (199 overlaps; the Ti135 card turned reference silk off); a look at the PHY area by hand (it is dense; R901 sits
+  alone north of it).
 - **What KRT is good for here** (survey, 2026-10-28; the Ti135 card's experience agrees): coarse placement by
   function and side, the buck templates, scoring alternatives, and re-placing a few parts with the rest locked and
   claims to their pins. Not for parts among existing copper (its placer sees courtyards, not vias or tracks), not
@@ -273,8 +287,7 @@ Placement rules:
 
 ## Open points for phase 3
 
-- **The pose** (step 3): A agreed by the user (2026-10-27). The trials put A ahead of B, and the board is at A0;
-  the user confirms it, after the clean judge rerun.
+- **The pose** (step 3): **A0 confirmed by the user (2026-10-28)** after the trials (A ahead of B).
 - **QSPI escapes:** copy juliancoy's MIO1-6 fan-outs (F.Cu to one via) with the block; without them the QSPI balls
   cannot be routed.
 - **JLC quote** for the block's via sizes and 0.102/0.102 mm on 1 oz inner (STATUS.md open items): needed before
