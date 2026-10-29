@@ -111,6 +111,18 @@ def from_source(src_fp, fpid):
     return fp
 
 
+def hide_designators(fp):
+    """No reference-designator silkscreen on this card (user, 2026-10-29; as on the Ti135 card): the Reference field
+    and any ${REFERENCE} text on F/B.SilkS are hidden. The F.Fab reference stays (assembly drawings)."""
+    silk = (pcbnew.F_SilkS, pcbnew.B_SilkS)
+    ref = fp.Reference()
+    if ref.GetLayer() in silk:
+        ref.SetVisible(False)
+    for t in fp.GraphicalItems():
+        if isinstance(t, pcbnew.PCB_TEXT) and t.GetLayer() in silk and "${REFERENCE}" in t.GetText():
+            t.SetVisible(False)
+
+
 def place(board, fp, x, y, side, orient):
     board.Add(fp)
     fp.SetPosition(V(x, y))
@@ -241,6 +253,8 @@ def main():
             row_h = max(row_h, h)
         y += row_h + 6.0
     add_outline(board)
+    for fp in board.GetFootprints():
+        hide_designators(fp)
     pcbnew.SaveBoard(out, board)
     for r in report:
         print("make_board: " + r)

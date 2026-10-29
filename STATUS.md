@@ -28,7 +28,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 | `vivado/pinplan/` | Vivado pin plan and power: `pinplan.py`, `ps7.tcl`, `signals.csv`, `groups.csv`, `mio.csv`; results `zynq_pinplan.csv`, `ps7_mio.csv`, `power_summary.csv` |
 | `reference/` | `zynqpcb/` (the block source, submodule), `baseboard_j11_pinout.csv` (the J3 authority), `stackup_scan_0p102mm.txt`, `vendor/README.md` (Xilinx PDFs to fetch; not in git) |
 | `placement/` | placement inputs (KiCadRoutingTools): `groups.json`, `sketches_B/`, `flip_bottom.py`, `fix_intent.py`, `prep.sh`, `intent.json`, `touchup.py` (lock + proximity claims), `hand_fixes.sh` (step 4.4); pose trials `pose_trial.sh` + `pose_chain.txt` (LAYOUT_PLAN.md steps 3–4) |
-| `tools/` | board: `make_board.py`, `board_setup.py`, `import_block.py`, `check_block_copper.py`, `apply_placement.py`, `place_analog.py`, `place_free.py`, `build_pcb.sh`; `ddr3_review.py`, `stackup_scan.py`, `zsolve.py`/`zsolve_cases.py`, `ddr_survey.py`; submodules `jlc/` and `p2k/` |
+| `tools/` | board: `make_board.py`, `board_setup.py`, `import_block.py`, `check_block_copper.py`, `apply_placement.py`, `place_analog.py`, `place_free.py`, `refill_zones.py`, `build_pcb.sh`; `ddr3_review.py`, `stackup_scan.py`, `zsolve.py`/`zsolve_cases.py`, `ddr_survey.py`; submodules `jlc/` and `p2k/` |
 
 ## Decisions (do not reopen without the user)
 
@@ -304,7 +304,8 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
        `work/pkg_delays_ps.csv` is regenerated from `vivado/pinplan/build/pkgpins.csv`, fs → ps). Target: byte 0
        CK − DQS ≥ +20 ps (now +2.6), CK P/N ≤ 1 ps.
     3. **Step 4.4 fixes: done 2026-10-28** (`placement/hand_fixes.sh`, `tools/place_free.py`; results in
-       LAYOUT_PLAN.md step 4). Left: bottom-side heights against the baseboard, silkscreen, a look at the PHY area.
+       LAYOUT_PLAN.md step 4). Left: bottom-side heights against the baseboard, a look at the PHY area.
+       **No designator silkscreen** (user, 2026-10-29): hidden by `make_board.py`.
     4. **U801 fan-out:** its inner CSP balls (C2, C4, D2, D4) need vias between the 1.0 mm-pitch balls (the router
        wanted below-standard vias); decide with the flash placement.
     - Note: `tools/build_pcb.sh --rebuild` recreates the board (make_board → board_setup → import_block →

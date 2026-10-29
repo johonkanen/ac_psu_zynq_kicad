@@ -260,9 +260,13 @@ and restored them, and those scores (in brackets) were too kind to A0.
     east edges, 10–18 mm from their rails' balls.
   - Zones refilled: no pour has more pieces than before. DRC: parity 0, no clearance/courtyard/mask errors; block
     copper check 0 failures.
-- **Still open for step 4:** the bottom-side heights against the baseboard parts (MECHANICAL.md); silkscreen
-  (199 overlaps; the Ti135 card turned reference silk off); a look at the PHY area by hand (it is dense; R901 sits
-  alone north of it).
+- **Silkscreen: no reference designators** (user, 2026-10-29): `tools/make_board.py` hides the Reference field and
+  any `${REFERENCE}` text on F/B.SilkS (the F.Fab reference stays), `import_block.py` the same for H1/H2. The 199 silk
+  overlaps are gone; left: J9's outline over the edge and its shield pads (the jack overhangs by design).
+- `tools/build_pcb.sh --rebuild` ends with `tools/refill_zones.py`: the import fills the zones before the placement
+  is put back, and a stale fill under a moved pad reads as a clearance error.
+- **Still open for step 4:** the bottom-side heights against the baseboard parts (MECHANICAL.md); a look at the PHY
+  area by hand (it is dense; R901 sits alone north of it).
 - **What KRT is good for here** (survey, 2026-10-28; the Ti135 card's experience agrees): coarse placement by
   function and side, the buck templates, scoring alternatives, and re-placing a few parts with the rest locked and
   claims to their pins. Not for parts among existing copper (its placer sees courtyards, not vias or tracks), not

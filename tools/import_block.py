@@ -538,6 +538,7 @@ def main():
         c = pcbnew.VECTOR2I(u20.x + iu(hx), u20.y + iu(hy))
         fp = load_fp(HOLE_FP)
         fp.SetReference(f"H{n}")
+        fp.Reference().SetVisible(False)        # no designator silkscreen (tools/make_board.py hide_designators)
         fp.SetBoardOnly(True)
         fp.SetExcludedFromBOM(True)
         fp.SetExcludedFromPosFiles(True)
