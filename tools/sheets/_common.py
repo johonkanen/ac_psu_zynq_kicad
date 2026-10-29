@@ -19,6 +19,20 @@ from p2k.sexpr import Sym  # noqa: E402
 from p2k.sheetkit import *  # noqa: E402,F401,F403
 from p2k.sheetkit import _two_pin_rot  # noqa: E402,F401
 
+_sheet_clear = Sheet.clear
+
+
+def _clear(self):
+    """Sheet.clear(), plus the `(embedded_fonts no)` tail that Sheet._add() inserts before: eeschema 10 (file version
+    20260306) no longer writes it, so a sheet saved from eeschema could not be rebuilt."""
+    _sheet_clear(self)
+    if not any(isinstance(c, list) and c and c[0] in ("sheet_instances", "embedded_fonts") for c in self.tree):
+        self.tree.append([Sym("embedded_fonts"), Sym("no")])
+    return self
+
+
+Sheet.clear = _clear
+
 
 def hlabel(sh, name, x, y, rot=0, shape="passive"):
     """Hierarchical label; rot 0 = text to the right of (x, y), 180 = to the left."""

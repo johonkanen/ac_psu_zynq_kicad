@@ -312,7 +312,12 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     2. **E1 done (2026-10-29):** `tools/block_e1.py` (run by `--rebuild`): byte 0 CK − DQS +27.5 ps, CK P/N 0.0/0.1 ps,
        all PASS derated (REUSE_LOG.md, "E1 as built"). E2 (DQS3 pair, 9.0 ps at U15) stays optional.
     3. **Step 4.4 fixes: done 2026-10-28** (`placement/hand_fixes.sh`, `tools/place_free.py`; results in
-       LAYOUT_PLAN.md step 4). Left: bottom-side heights against the baseboard, a look at the PHY area.
+       LAYOUT_PLAN.md step 4). Heights and PHY area done 2026-10-29 (`tools/check_heights.py`; TX series R at the SoC
+       end, R606 out of the eMMC ball field). C67 → 22 µF 1206 (REUSE_LOG E12, user): all pairs pass, tightest
+       0.70 mm. The H1 push-pin barb over U17 fits (user).
+       Sheets saved by eeschema 10 (file version 20260306) have no `(embedded_fonts no)`, which p2k's
+       `Sheet._add()` inserts before: `tools/sheets/_common.py` puts it back in `Sheet.clear()` (a fix for p2k itself
+       is open).
        **No designator silkscreen** (user, 2026-10-29): hidden by `make_board.py`.
        **Copper layers named** (user, 2026-10-29): 1.Top, 2.GND, 3.Sig, 4.GND, 5.Sig, 6.GND, 7.Sig, 8.Bottom
        (`board_setup.py` LAYER_NAMES; files keep the standard names, scripts use `GetStandardLayerName`). Board
@@ -361,8 +366,8 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
   - `ZYNQ_PCB_NOTES.md` §8: UG470 PROGRAM_B/INIT_B/DONE values, XADC tie-off, IS25WP128 support in `program_flash`/U-Boot, the IS25WP128 reset recovery time (RESET# on
     `ps_por_n`, sheet 8);
   - `POWER_BUDGET.md`: the DDR3L/eMMC/QSPI currents.
-- [ ] **Heatsink:** the push-pin grip range for 1.6 mm board + package + tape, and the barb protrusion against the
-      5.3 mm card-to-baseboard gap.
+- [ ] **Heatsink:** the push-pin grip range for 1.6 mm board + package + tape. (The barb protrusion fits the gap: user,
+      2026-10-29.)
 - [ ] **JLC quote:** the JLC081611-7628 surcharge, 1 oz inner minimum width/space (the block needs 0.102/0.102 mm), and
       the block's via sizes.
 - [ ] **The DDR3L temperature grade:** standard 0…95 °C (C253882) or IT −40…95 °C (C367428).

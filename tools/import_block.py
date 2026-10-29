@@ -50,7 +50,7 @@ TOOLS = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(TOOLS)
 sys.path.insert(0, TOOLS)
 sys.path.insert(0, os.path.join(TOOLS, "p2k"))
-from check_block_netlist import NET_MAP, RAILS, net_name  # noqa: E402
+from check_block_netlist import FP_SWAP, NET_MAP, RAILS, net_name  # noqa: E402
 from p2k.build_pcb import load_fp  # noqa: E402
 
 SOURCE = os.path.join(ROOT, "reference", "zynqpcb", "DFTBoard.kicad_pcb")
@@ -468,7 +468,7 @@ def main():
             lays = list(p.GetLayerSet().Seq())
             off = min(((p.GetPosition() - w).EuclideanNorm() for w, ql in sp[p.GetNumber()] if ql == lays),
                       default=math.inf)
-            if off > 2:
+            if off > (FP_SWAP[r][1] * 1e6 if r in FP_SWAP else 2):
                 fails.append(f"{r}.{p.GetNumber()}: pad not on the transformed source pad ({mm(off):.4f} mm off)")
     nets = {n: board.FindNet(n) for n in set(net_of.values())}
     for n, ni in nets.items():

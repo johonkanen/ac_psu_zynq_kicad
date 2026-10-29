@@ -43,7 +43,7 @@ PARTS = {
     (".47uF", "C_0402_1005Metric"): ("C47339", None),
     ("4.7uF", "C_0402_1005Metric"): ("C23733", None),
     ("47uF", "C_0805_2012Metric"): ("C16780", None),
-    ("100uF", "C_1210_3225Metric"): ("C49066", None),
+    ("22uF", "C_1206_3216Metric"): ("C12891", "CL31A226KAHNNNE"),     # C67, E12: 1.6 +/- 0.2 mm
     ("4.7k", "R_0402_1005Metric"): ("C25900", None),
     # ours: capacitors
     ("100n", "C_0402_1005Metric"): ("C1525", None),

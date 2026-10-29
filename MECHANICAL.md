@@ -86,6 +86,14 @@ The Agilex 5 card (after its 2026-10-24 change) is the same within 0.03 mm.
 - **Power supplies go on the card's underside**, as on the Ti60 card. Bottom-side budget: the tallest card part
   (WPN4020 inductor, 2.0 mm) + the tallest baseboard part under it (SOIC-16W isolators, 2.65 mm) = 4.65 mm < 5.3 mm.
 
+## Bottom-side heights against the baseboard (`tools/check_heights.py`, 2026-10-29)
+
+- The baseboard is mapped through J11/J12; card B.Cu part + baseboard part under it must stay ≤ gap − 0.3 mm.
+- All pairs pass. C67 (100 µF 1210, 2.7 mm max) over **U17** (Si8661 SOIC-16W, 2.65 mm) left −0.05 mm at a 5.3 mm
+  gap: C67 is now 22 µF 1206, 1.8 mm max (REUSE_LOG E12), 0.85 mm left. Tightest: L331 over D1 (SMA) 0.70 mm.
+- **Heatsink push-pin H1 sits over U17**: a barb has 2.65 mm below the card there; it goes a few mm and fits the space
+  between the boards (user, 2026-10-29). H2 is 1.7 mm from U15.
+
 ## J9: RJ45 magjack HanRun HR911130A, front face and centreline as on the Ti60
 
 - **Part (changed 2026-10-25):** **HanRun HR911130A** (LCSC C54408, 9,124 orderable at JLC on 2026-10-25,

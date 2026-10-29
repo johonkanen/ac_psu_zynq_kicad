@@ -60,7 +60,7 @@ BLOCK_OTHER_3V3 = [
     ("C57", "4.7uF", C0402),  # U18 bank 33
     ("C114", "4.7uF", C0402),
     ("C61", "47uF", "Capacitor_SMD:C_0805_2012Metric"),
-    ("C67", "100uF", C1210),
+    ("C67", "22uF", C1206),  # E12: was 100uF 1210, too tall over baseboard U17 (tools/check_heights.py)
 ]
 BLOCK_OTHER_1V8 = [("C59", "4.7uF", C0402), ("C122", "4.7uF", C0402)]  # E6: E12 (MIO1), C6 (MIO0)
 
@@ -93,7 +93,7 @@ COUNT = ("UG933 count, block + C5xx:\n"
          "VCCPLL: 120R bead + 10u 0603 + 0.47-4.7u 0402 within 5.1 mm of the H10/GND vias\n"
          "1V35 (VCCO_DDR): 100u 1, 4u7 1, 470n 4; sheet 1 has C99 100u, C100 4u7, C101 470n\n"
          "3V3  (VCCO_13/33/34/35): 47u 1 (one per four HR banks), 4u7 8, 470n 16\n"
-         "     block C61 47u, C67 100u, C57 C114 4u7, ten 470n (banks 13/33; banks 34/35 had VCCO on GND)")
+         "     block C61 47u, C67 22u (E12), C57 C114 4u7, ten 470n (banks 13/33; banks 34/35 had VCCO on GND)")
 
 
 def main():

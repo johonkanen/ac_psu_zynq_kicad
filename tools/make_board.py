@@ -37,6 +37,8 @@ import pcbnew  # noqa: E402
 from p2k import board as p2k_board  # noqa: E402
 from p2k import pcb  # noqa: E402
 from p2k.build_pcb import load_fp  # noqa: E402
+sys.path.insert(0, TOOLS)
+from check_block_netlist import FP_SWAP  # noqa: E402
 
 SOURCE = os.path.join(ROOT, "reference", "zynqpcb", "DFTBoard.kicad_pcb")
 
@@ -204,7 +206,8 @@ def main():
         n_block += block
 
         def make(cm=cm, ref=ref, block=block):
-            fp = from_source(source[ref], cm["footprint"]) if block else load_fp(cm["footprint"])
+            swapped = block and FP_SWAP.get(ref, ("",))[0] == cm["footprint"]      # REUSE_LOG: another land
+            fp = from_source(source[ref], cm["footprint"]) if block and not swapped else load_fp(cm["footprint"])
             fp.SetReference(ref)
             fp.SetValue(cm["value"])
             for fname, val in cm["fields"].items():

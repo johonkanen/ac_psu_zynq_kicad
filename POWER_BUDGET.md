@@ -166,8 +166,8 @@ Drawing: Wakefield-Vette *960 Series Plastic Push Pin Heat Sinks*, 23 mm page.
 Still to check:
 - **[verify]** the push-pin grip range for our stack: 1.6 mm PCB + about 1.5 mm CLG484 + tape. The datasheet has no
   number; Mouser's page on the 960 pins gives a 4–9.4 mm stack-up range.
-- **[verify]** how far the barbs stick out below the card: they must clear the baseboard parts within the 5.3 mm
-  card-to-baseboard gap (`MECHANICAL.md`).
+- ~~[verify] how far the barbs stick out below the card~~: a few mm, fits the gap (user, 2026-10-29). H1 is over
+  baseboard U17 (2.65 mm room; `MECHANICAL.md`).
 
 ### Other thermal measures
 
@@ -178,7 +178,7 @@ Still to check:
 ## Open
 
 - [x] ~~The enclosure ambient~~ 40 °C worst case, room for a heatsink (2026-10-27): Wakefield 960-23-33-D-AB-0.
-- [ ] Push-pin grip range and barb protrusion against the baseboard gap.
+- [ ] Push-pin grip range. (~~Barb protrusion~~: fits, user 2026-10-29.)
 - [ ] Re-run `vivado/pinplan/power.tcl` on the real design: replace the PL allowance, and set the real CPU clock.
 - [ ] Check the DDR3L, eMMC and QSPI currents against their data sheets.
 - [ ] Measure the 5V_ISOL current and the die temperature on the first board.

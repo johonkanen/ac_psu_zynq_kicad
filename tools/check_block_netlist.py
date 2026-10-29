@@ -51,6 +51,12 @@ NET_MAP = {
     "INIT_B": "/06 soc_config/cfg_init_n",  # R10
 }
 # (ref, pad): reason. The net differs from the source by design.
+# block parts on another footprint than the source's (REUSE_LOG.md): ref -> (footprint, pad offset allowed, mm, why).
+# tools/make_board.py builds them from the library, tools/import_block.py checks their pads within the offset.
+FP_SWAP = {
+    "C67": ("Capacitor_SMD:C_1206_3216Metric", 0.1,
+            "E12: 22 uF 1206 (1.8 mm max) instead of 100 uF 1210 (2.7 mm): over baseboard U17; pads 0.075 mm out"),
+}
 EXPECTED = {
     ("U20", "H10"): "E5: VCCPLL through FB501, not straight on +1V8",
     ("C59", "1"): "E6: MIO1 (E12) cap, the MIO banks are 1.8 V here",
@@ -144,7 +150,11 @@ def main():
         if r not in src_fp:
             fails.append(f"{r}: not on the source board")
         elif comps[r]["footprint"] != src_fp[r]:
-            fails.append(f"{r}: footprint {comps[r]['footprint']} != source {src_fp[r]}")
+            if FP_SWAP.get(r, ("",))[0] == comps[r]["footprint"]:
+                print(f"expected difference {r}: footprint {comps[r]['footprint']}, source {src_fp[r]} "
+                      f"({FP_SWAP[r][2]})")
+            else:
+                fails.append(f"{r}: footprint {comps[r]['footprint']} != source {src_fp[r]}")
     # connectivity by pad sets
     by_ours, by_src = collections.defaultdict(set), collections.defaultdict(set)
     for k in keys:

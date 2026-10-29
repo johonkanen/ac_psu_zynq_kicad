@@ -269,8 +269,20 @@ and restored them, and those scores (in brackets) were too kind to A0.
   name, so `ddr3_review.py`, `check_block_copper.py` and `import_block.py` use `GetStandardLayerName`.
 - `tools/build_pcb.sh --rebuild` ends with `tools/refill_zones.py`: the import fills the zones before the placement
   is put back, and a stale fill under a moved pad reads as a clearance error.
-- **Still open for step 4:** the bottom-side heights against the baseboard parts (MECHANICAL.md); a look at the PHY
-  area by hand (it is dense; R901 sits alone north of it).
+- **Bottom-side heights (2026-10-29):** `tools/check_heights.py` maps the baseboard (`~/dev/ac_psu_kicad`) into the
+  card frame through J11/J12 (fit 1 um) and checks every overlapping pair of card B.Cu part and baseboard top part
+  (max package heights, courtyards + 0.3 mm) against the 5.3 mm gap with 0.3 mm margin. **All pass**: C67
+  (juliancoy's 100 u 1210 on 3V3, 2.7 mm max) over baseboard **U17** (Si8661 SOIC-16W, 2.65 mm) left −0.05 mm, so C67
+  is now 22 u 1206 (REUSE_LOG E12, user): 0.85 mm. Tightest L331 over D1 (SMA) 0.70 mm, C28 over U12 1.15 mm. The
+  heatsink push-pin **H1 lands on U17** (2.65 mm below the card); the barb goes a few mm and fits (user, 2026-10-29).
+  H2 is 1.7 mm from U15. Baseboard H4 (mounting
+  hole) is under the card with no card part within 5 mm; U8 and the 35 mm C12 have courtyards touching the card edge.
+- **PHY area (2026-10-29):** the RX series resistors, straps and decaps sit tight around U901 (F), Y901 under it (B).
+  The **TX series 22 R were at the PHY** (R902-R906; R901 alone north of it), against sheet 9 ("TX at the SoC, RX
+  at the PHY"): now a column on **B.Cu at x 180.6, y 82.6-87.85**, just east of the block and west of the eMMC ball
+  field (U20's TX balls are in its NE corner; no room under U20, the eMMC fills F at the block edge), in ball order.
+  **R606** (MIO7 strap on `emmc_rst_n`) had gone to the eMMC's K5 ball inside its ball field (B.Cu): now on top of
+  that column. Both in `placement/hand_fixes.sh`.
 - **What KRT is good for here** (survey, 2026-10-28; the Ti135 card's experience agrees): coarse placement by
   function and side, the buck templates, scoring alternatives, and re-placing a few parts with the rest locked and
   claims to their pins. Not for parts among existing copper (its placer sees courtyards, not vias or tracks), not
@@ -301,5 +313,5 @@ Placement rules:
   cannot be routed.
 - **JLC quote** for the block's via sizes and 0.102/0.102 mm on 1 oz inner (STATUS.md open items): needed before
   `board_setup.py` freezes the rules.
-- **Heatsink barbs** against the baseboard parts: once the pose is fixed, the two hole positions are known in the
-  baseboard frame.
+- ~~**Heatsink barbs** against the baseboard parts~~: H1 over U17 (2.65 mm room), H2 beside U15; the barb fits
+  (user, 2026-10-29).
