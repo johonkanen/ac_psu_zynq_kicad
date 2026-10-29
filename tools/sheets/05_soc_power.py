@@ -34,7 +34,9 @@ BLOCK = {"C4", "C5", "C8", "C9", "C11", "C14", "C15", "C17", "C18", "C19", "C20"
          "C30", "C31", "C33", "C34", "FB1"}
 # E5: the source wire from C6/C5 to the VCCPLL pin (H10); the C5-C6 stub then hangs loose and is pruned
 E5_CUT = [(3200, 5800, 10150, 5800)]
-E5_FB1 = {"value": "0", "fields": {"Description": "0 ohm jumper on juliancoy's VCCAUX bead land (REUSE_LOG E5)"}}
+E5_FB1 = {"value": "0", "fields": {"Description": "0 ohm jumper on juliancoy's VCCAUX bead land (REUSE_LOG E5)",
+                                   "MFR": "UNI-ROYAL", "MPN": "0603WAF0000T5E", "LCSC": "C21189"},
+          "drop": {"SPN", "SPR", "SPURL"}}  # the source fields name the bead
 
 C0402 = "Capacitor_SMD:C_0402_1005Metric"
 C0603 = "Capacitor_SMD:C_0603_1608Metric"

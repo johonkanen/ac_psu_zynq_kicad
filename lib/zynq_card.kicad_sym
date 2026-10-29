@@ -22,7 +22,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XC7Z020-1CLG484I"
+		(property "Value" "XC7Z020-2CLG484I"
 			(at 5.08 3.81 0)
 			(show_name no)
 			(do_not_autoplace no)

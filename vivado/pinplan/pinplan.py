@@ -15,7 +15,7 @@ import argparse, csv, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 BUILD = os.path.join(HERE, "build")
-PART = "xc7z020clg484-1"
+PART = "xc7z020clg484-2"  # -2 or -3 (user, 2026-10-29); the balls are the same
 ROWS = list("ABCDEFGHJKLMNPRTUVWY") + ["AA", "AB"]
 
 ap = argparse.ArgumentParser()

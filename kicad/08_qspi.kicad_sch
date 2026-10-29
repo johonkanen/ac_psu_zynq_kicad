@@ -1242,6 +1242,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25744"
+			(at 86.36 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 86.36 104.14 0)
 			(effects
@@ -1418,6 +1427,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 147.32 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C1525"
 			(at 147.32 106.68 0)
 			(effects
 				(font

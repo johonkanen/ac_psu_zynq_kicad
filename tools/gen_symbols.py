@@ -28,7 +28,7 @@ JC_SYM = os.path.join(ROOT, "work", "jc_cache.kicad_sym")
 
 # juliancoy cache name -> (our name, reference, value, description)
 JC_SYMBOLS = {
-    "xilinx7_xc7z020clg484": ("XC7Z020-CLG484", "U", "XC7Z020-1CLG484I",
+    "xilinx7_xc7z020clg484": ("XC7Z020-CLG484", "U", "XC7Z020-2CLG484I",
                               "AMD Zynq-7000 SoC, CLG484 (symbol from juliancoy/zynqPCB, MIT)"),
     "DFTBoard-rescue_MT41K256M16HA-125_E-MT41K256M16HA-125_E": (
         "MT41K256M16-FBGA96", "U", "MT41K256M16TW-107:P",

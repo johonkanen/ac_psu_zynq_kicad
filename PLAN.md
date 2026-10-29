@@ -239,7 +239,8 @@ Then the copper is copied, and the net of every copied item is checked against o
    - optional: report pinguz97's F1/F2 on its issue #3 (public: ask first).
 2. ~~Licence~~ **Decided 2026-10-26: MIT** (§3).
 3. ~~512 MB vs 1 GB~~ **Decided 2026-10-26: 1 GB** (2 × MT41K256M16TW-107, 32-bit, the full juliancoy block).
-4. **Speed grade: either is fine (user, 2026-10-26).** Buy whichever has stock at order time: XC7Z020-1CLG484I (C89055,
+4. **Speed grade: −2 or −3, any temperature grade (user, 2026-10-29; supersedes the next lines): XC7Z020-2CLG484I
+   (C157624) in the BOM.** Was: **either is fine (user, 2026-10-26).** Buy whichever has stock at order time: XC7Z020-1CLG484I (C89055,
    116 at JLC on 2026-10-26) or -2CLG484I (C157624, 309). Both have the same footprint and pinout. Configure the PS7 DDR
    for DDR3L-1066 (533 MHz), the -1 limit, so one bitstream fits both grades. **Still open: the MT41K256M16 temperature
    range** against the card's target. The standard part (C253882) is 0…95 °C, IT (C367428) is −40…95 °C.

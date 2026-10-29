@@ -1524,6 +1524,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C96123"
+			(at 88.9 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 88.9 66.04 0)
 			(effects
@@ -1741,6 +1750,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C45783"
+			(at 99.06 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 99.06 66.04 0)
 			(effects
@@ -1950,6 +1968,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 109.22 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C1525"
 			(at 109.22 66.04 0)
 			(effects
 				(font

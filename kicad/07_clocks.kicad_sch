@@ -1473,6 +1473,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 60.96 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 60.96 68.58 0)
 			(effects
@@ -1702,6 +1711,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 109.22 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25105"
 			(at 109.22 63.5 0)
 			(effects
 				(font

@@ -34,7 +34,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 
 | Item | Decision |
 |---|---|
-| SoC | **XC7Z020-1CLG484I or -2CLG484I**, whichever JLC stocks at order time (C89055 / C157624). 200 PL HR I/O, all at 3.3 V |
+| SoC | **XC7Z020-2CLG484I** (C157624). Any temperature grade at speed −2 or −3 that JLC stocks; not −1 (user, 2026-10-29). 200 PL HR I/O, all at 3.3 V |
 | Block source | **juliancoy/zynqPCB** (MIT), SoC + DDR3 only. pinguz97/Zynq-SoM rejected by the UG933 review |
 | Memory | **1 GB DDR3L, 2 × MT41K256M16TW-107:P** (C253882) on juliancoy's HA land; 32-bit, 533 MHz |
 | Licence | **MIT** |
@@ -152,7 +152,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     - the TLV62585 is specified for 10–47 µF out, and every rail carries hundreds of µF (sheet 5). The Ti135 cell
       handles this with the 22 p feed-forward cap; check the loop on the first board (load step);
     - 1V0 at 2.4 A in a SOT-563 needs copper for heat;
-    - LCSC numbers for U341 and U401 are not set yet (the Ti135 sheets have none either).
+    - ~~LCSC numbers for U341 and U401~~ set 2026-10-29 (`tools/set_lcsc.py`).
 - **Sheets 8–10, the MIO peripherals** (`tools/sheets/08_qspi.py`, `09_ethernet.py`, `10_emmc.py`), ported from
   the Ti135 card. Its symbols are now in `tools/gen_symbols.py`: IS25WP128-RHLE, RTL8211FD, HR911130A,
   THGAMVG7T13BAIL, plus Crystal_GND24 and 74LVC1G07. Its two custom footprints (the CSP-24 flash land and the
@@ -187,7 +187,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     - 47 k pull-ups on CMD and DAT0–7 (DAT4–7 are unused but not left floating), and a 47 k pull-down on DS.
     - The RST_n pull-up is the MIO7 VMODE strap (R606, sheet 6).
     - R1001 is the 0 R on `sd_clk` at the MIO pin.
-  - Parts without an LCSC number yet: Y901 (25 MHz 3225) and FB901 (BLM15PX121SN1D), as on the Ti135 card.
+  - ~~Parts without an LCSC number: Y901, FB901~~ set 2026-10-29 (`tools/set_lcsc.py`; Y901 = X322525MRB4SI, 18 pF).
   - **ERC:** the `isolated_pin_label`/`label_dangling` entries for these ports are gone. What is left is expected:
     - `isolated_pin_label` × 8: `uart_tx`/`uart_rx` and `i2c_scl`/`i2c_sda` (label and port each). Their sheets
       are not drawn yet (J2 translator on sheet 13; the I²C EEPROM).
@@ -298,6 +298,11 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
       juliancoy's);
     - `build_pcb.sh --rebuild` now puts the placement back (`tools/apply_placement.py`); checked: every pose, side and
       lock round-trips.
+  - **JLC BOM (2026-10-29):** `reports/jlc/` (gitignored) from
+    `kicad-cli pcb export pos --format csv --units mm --side both -o reports/jlc/pos.csv kicad/zynq_card.kicad_pcb`
+    and `tools/p2k/bin/kipy -I tools/jlc/jlc_bom_cpl.py kicad/zynq_card.kicad_pcb reports/jlc/pos.csv reports/jlc
+    --skip J1,J2,J3,J5,J6,J9`: 80 lines, 303 parts, all with an LCSC number; `python3 -I tools/jlc/stock_check.py
+    reports/jlc/bom_jlcpcb.csv --boards 5`. U20 is XC7Z020-2CLG484I (user: −2 or −3, any temperature grade).
   - **Start here next session (left off 2026-10-28):**
     1. **Pose A0 confirmed by the user (2026-10-28).**
     2. **E1 done (2026-10-29):** `tools/block_e1.py` (run by `--rebuild`): byte 0 CK − DQS +27.5 ps, CK P/N 0.0/0.1 ps,
@@ -315,7 +320,10 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 - Open from phase 2:
   - **ADS7056IRUGR (C2669798) shows −6 orderable at JLC** (2026-10-27, oversold). Check it before ordering or
     source it separately;
-  - LCSC numbers for U341, U401, Y901, FB901.
+  - ~~LCSC numbers for U341, U401, Y901, FB901~~ done 2026-10-29: **every BOM part has an LCSC number**
+    (`tools/set_lcsc.py`, run by `build_schematic.sh`; REUSE_LOG E11 for the block parts). The connectors J1, J2, J3,
+    J5, J6 and J9 are **hand-soldered** (user, 2026-10-29): `jlc_bom_cpl.py --skip J1,J2,J3,J5,J6,J9`. Stock for 5
+    boards (2026-10-29): all fine but the ADS7056 (−2 orderable); tightest IS25WP128 58, eMMC 173, XC7Z020-2 306.
 
 **Suggested way to work on phase 2:**
 - **Script the sheets like the Ti135 repo** (`efinix_soc_board/tools/sheets/NN_*.py` + `_common.py`, with

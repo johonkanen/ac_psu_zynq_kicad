@@ -31,7 +31,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "XC7Z020-1CLG484I"
+			(property "Value" "XC7Z020-2CLG484I"
 				(at 5.08 3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -9405,7 +9405,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XC7Z020-1CLG484I"
+		(property "Value" "XC7Z020-2CLG484I"
 			(at 58.42 46.99 0)
 			(effects
 				(font
@@ -9424,6 +9424,24 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 58.42 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C157624"
+			(at 58.42 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "XC7Z020-2CLG484I"
 			(at 58.42 50.8 0)
 			(effects
 				(font
@@ -10539,7 +10557,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XC7Z020-1CLG484I"
+		(property "Value" "XC7Z020-2CLG484I"
 			(at 157.48 46.99 0)
 			(effects
 				(font
@@ -10558,6 +10576,24 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 157.48 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C157624"
+			(at 157.48 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "XC7Z020-2CLG484I"
 			(at 157.48 50.8 0)
 			(effects
 				(font
@@ -11395,7 +11431,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XC7Z020-1CLG484I"
+		(property "Value" "XC7Z020-2CLG484I"
 			(at 256.54 46.99 0)
 			(effects
 				(font
@@ -11414,6 +11450,24 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 256.54 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C157624"
+			(at 256.54 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "XC7Z020-2CLG484I"
 			(at 256.54 50.8 0)
 			(effects
 				(font
@@ -11916,7 +11970,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XC7Z020-1CLG484I"
+		(property "Value" "XC7Z020-2CLG484I"
 			(at 355.6 46.99 0)
 			(effects
 				(font
@@ -11935,6 +11989,24 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 355.6 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C157624"
+			(at 355.6 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "XC7Z020-2CLG484I"
 			(at 355.6 50.8 0)
 			(effects
 				(font
@@ -12473,6 +12545,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C11702"
+			(at 177.8 243.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 177.8 243.84 0)
 			(effects
@@ -12615,6 +12696,24 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "KT-0603R"
+			(at 177.8 254 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2286"
+			(at 177.8 254 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Light emitting diode"
 			(at 177.8 254 0)
 			(effects
@@ -12704,6 +12803,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 195.58 243.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C11702"
 			(at 195.58 243.84 0)
 			(effects
 				(font
@@ -12846,6 +12954,24 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 195.58 254 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "KT-0603R"
+			(at 195.58 254 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2286"
 			(at 195.58 254 0)
 			(effects
 				(font

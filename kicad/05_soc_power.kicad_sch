@@ -836,7 +836,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "XC7Z020-1CLG484I"
+			(property "Value" "XC7Z020-2CLG484I"
 				(at 5.08 3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -10590,43 +10590,16 @@
 				)
 			)
 		)
-		(property "MFR" "TAIYO YUDEN"
-			(at 114.3 34.29 0)
-			(hide yes)
+		(property "LCSC" "C49066"
+			(at 203.2 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "JMK325ABJ107MM-P"
-			(at 114.3 34.29 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 114.3 34.29 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "587-4313-1-ND"
-			(at 114.3 34.29 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL32A107MQVNNNE"
 			(at 114.3 34.29 0)
 			(hide yes)
 			(effects
@@ -10806,43 +10779,16 @@
 				)
 			)
 		)
-		(property "MFR" "Murata"
-			(at -73.66 -35.56 0)
-			(hide yes)
+		(property "LCSC" "C19702"
+			(at 83.82 93.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "GRM188R61A106KE69J"
-			(at -73.66 -35.56 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at -73.66 -35.56 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "490-14372-1-ND"
-			(at -73.66 -35.56 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL10A106KP8NNNC"
 			(at -73.66 -35.56 0)
 			(hide yes)
 			(effects
@@ -10911,43 +10857,16 @@
 				)
 			)
 		)
-		(property "MFR" "Murata"
-			(at -76.2 -40.64 0)
-			(hide yes)
+		(property "LCSC" "C19702"
+			(at 177.8 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "GRM188R61A106KE69J"
-			(at -76.2 -40.64 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at -76.2 -40.64 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "490-14372-1-ND"
-			(at -76.2 -40.64 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL10A106KP8NNNC"
 			(at -76.2 -40.64 0)
 			(hide yes)
 			(effects
@@ -11242,43 +11161,16 @@
 				)
 			)
 		)
-		(property "MFR" "Yageo"
-			(at 195.58 19.05 0)
-			(hide yes)
+		(property "LCSC" "C47339"
+			(at 251.46 165.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "CC0402KRX5R5BB474"
-			(at 195.58 19.05 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 195.58 19.05 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "311-1684-1-ND"
-			(at 195.58 19.05 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A474KP5NNNC"
 			(at 195.58 19.05 0)
 			(hide yes)
 			(effects
@@ -11402,7 +11294,7 @@
 				)
 			)
 		)
-		(property "MFR" "Murata Electronics"
+		(property "MFR" "UNI-ROYAL"
 			(at 238.76 160.02 0)
 			(hide yes)
 			(effects
@@ -11411,7 +11303,7 @@
 				)
 			)
 		)
-		(property "MPN" "BLM18AG121SN1D"
+		(property "MPN" "0603WAF0000T5E"
 			(at 238.76 160.02 0)
 			(hide yes)
 			(effects
@@ -11420,31 +11312,13 @@
 				)
 			)
 		)
-		(property "SPR" "Digikey"
+		(property "LCSC" "C21189"
 			(at 238.76 160.02 0)
-			(hide yes)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-			)
-		)
-		(property "SPN" "490-1011-1-ND"
-			(at 238.76 160.02 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" "-"
-			(at 238.76 160.02 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
+				(hide yes)
 			)
 		)
 		(property "Description" "0 ohm jumper on juliancoy's VCCAUX bead land (REUSE_LOG E5)"
@@ -11572,43 +11446,16 @@
 				)
 			)
 		)
-		(property "MFR" "Murata"
-			(at -8.89 34.29 0)
-			(hide yes)
+		(property "LCSC" "C19702"
+			(at 245.11 165.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "GRM188R61A106KE69J"
-			(at -8.89 34.29 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at -8.89 34.29 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "490-14372-1-ND"
-			(at -8.89 34.29 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL10A106KP8NNNC"
 			(at -8.89 34.29 0)
 			(hide yes)
 			(effects
@@ -11734,43 +11581,16 @@
 				)
 			)
 		)
-		(property "MFR" "Murata"
-			(at 78.74 11.43 0)
-			(hide yes)
+		(property "LCSC" "C23733"
+			(at 143.51 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155R60G475ME47D"
-			(at 78.74 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 78.74 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "490-11980-1-ND"
-			(at 78.74 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A475MP5NRNC"
 			(at 78.74 11.43 0)
 			(hide yes)
 			(effects
@@ -11839,43 +11659,16 @@
 				)
 			)
 		)
-		(property "MFR" "Murata"
-			(at 72.39 11.43 0)
-			(hide yes)
+		(property "LCSC" "C23733"
+			(at 137.16 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155R60G475ME47D"
-			(at 72.39 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 72.39 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "490-11980-1-ND"
-			(at 72.39 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A475MP5NRNC"
 			(at 72.39 11.43 0)
 			(hide yes)
 			(effects
@@ -11944,43 +11737,16 @@
 				)
 			)
 		)
-		(property "MFR" "Yageo"
-			(at 74.93 11.43 0)
-			(hide yes)
+		(property "LCSC" "C47339"
+			(at 130.81 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "CC0402KRX5R5BB474"
-			(at 74.93 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 74.93 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "311-1684-1-ND"
-			(at 74.93 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A474KP5NNNC"
 			(at 74.93 11.43 0)
 			(hide yes)
 			(effects
@@ -12049,43 +11815,16 @@
 				)
 			)
 		)
-		(property "MFR" "Yageo"
-			(at 68.58 11.43 0)
-			(hide yes)
+		(property "LCSC" "C47339"
+			(at 124.46 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "CC0402KRX5R5BB474"
-			(at 68.58 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 68.58 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "311-1684-1-ND"
-			(at 68.58 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A474KP5NNNC"
 			(at 68.58 11.43 0)
 			(hide yes)
 			(effects
@@ -12154,43 +11893,16 @@
 				)
 			)
 		)
-		(property "MFR" "Yageo"
-			(at 62.23 11.43 0)
-			(hide yes)
+		(property "LCSC" "C47339"
+			(at 118.11 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "CC0402KRX5R5BB474"
-			(at 62.23 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 62.23 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "311-1684-1-ND"
-			(at 62.23 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A474KP5NNNC"
 			(at 62.23 11.43 0)
 			(hide yes)
 			(effects
@@ -12259,43 +11971,16 @@
 				)
 			)
 		)
-		(property "MFR" "Yageo"
-			(at 55.88 11.43 0)
-			(hide yes)
+		(property "LCSC" "C47339"
+			(at 111.76 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "CC0402KRX5R5BB474"
-			(at 55.88 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 55.88 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "311-1684-1-ND"
-			(at 55.88 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A474KP5NNNC"
 			(at 55.88 11.43 0)
 			(hide yes)
 			(effects
@@ -12364,43 +12049,16 @@
 				)
 			)
 		)
-		(property "MFR" "Yageo"
-			(at 160.02 16.51 0)
-			(hide yes)
+		(property "LCSC" "C47339"
+			(at 209.55 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "CC0402KRX5R5BB474"
-			(at 160.02 16.51 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 160.02 16.51 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "311-1684-1-ND"
-			(at 160.02 16.51 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A474KP5NNNC"
 			(at 160.02 16.51 0)
 			(hide yes)
 			(effects
@@ -12469,43 +12127,16 @@
 				)
 			)
 		)
-		(property "MFR" "Yageo"
-			(at 166.37 16.51 0)
-			(hide yes)
+		(property "LCSC" "C47339"
+			(at 215.9 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "CC0402KRX5R5BB474"
-			(at 166.37 16.51 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 166.37 16.51 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "311-1684-1-ND"
-			(at 166.37 16.51 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A474KP5NNNC"
 			(at 166.37 16.51 0)
 			(hide yes)
 			(effects
@@ -12574,43 +12205,16 @@
 				)
 			)
 		)
-		(property "MFR" "Yageo"
-			(at 172.72 16.51 0)
-			(hide yes)
+		(property "LCSC" "C47339"
+			(at 222.25 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "CC0402KRX5R5BB474"
-			(at 172.72 16.51 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 172.72 16.51 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "311-1684-1-ND"
-			(at 172.72 16.51 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A474KP5NNNC"
 			(at 172.72 16.51 0)
 			(hide yes)
 			(effects
@@ -12679,43 +12283,16 @@
 				)
 			)
 		)
-		(property "MFR" "Yageo"
-			(at 119.38 11.43 0)
-			(hide yes)
+		(property "LCSC" "C47339"
+			(at 168.91 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "CC0402KRX5R5BB474"
-			(at 119.38 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 119.38 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "311-1684-1-ND"
-			(at 119.38 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A474KP5NNNC"
 			(at 119.38 11.43 0)
 			(hide yes)
 			(effects
@@ -12784,43 +12361,16 @@
 				)
 			)
 		)
-		(property "MFR" "Murata"
-			(at 110.49 11.43 0)
-			(hide yes)
+		(property "LCSC" "C23733"
+			(at 175.26 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155R60G475ME47D"
-			(at 110.49 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 110.49 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "490-11980-1-ND"
-			(at 110.49 11.43 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A475MP5NRNC"
 			(at 110.49 11.43 0)
 			(hide yes)
 			(effects
@@ -12946,43 +12496,16 @@
 				)
 			)
 		)
-		(property "MFR" "Yageo"
-			(at 40.64 6.35 0)
-			(hide yes)
+		(property "LCSC" "C47339"
+			(at 90.17 152.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "CC0402KRX5R5BB474"
-			(at 40.64 6.35 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 40.64 6.35 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "311-1684-1-ND"
-			(at 40.64 6.35 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A474KP5NNNC"
 			(at 40.64 6.35 0)
 			(hide yes)
 			(effects
@@ -13051,43 +12574,16 @@
 				)
 			)
 		)
-		(property "MFR" "Murata"
-			(at 31.75 6.35 0)
-			(hide yes)
+		(property "LCSC" "C23733"
+			(at 96.52 152.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155R60G475ME47D"
-			(at 31.75 6.35 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 31.75 6.35 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "490-11980-1-ND"
-			(at 31.75 6.35 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A475MP5NRNC"
 			(at 31.75 6.35 0)
 			(hide yes)
 			(effects
@@ -13213,43 +12709,16 @@
 				)
 			)
 		)
-		(property "MFR" "Yageo"
-			(at 19.05 3.81 0)
-			(hide yes)
+		(property "LCSC" "C47339"
+			(at 68.58 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "CC0402KRX5R5BB474"
-			(at 19.05 3.81 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 19.05 3.81 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "311-1684-1-ND"
-			(at 19.05 3.81 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A474KP5NNNC"
 			(at 19.05 3.81 0)
 			(hide yes)
 			(effects
@@ -13318,43 +12787,16 @@
 				)
 			)
 		)
-		(property "MFR" "Murata"
-			(at 10.16 3.81 0)
-			(hide yes)
+		(property "LCSC" "C23733"
+			(at 74.93 149.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155R60G475ME47D"
-			(at 10.16 3.81 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPR" "Digikey"
-			(at 10.16 3.81 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPN" "490-11980-1-ND"
-			(at 10.16 3.81 0)
-			(hide yes)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "SPURL" ""
+		(property "MPN" "CL05A475MP5NRNC"
 			(at 10.16 3.81 0)
 			(hide yes)
 			(effects
@@ -13679,7 +13121,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "xc7z020clg484"
+		(property "Value" "XC7Z020-2CLG484I"
 			(at 278.9174 153.5938 0)
 			(effects
 				(font
@@ -13706,6 +13148,15 @@
 				)
 			)
 		)
+		(property "LCSC" "C157624"
+			(at 257.81 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "MFR" "Xilinx"
 			(at 257.81 162.56 0)
 			(hide yes)
@@ -13715,7 +13166,7 @@
 				)
 			)
 		)
-		(property "MPN" "XC7Z020-1CLG484C"
+		(property "MPN" "XC7Z020-2CLG484I"
 			(at 257.81 162.56 0)
 			(hide yes)
 			(effects
@@ -15100,6 +14551,24 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "T520D337M006ATE015"
+			(at 12.7 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C116744"
+			(at 12.7 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Polarized capacitor"
 			(at 12.7 60.96 0)
 			(effects
@@ -15349,6 +14818,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C49066"
+			(at 22.86 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 22.86 60.96 0)
 			(effects
@@ -15460,6 +14938,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 33.02 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C23733"
 			(at 33.02 60.96 0)
 			(effects
 				(font
@@ -15587,6 +15074,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C23733"
+			(at 43.18 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 43.18 60.96 0)
 			(effects
@@ -15698,6 +15194,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 53.34 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C47339"
 			(at 53.34 60.96 0)
 			(effects
 				(font
@@ -15825,6 +15330,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 63.5 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 63.5 60.96 0)
 			(effects
@@ -15944,6 +15458,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 73.66 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 73.66 60.96 0)
 			(effects
@@ -16054,6 +15577,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 114.3 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C49066"
 			(at 114.3 60.96 0)
 			(effects
 				(font
@@ -16311,6 +15843,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C49066"
+			(at 124.46 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 124.46 60.96 0)
 			(effects
@@ -16422,6 +15963,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 134.62 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C49066"
 			(at 134.62 60.96 0)
 			(effects
 				(font
@@ -16549,6 +16099,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C77101"
+			(at 144.78 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 144.78 60.96 0)
 			(effects
@@ -16668,6 +16227,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C77101"
+			(at 154.94 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 154.94 60.96 0)
 			(effects
@@ -16778,6 +16346,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 190.5 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C47339"
 			(at 190.5 60.96 0)
 			(effects
 				(font
@@ -17035,6 +16612,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 200.66 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 200.66 60.96 0)
 			(effects
@@ -17154,6 +16740,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 210.82 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 210.82 60.96 0)
 			(effects
@@ -17264,6 +16859,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 12.7 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C23733"
 			(at 12.7 101.6 0)
 			(effects
 				(font
@@ -17521,6 +17125,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C23733"
+			(at 22.86 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 22.86 101.6 0)
 			(effects
@@ -17632,6 +17245,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 33.02 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C23733"
 			(at 33.02 101.6 0)
 			(effects
 				(font
@@ -17759,6 +17381,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 43.18 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 43.18 101.6 0)
 			(effects
@@ -17870,6 +17501,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 53.34 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C47339"
 			(at 53.34 101.6 0)
 			(effects
 				(font
@@ -17997,6 +17637,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 63.5 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 63.5 101.6 0)
 			(effects
@@ -18107,6 +17756,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 241.3 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C23733"
 			(at 241.3 101.6 0)
 			(effects
 				(font
@@ -18364,6 +18022,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C23733"
+			(at 251.46 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 251.46 101.6 0)
 			(effects
@@ -18475,6 +18142,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 261.62 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C23733"
 			(at 261.62 101.6 0)
 			(effects
 				(font
@@ -18602,6 +18278,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 271.78 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 271.78 101.6 0)
 			(effects
@@ -18713,6 +18398,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 281.94 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C47339"
 			(at 281.94 101.6 0)
 			(effects
 				(font
@@ -18840,6 +18534,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 292.1 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 292.1 101.6 0)
 			(effects
@@ -18950,6 +18653,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 12.7 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C47339"
 			(at 12.7 228.6 0)
 			(effects
 				(font
@@ -19207,6 +18919,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 22.86 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 22.86 228.6 0)
 			(effects
@@ -19318,6 +19039,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 33.02 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C47339"
 			(at 33.02 228.6 0)
 			(effects
 				(font
@@ -19445,6 +19175,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 43.18 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 43.18 228.6 0)
 			(effects
@@ -19556,6 +19295,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 53.34 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C47339"
 			(at 53.34 228.6 0)
 			(effects
 				(font
@@ -19683,6 +19431,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 63.5 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 63.5 228.6 0)
 			(effects
@@ -19794,6 +19551,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 73.66 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C47339"
 			(at 73.66 228.6 0)
 			(effects
 				(font
@@ -19921,6 +19687,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 83.82 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 83.82 228.6 0)
 			(effects
@@ -20032,6 +19807,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 93.98 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C47339"
 			(at 93.98 228.6 0)
 			(effects
 				(font
@@ -20159,6 +19943,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C47339"
+			(at 104.14 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 104.14 228.6 0)
 			(effects
@@ -20270,6 +20063,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 114.3 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C23733"
 			(at 114.3 228.6 0)
 			(effects
 				(font
@@ -20397,6 +20199,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C23733"
+			(at 124.46 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 124.46 228.6 0)
 			(effects
@@ -20508,6 +20319,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 134.62 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C16780"
 			(at 134.62 228.6 0)
 			(effects
 				(font
@@ -20635,6 +20455,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C49066"
+			(at 144.78 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 144.78 228.6 0)
 			(effects
@@ -20745,6 +20574,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 190.5 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C23733"
 			(at 190.5 228.6 0)
 			(effects
 				(font
@@ -21002,6 +20840,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C23733"
+			(at 200.66 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 200.66 228.6 0)
 			(effects
@@ -21132,6 +20979,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 342.9 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C113030"
 			(at 342.9 106.68 0)
 			(effects
 				(font
@@ -21293,6 +21149,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C19702"
+			(at 350.52 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 350.52 113.03 0)
 			(effects
@@ -21437,6 +21302,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 360.68 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C47339"
 			(at 360.68 113.03 0)
 			(effects
 				(font

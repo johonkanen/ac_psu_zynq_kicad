@@ -31,7 +31,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "XC7Z020-1CLG484I"
+			(property "Value" "XC7Z020-2CLG484I"
 				(at 5.08 3.81 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -10341,7 +10341,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XC7Z020-1CLG484I"
+		(property "Value" "XC7Z020-2CLG484I"
 			(at 91.44 34.29 0)
 			(effects
 				(font
@@ -10862,6 +10862,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25765"
+			(at 17.78 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 17.78 132.08 0)
 			(effects
@@ -11016,6 +11025,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 29.21 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25765"
 			(at 29.21 132.08 0)
 			(effects
 				(font
@@ -11186,6 +11204,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25765"
+			(at 40.64 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 40.64 132.08 0)
 			(effects
@@ -11340,6 +11367,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 52.07 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25765"
 			(at 52.07 132.08 0)
 			(effects
 				(font
@@ -11510,6 +11546,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25765"
+			(at 63.5 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 63.5 132.08 0)
 			(effects
@@ -11664,6 +11709,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 74.93 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25765"
 			(at 74.93 132.08 0)
 			(effects
 				(font
@@ -11834,6 +11888,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25765"
+			(at 86.36 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 86.36 132.08 0)
 			(effects
@@ -11996,6 +12059,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25744"
+			(at 97.79 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 97.79 132.08 0)
 			(effects
@@ -12133,7 +12205,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XC7Z020-1CLG484I"
+		(property "Value" "XC7Z020-2CLG484I"
 			(at 226.06 26.67 0)
 			(effects
 				(font
@@ -13051,6 +13123,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25744"
+			(at 139.7 177.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 139.7 177.8 0)
 			(effects
@@ -13213,6 +13294,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25744"
+			(at 151.13 177.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 151.13 177.8 0)
 			(effects
@@ -13367,6 +13457,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 162.56 177.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C15195"
 			(at 162.56 177.8 0)
 			(effects
 				(font
@@ -13622,6 +13721,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25744"
+			(at 182.88 177.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 182.88 177.8 0)
 			(effects
@@ -13759,7 +13867,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "XC7Z020-1CLG484I"
+		(property "Value" "XC7Z020-2CLG484I"
 			(at 368.3 34.29 0)
 			(effects
 				(font
@@ -15143,6 +15251,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25900"
+			(at 294.64 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 294.64 132.08 0)
 			(effects
@@ -15305,6 +15422,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25900"
+			(at 306.07 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 306.07 132.08 0)
 			(effects
@@ -15459,6 +15585,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 317.5 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25104"
 			(at 317.5 132.08 0)
 			(effects
 				(font
@@ -16537,6 +16672,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C1525"
+			(at 309.88 220.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 309.88 220.98 0)
 			(effects
@@ -16766,6 +16910,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 353.06 220.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C1525"
 			(at 353.06 220.98 0)
 			(effects
 				(font
@@ -17011,6 +17164,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C11702"
+			(at 226.06 233.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 226.06 233.68 0)
 			(effects
@@ -17165,6 +17327,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 237.49 233.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25744"
 			(at 237.49 233.68 0)
 			(effects
 				(font
@@ -17335,6 +17506,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25744"
+			(at 248.92 233.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 248.92 233.68 0)
 			(effects
@@ -17489,6 +17669,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 260.35 233.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25744"
 			(at 260.35 233.68 0)
 			(effects
 				(font

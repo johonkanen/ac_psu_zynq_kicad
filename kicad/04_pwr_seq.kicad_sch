@@ -1122,6 +1122,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25741"
+			(at 55.88 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 55.88 57.15 0)
 			(effects
@@ -1316,6 +1325,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25741"
+			(at 55.88 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 55.88 95.25 0)
 			(effects
@@ -1484,6 +1502,15 @@
 		)
 		(property "Datasheet" ""
 			(at 162.56 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C19653"
+			(at 165.1 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1803,6 +1830,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C11693"
+			(at 106.68 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 106.68 110.49 0)
 			(effects
@@ -1937,6 +1973,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 106.68 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25741"
 			(at 106.68 123.19 0)
 			(effects
 				(font
@@ -2243,6 +2288,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 193.04 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C1525"
 			(at 193.04 66.04 0)
 			(effects
 				(font

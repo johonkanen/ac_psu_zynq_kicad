@@ -17,7 +17,8 @@ still need checking against a primary source or the Vivado pin planner.
 
 ## 1. Package
 
-- **XC7Z020-1CLG484I or -2CLG484I** (user decision 2026-10-26: either grade, whichever JLC has in stock).
+- **XC7Z020-2CLG484I** (LCSC C157624). User decision 2026-10-29: speed grade −2 or −3, any temperature grade JLC
+  stocks; not −1 (was 2026-10-26: −1 or −2). Same balls and package delays.
 - CLG484: 19 × 19 mm, 0.8 mm pitch, wire-bond, 22 × 22 array.
 - **200 PL SelectIO** (all HR, in banks 13, 33, 34, 35) and **128 PS I/O** (UG865 Table 1-2).
 - The -1 and -2 grades share the footprint and pinout; -2 runs the CPUs faster (766 vs 667 MHz).

@@ -3120,6 +3120,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C52923"
+			(at 76.2 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 76.2 152.4 0)
 			(effects
@@ -3379,6 +3388,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25076"
+			(at 22.86 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 22.86 193.04 0)
 			(effects
@@ -3533,6 +3551,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 33.02 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C11702"
 			(at 33.02 193.04 0)
 			(effects
 				(font
@@ -3703,6 +3730,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C11702"
+			(at 43.18 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 43.18 193.04 0)
 			(effects
@@ -3865,6 +3901,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C11702"
+			(at 53.34 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 53.34 193.04 0)
 			(effects
@@ -4019,6 +4064,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 63.5 193.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C11702"
 			(at 63.5 193.04 0)
 			(effects
 				(font
@@ -4504,6 +4558,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25105"
+			(at 223.52 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 223.52 101.6 0)
 			(effects
@@ -4583,6 +4646,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 232.41 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C113781"
 			(at 232.41 107.95 0)
 			(effects
 				(font
@@ -4772,6 +4844,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 190.5 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C1525"
 			(at 190.5 152.4 0)
 			(effects
 				(font
@@ -5503,6 +5584,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C19666"
+			(at 292.1 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 292.1 152.4 0)
 			(effects
@@ -5752,6 +5842,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C1525"
+			(at 300.99 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 300.99 152.4 0)
 			(effects
@@ -5862,6 +5961,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 368.3 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C52923"
 			(at 368.3 152.4 0)
 			(effects
 				(font
@@ -6118,6 +6226,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25105"
+			(at 304.8 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 304.8 187.96 0)
 			(effects
@@ -6226,6 +6343,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25105"
+			(at 304.8 194.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 304.8 194.31 0)
 			(effects
@@ -6326,6 +6452,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 304.8 200.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25105"
 			(at 304.8 200.66 0)
 			(effects
 				(font

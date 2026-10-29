@@ -2155,6 +2155,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C15850"
+			(at 38.1 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 38.1 64.77 0)
 			(effects
@@ -2523,6 +2532,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C2998095"
+			(at 104.14 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 104.14 64.77 0)
 			(effects
@@ -2612,6 +2630,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 104.14 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25741"
 			(at 104.14 74.93 0)
 			(effects
 				(font
@@ -2770,6 +2797,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 118.11 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C1555"
 			(at 118.11 64.77 0)
 			(effects
 				(font
@@ -2948,6 +2984,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C45783"
+			(at 129.54 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 129.54 64.77 0)
 			(effects
@@ -3098,6 +3143,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 139.7 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C45783"
 			(at 139.7 64.77 0)
 			(effects
 				(font
@@ -3600,6 +3654,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C15850"
+			(at 177.8 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 177.8 64.77 0)
 			(effects
@@ -3969,6 +4032,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C25764"
+			(at 243.84 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 243.84 64.77 0)
 			(effects
@@ -4058,6 +4130,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 243.84 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25741"
 			(at 243.84 74.93 0)
 			(effects
 				(font
@@ -4216,6 +4297,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 257.81 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C1555"
 			(at 257.81 64.77 0)
 			(effects
 				(font
@@ -4386,6 +4476,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 269.24 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C45783"
 			(at 269.24 64.77 0)
 			(effects
 				(font
@@ -4888,6 +4987,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C15850"
+			(at 38.1 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 38.1 143.51 0)
 			(effects
@@ -5257,6 +5365,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C27009"
+			(at 104.14 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 104.14 143.51 0)
 			(effects
@@ -5346,6 +5463,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 104.14 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25741"
 			(at 104.14 153.67 0)
 			(effects
 				(font
@@ -5504,6 +5630,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 118.11 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C1555"
 			(at 118.11 143.51 0)
 			(effects
 				(font
@@ -5674,6 +5809,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 129.54 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C45783"
 			(at 129.54 143.51 0)
 			(effects
 				(font
@@ -6176,6 +6320,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C15850"
+			(at 177.8 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 177.8 143.51 0)
 			(effects
@@ -6545,6 +6698,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C2933070"
+			(at 243.84 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Resistor"
 			(at 243.84 143.51 0)
 			(effects
@@ -6634,6 +6796,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 243.84 153.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25741"
 			(at 243.84 153.67 0)
 			(effects
 				(font
@@ -6792,6 +6963,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 257.81 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C1555"
 			(at 257.81 143.51 0)
 			(effects
 				(font
@@ -6962,6 +7142,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 269.24 143.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C45783"
 			(at 269.24 143.51 0)
 			(effects
 				(font
@@ -7278,6 +7467,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C603656"
+			(at 342.9 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "250mA low-noise LDO, 2.2V-5.5V input, 3.3V output, SOT-23-5"
 			(at 342.9 66.04 0)
 			(effects
@@ -7544,6 +7742,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C52923"
+			(at 322.58 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Description" "Unpolarized capacitor"
 			(at 322.58 71.12 0)
 			(effects
@@ -7708,6 +7915,15 @@
 			)
 		)
 		(property "Datasheet" ""
+			(at 358.14 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C52923"
 			(at 358.14 71.12 0)
 			(effects
 				(font
