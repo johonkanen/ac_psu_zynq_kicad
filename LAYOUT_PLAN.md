@@ -107,7 +107,7 @@ method is in the script's docstring; in short:
 - Left for phase 4: the H10 via + VCCPLL planelet (E5); 3V3 to the 12 VCCO_34/35 balls; the J3 and other escapes.
 - Render: `reports/pose_a_top.png` (`kicad-cli pcb render`).
 
-Then the **block edits E1 (CK trunk) and optional E2** by hand in pcbnew, checked with `ddr3_review.py` as
+Then the **block edits E1 (CK trunk; done 2026-10-29 by `tools/block_e1.py`) and optional E2**, checked with `ddr3_review.py` as
 REUSE_LOG says. They are inside the block and do not depend on the pose, so they can wait until the pose is fixed.
 
 **`ddr3_review.py` run** (the Vivado package delays come from `vivado/pinplan/build/pkgpins.csv`, in fs; convert to a
@@ -286,7 +286,8 @@ Placement rules:
 
 - DRC (our rules) with no errors apart from unrouted nets outside the block; parity 0.
 - `tools/check_block_copper.py`: 0 differences except the logged E-edits.
-- `ddr3_review.py` on both DRAMs, after E1: byte 0 CK − DQS ≥ +20 ps, CK P/N ≤ 1 ps.
+- `ddr3_review.py` on both DRAMs, after E1: byte 0 CK − DQS ≥ +20 ps, CK P/N ≤ 1 ps. **Met 2026-10-29: +27.5 ps,
+  0.0/0.1 ps** (`tools/block_e1.py`, REUSE_LOG.md "E1 as built").
 - Renders of F/B and each inner layer in `reports/`; the pose and the placement committed; STATUS.md updated.
 
 ## Open points for phase 3

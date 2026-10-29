@@ -28,7 +28,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 | `vivado/pinplan/` | Vivado pin plan and power: `pinplan.py`, `ps7.tcl`, `signals.csv`, `groups.csv`, `mio.csv`; results `zynq_pinplan.csv`, `ps7_mio.csv`, `power_summary.csv` |
 | `reference/` | `zynqpcb/` (the block source, submodule), `baseboard_j11_pinout.csv` (the J3 authority), `stackup_scan_0p102mm.txt`, `vendor/README.md` (Xilinx PDFs to fetch; not in git) |
 | `placement/` | placement inputs (KiCadRoutingTools): `groups.json`, `sketches_B/`, `flip_bottom.py`, `fix_intent.py`, `prep.sh`, `intent.json`, `touchup.py` (lock + proximity claims), `hand_fixes.sh` (step 4.4); pose trials `pose_trial.sh` + `pose_chain.txt` (LAYOUT_PLAN.md steps 3–4) |
-| `tools/` | board: `make_board.py`, `board_setup.py`, `import_block.py`, `check_block_copper.py`, `apply_placement.py`, `place_analog.py`, `place_free.py`, `refill_zones.py`, `build_pcb.sh`; `ddr3_review.py`, `stackup_scan.py`, `zsolve.py`/`zsolve_cases.py`, `ddr_survey.py`; submodules `jlc/` and `p2k/` |
+| `tools/` | board: `make_board.py`, `board_setup.py`, `import_block.py`, `check_block_copper.py`, `apply_placement.py`, `place_analog.py`, `place_free.py`, `refill_zones.py`, `block_e1.py`, `build_pcb.sh`; `ddr3_review.py`, `stackup_scan.py`, `zsolve.py`/`zsolve_cases.py`, `ddr_survey.py`; submodules `jlc/` and `p2k/` |
 
 ## Decisions (do not reopen without the user)
 
@@ -300,9 +300,8 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
       lock round-trips.
   - **Start here next session (left off 2026-10-28):**
     1. **Pose A0 confirmed by the user (2026-10-28).**
-    2. **E1** (CK trunk, REUSE_LOG.md) in pcbnew; check with `ddr3_review.py` (command in LAYOUT_PLAN.md step 2;
-       `work/pkg_delays_ps.csv` is regenerated from `vivado/pinplan/build/pkgpins.csv`, fs → ps). Target: byte 0
-       CK − DQS ≥ +20 ps (now +2.6), CK P/N ≤ 1 ps.
+    2. **E1 done (2026-10-29):** `tools/block_e1.py` (run by `--rebuild`): byte 0 CK − DQS +27.5 ps, CK P/N 0.0/0.1 ps,
+       all PASS derated (REUSE_LOG.md, "E1 as built"). E2 (DQS3 pair, 9.0 ps at U15) stays optional.
     3. **Step 4.4 fixes: done 2026-10-28** (`placement/hand_fixes.sh`, `tools/place_free.py`; results in
        LAYOUT_PLAN.md step 4). Left: bottom-side heights against the baseboard, a look at the PHY area.
        **No designator silkscreen** (user, 2026-10-29): hidden by `make_board.py`.
@@ -334,7 +333,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 ## Open items
 
 - [ ] **Block edits after the import** (`REUSE_LOG.md`):
-  - E1: CK_P +4.30 mm, CK_N +3.23 mm in the trunk, giving CK = DQS0 + 25 ps and CK P/N matched;
+  - ~~E1~~ done 2026-10-29 (`tools/block_e1.py`): byte 0 CK − DQS +27.5 ps, CK P/N 0.0 ps;
   - E2 (optional): match the DQS3 pair;
   - E3: TPS51200 EN;
   - E4: the DRAM part swap;

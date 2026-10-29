@@ -27,6 +27,8 @@ from import_block import PCB, RAIL_MAP, SOURCE, Pose  # noqa: E402
 # source net: why its copper differs (REUSE_LOG.md)
 EXPECTED = {
     "DDR3_VTT_EN": "E3: the branch to U20 B6 (PS_MIO14) is removed; R25-U8 EN stays",
+    "DDR3_CK_P": "E1: coupled meander + P bump in the In2 trunk (tools/block_e1.py), +4.30 mm",
+    "DDR3_CK_N": "E1: coupled meander in the In2 trunk (tools/block_e1.py), +3.23 mm",
 }
 mm = pcbnew.ToMM
 
