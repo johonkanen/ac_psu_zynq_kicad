@@ -15,10 +15,10 @@ SPECS=(
   C505 C506 C507 C513 C514 C515 C519 C520 C521 C525 C526 C527
   C503 C504 C516 C517 C518 C522 C523 C524
   # config: PS_MIO_VREF divider and cap at F8, PS_POR_B / PS_SRST_B / DONE pulls, the MIO boot straps at their balls
-  C601 R609 R610 R608@U20.B5 R611 R612 R604 R607
+  C601 R609 R610 R608@U20.B5 R611 R612 R607
   # the QSPI straps (at the flash or their balls); the PHY crystal under the PHY area on B.Cu (0.8 mm; F is full of
   # the PHY's passives) with its load caps
-  R601 R602 R603 R605 Y901/10 C910@Y901.1 C911@Y901.3
+  Y901/10 C910@Y901.1 C911@Y901.3
   # PS_CLK oscillator on F at the block edge nearest F7 (on B it would sit under the DDR), its supply filter beside it,
   # the 33 R source-series at its output; the SD0 CLK 0 R at its ball (E14)
   Y701@U20.F7:F/20 FB701@Y701.4:F C701@Y701.4:F R701@Y701.3:F R1001@U20.E14
@@ -30,4 +30,10 @@ SPECS=(
   C502:F/25 C501:F/25 C508:F/25 C509:F/25 C510:F/25 C511:F/25 C512:F/25
 )
 "$R/tools/p2k/bin/kipy" "$R/tools/place_free.py" "$IN" "$OUT" "${SPECS[@]}" 2>&1 | grep -v -e swig -e "Debug: Adding" \
+    -e "Legacy zone" -e "best-effort"
+# U801's fan-out (tools/fanout_u801.py: one via between the balls per used ball), then its decap, the CS# pull-up and
+# the MIO boot straps on B.Cu beside the via field, never over a via (--clear-vias), each at its ball (2026-10-29)
+"$R/tools/p2k/bin/kipy" "$R/tools/fanout_u801.py" "$OUT" 2>&1 | grep -v -e swig -e "Debug: Adding"
+"$R/tools/p2k/bin/kipy" "$R/tools/place_free.py" "$OUT" "$OUT" --clear-vias C801@U801.B4/5 R801@U801.C2/5 R601@U801.D3/6 \
+    R602@U801.D2/6 R603@U801.C4/6 R604@U801.D4/6 R605@U801.B2/6 2>&1 | grep -v -e swig -e "Debug: Adding" \
     -e "Legacy zone" -e "best-effort"

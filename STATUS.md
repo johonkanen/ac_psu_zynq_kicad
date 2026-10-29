@@ -322,8 +322,8 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
        **Copper layers named** (user, 2026-10-29): 1.Top, 2.GND, 3.Sig, 4.GND, 5.Sig, 6.GND, 7.Sig, 8.Bottom
        (`board_setup.py` LAYER_NAMES; files keep the standard names, scripts use `GetStandardLayerName`). Board
        re-made from the schematic 2026-10-29 (`--rebuild`): no change, parity 0.
-    4. **U801 fan-out:** its inner CSP balls (C2, C4, D2, D4) need vias between the 1.0 mm-pitch balls (the router
-       wanted below-standard vias); decide with the flash placement.
+    4. ~~**U801 fan-out**~~ done 2026-10-29 (`tools/fanout_u801.py`, run by `--rebuild`): 9 standard 0.48/0.25 mm vias
+       between the balls (LAYOUT_PLAN.md step 4). U801 stays at (183.8, 93.85).
     - Note: `tools/build_pcb.sh --rebuild` recreates the board (make_board → board_setup → import_block →
       apply_placement); safe until routing outside the block starts.
 - Open from phase 2:
@@ -375,7 +375,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 - [ ] **ADS7056 stock** at JLC (−6 orderable on 2026-10-27, −2 on 2026-10-29): wait, Global Sourcing / consign, or
       another ADC.
 - [ ] **Path to the order** (2026-10-29): (1) JLC quote: stack-up, 0.102/0.102 mm on 1 oz inner, 0.48/0.25 mm vias;
-      (2) close phase 3 (bottom heights vs the baseboard, PHY area, U801 fan-out, layer renders); (3) phase 4
+      (2) close phase 3 (layer renders; heights, PHY area and U801 fan-out done); (3) phase 4
       routing (E5 planelet + H10 via, VCCO_34/35, power/pours, MIO/RGMII/MDI/eMMC/QSPI, PL I/O, GND stitching);
       (4) phase 5 sign-off (DRC 0 + parity 0, block check, ddr3_review both DRAMs, Vivado PS7 board delays,
       routed-board review, DFM); (5) order files: `tools/jlc/fab_outputs.sh ... --skip J1,J2,J3,J5,J6,J9`,

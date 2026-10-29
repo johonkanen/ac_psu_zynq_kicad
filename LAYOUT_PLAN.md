@@ -283,6 +283,15 @@ and restored them, and those scores (in brackets) were too kind to A0.
   field (U20's TX balls are in its NE corner; no room under U20, the eMMC fills F at the block edge), in ball order.
   **R606** (MIO7 strap on `emmc_rst_n`) had gone to the eMMC's K5 ball inside its ball field (B.Cu): now on top of
   that column. Both in `placement/hand_fixes.sh`.
+- **U801 fan-out (2026-10-29, `tools/fanout_u801.py`, run by `build_pcb.sh --rebuild`):** each of the 9 used balls
+  (A4 `ps_por_n`, B2 SCLK, B3 GND, B4 1V8, C2 CS#, C4/D2/D3/D4 IO2/IO1/IO0/IO3) takes an F.Cu stub (0.1 mm, GND/1V8
+  0.2 mm) diagonally outward to a standard **0.48/0.25 mm via between four balls**: 0.707 mm from each pad centre, so
+  0.27 mm copper and 0.38 mm hole-to-pad clearance, vias 1.0 mm apart. Offsets in the footprint frame. The Agilex 5
+  card (same IS25WP128, footprint and rotation, its U2) has 0.3/0.15 mm vias **in** the pads (via-in-pad, below our
+  minimums, filled vias at the fab) and leaves west on In2; ours leaves west on the inner layers from between the
+  balls. R601-R605 (MIO boot straps) sat on B.Cu where the vias go, and C801/R801 were 30 mm away: all now on B.Cu
+  beside the via field, 0.25-1.3 mm from their balls, with `place_free.py --clear-vias` (no via inside a courtyard).
+  DRC: no clearance errors; `via_dangling` 20 → 28 (the 8 vias wait for routing; the GND one is on the planes).
 - **What KRT is good for here** (survey, 2026-10-28; the Ti135 card's experience agrees): coarse placement by
   function and side, the buck templates, scoring alternatives, and re-placing a few parts with the rest locked and
   claims to their pins. Not for parts among existing copper (its placer sees courtyards, not vias or tracks), not

@@ -16,6 +16,7 @@ if [[ "${1:-}" == "--rebuild" ]]; then
     tools/p2k/bin/kipy tools/import_block.py 2>&1 | quiet
     tools/p2k/bin/kipy tools/block_e1.py 2>&1 | quiet       # REUSE_LOG E1: the CK trunk meander
     tools/p2k/bin/kipy tools/apply_placement.py work/before_rebuild.kicad_pcb 2>&1 | quiet | grep -v swig/python
+    tools/p2k/bin/kipy tools/fanout_u801.py 2>&1 | quiet | grep -v swig/python   # vias between U801's balls
     tools/p2k/bin/kipy tools/refill_zones.py 2>&1 | quiet
 else
     python3 tools/board_setup.py

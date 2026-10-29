@@ -31,4 +31,10 @@ git submodule update --init   # tools/jlc (jlc-tools), tools/p2k (proteus2kicad,
 KiCad 10 runs through `tools/p2k/bin/kicad_env.sh` (AppImage at `~/kicad/kicad-10.0.7-x86_64.AppImage`). Vivado 2024.2
 runs the pin plan (`vivado/pinplan/pinplan.py`).
 
-Status: planning (phase 0 and the repository set-up done; next: the schematic).
+Status: phase 3, placement (schematic done, DDR3 block imported, parts placed); next: routing. See
+[STATUS.md](STATUS.md).
+
+## Board
+
+<!-- board-plots:start -->
+<!-- board-plots:end -->

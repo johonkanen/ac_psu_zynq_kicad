@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Put parts at the nearest free spot to a target, clear of the real copper (kipy):
-    tools/p2k/bin/kipy tools/place_free.py IN OUT SPEC [SPEC ...]
+    tools/p2k/bin/kipy tools/place_free.py IN OUT [--clear-vias] SPEC [SPEC ...]
 
 Ported from the Ti135 card (its place_free.py, B.Cu decaps under its BGA), for both sides. SPEC is
     REF[@TARGET][:SIDE][/RMAX]
@@ -16,6 +16,8 @@ the `ddr3_block` area: on F all of it (the block parts and the heatsink base: no
 U20's courtyard (our decaps and straps go under U20 between the block's vias; the rest is the DDR, which keeps
 switching and clock parts 2.5 mm away: LAYOUT_PLAN.md step 4). No copper is moved; zones are refilled
 afterwards (they flow around the new pads).
+--clear-vias: also no via (any net) inside the part's courtyard, so nothing sits on top of a via (a BGA's fan-out
+vias under its package: the parts go beside the via field, not over it).
 """
 import math
 import sys
@@ -28,7 +30,8 @@ RAILS = {"GND", "1V0", "1V8", "1V35", "3V3", "5V0", "3V3_analog", "DDR3_VTT", "/
          "/05 soc_power/VCCPLL"}
 
 b = pcbnew.LoadBoard(sys.argv[1])
-specs = sys.argv[3:]
+CLEAR_VIAS = "--clear-vias" in sys.argv[3:]
+specs = [a for a in sys.argv[3:] if a != "--clear-vias"]
 fps = {f.GetReference(): f for f in b.GetFootprints()}
 eb = b.GetBoardEdgesBoundingBox()
 EX0, EY0, EX1, EY1 = mm(eb.GetLeft()), mm(eb.GetTop()), mm(eb.GetRight()), mm(eb.GetBottom())
@@ -117,6 +120,8 @@ def fits(f):
     for oc in courts[lay]:
         if cf[0] < oc[2] and oc[0] < cf[2] and cf[1] < oc[3] and oc[1] < cf[3]:
             return False
+    if CLEAR_VIAS and any(rect_dist(cf, (x, y, x, y)) < dc - CLR + MARGIN for x, y, n, dc, dh in vias_near(cf)):
+        return False
     for p in copper(f):
         pr = rect(p.GetBoundingBox())
         net = p.GetNetCode()
