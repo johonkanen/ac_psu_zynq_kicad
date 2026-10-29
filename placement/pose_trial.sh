@@ -28,7 +28,8 @@ $P -X utf8 $K/py_placer/place_simple.py fixed.kicad_pcb 'wk/s{seed}.kicad_pcb' -
 tail -4 place.log
 # KICAD_RIP_PREEXISTING=0: the router must never rip the block copper (it did, and restored it, on 2026-10-28);
 # KICAD_PYTHON: KiCad's python for exact pour fills (without it the router blocks whole pour outlines)
+sed "s|@REPO@|$R|g" "$H/pose_chain.txt" > "$W/wk/chain.txt"    # absolute paths: the chain runs from $K
 cd $K
-KICAD_RIP_PREEXISTING=0 KICAD_PYTHON=$KIPY $P -X utf8 py_placer/judge_seeds.py "$W/wk/judge.json" --chain "$H/pose_chain.txt" \
+KICAD_RIP_PREEXISTING=0 KICAD_PYTHON=$KIPY $P -X utf8 py_placer/judge_seeds.py "$W/wk/judge.json" --chain "$W/wk/chain.txt" \
     --intent "$W/intent.json" --jobs 2 > "$W/judge.log" 2>&1 || true
 grep -v "^JSON_SUMMARY" "$W/judge.log" | tail -12

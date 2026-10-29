@@ -1,4 +1,5 @@
 # Pose trial route (LAYOUT_PLAN.md step 3), run by judge_seeds.py from ~/dev/KiCadRoutingTools.
+# @REPO@ is this repository; placement/pose_trial.sh fills it in (the chain runs from KRT's folder).
 # 1. the seed's poses onto the trial board, which carries the block copper ({run} is wk/, the board is beside it);
 # 2. the signal nets outside the block on the five signal layers. GND (In1/In3/In5 planes) and the rails are left out:
 #    they become pours, and their parts sit the same distance from the block at every pose.
