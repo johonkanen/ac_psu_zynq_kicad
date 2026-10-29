@@ -187,7 +187,7 @@ def escape_walk(g, pad):
                 items.add(j)
                 continue
             if o.GetLayer() != pcbnew.F_Cu:
-                return f"a track on {o.GetLayerName()} before the via"
+                return f"a track on {o.GetBoard().GetStandardLayerName(o.GetLayer())} before the via"
             items.add(j)
             todo.append(j)
     if len(vias) != 1:
@@ -501,7 +501,7 @@ def main():
         new.SetNet(board.FindNet(RAIL_MAP[sn]))
         new.UnFill()
         pose.apply(new)
-        zlog.append(f"{RAIL_MAP[sn]}@{board.GetLayerName(z.GetLayer())}")
+        zlog.append(f"{RAIL_MAP[sn]}@{board.GetStandardLayerName(z.GetLayer())}")
     # our GND planes: juliancoy's (his fill settings: 0.102 mm minimum width, which reaches the vias under the BGA),
     # on our whole board
     edge = board.GetBoardEdgesBoundingBox()

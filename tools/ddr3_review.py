@@ -57,7 +57,7 @@ else:   # no stack-up in the file: spread the copper layers evenly over the boar
         layer_z[l] = th * i / max(1, len(cu) - 1)
 
 def speed(layer, diff):
-    name = b.GetLayerName(layer)
+    name = b.GetStandardLayerName(layer)
     if name in PS_LAYER:
         return PS_LAYER[name]
     if layer in (pcbnew.F_Cu, pcbnew.B_Cu):
@@ -133,7 +133,7 @@ def shortest(G, src, dst, diff):
                 if kind == "via":
                     vias.add(n[:2])     # one via spans several layer hops
                 else:
-                    per[b.GetLayerName(lay)] += L
+                    per[b.GetStandardLayerName(lay)] += L
                 n = p
             return d, per, len(vias), u
         if d > best.get(u, 1e18):

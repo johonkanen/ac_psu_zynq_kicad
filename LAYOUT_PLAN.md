@@ -20,7 +20,7 @@ as in the Ti135 repo) and this repo's scripts, run with `tools/p2k/bin/kipy`.
 |---|---|---|
 | Outline | 76.000 × 65.127 mm, KiCad x 131.531…207.531, y 51.694…116.821; aux origin (100, 100) | MECHANICAL.md |
 | J3 / J6 (B.Cu), J9 / J5 / J1 / J2 (top) | the MECHANICAL.md positions, checked by make_board | MECHANICAL.md |
-| Stack-up | JLC081611-7628: F · In1 GND · In2 sig · In3 GND · In4 sig · In5 GND · In6 sig · B | ZYNQ_PCB_NOTES.md §6.4 |
+| Stack-up | JLC081611-7628: F · In1 GND · In2 sig · In3 GND · In4 sig · In5 GND · In6 sig · B | ZYNQ_PCB_NOTES.md §6.4; user names 1.Top, 2.GND, 3.Sig, 4.GND, 5.Sig, 6.GND, 7.Sig, 8.Bottom (`board_setup.py`) |
 | Layer map from the source | `TOP_GND` → F, `GND0` → In1, `SIGNAL1` → In2, `GND1` → In3, `SIGNAL2` → In4, `GND2` → In5, `SIGNAL4` → In6, `BOTTOM` → B | PLAN.md §4.2 |
 | Block rules | 0.102 mm width / clearance, juliancoy's via sizes; exempt from our width rules | PLAN.md §4.3 |
 | Heatsink | 2 × NPTH Ø3.2 mm at U20 ± (14.93, 14.93) in the block frame, Ø6 mm F/B keep-out, nothing taller than the package under the 24 × 23.5 mm base | POWER_BUDGET.md §Heatsink |
@@ -263,6 +263,10 @@ and restored them, and those scores (in brackets) were too kind to A0.
 - **Silkscreen: no reference designators** (user, 2026-10-29): `tools/make_board.py` hides the Reference field and
   any `${REFERENCE}` text on F/B.SilkS (the F.Fab reference stays), `import_block.py` the same for H1/H2. The 199 silk
   overlaps are gone; left: J9's outline over the edge and its shield pads (the jack overhangs by design).
+- **Copper layer user names** (user, 2026-10-29): 1.Top, 2.GND, 3.Sig, 4.GND, 5.Sig, 6.GND, 7.Sig, 8.Bottom, set by
+  `board_setup.py` (LAYER_NAMES). The file keeps the standard names on items, zones and in the rule file (`'F.Cu'`
+  in the DRU still matches: tested with MDI tracks), and KRT reads those; pcbnew's `GetLayerName` returns the user
+  name, so `ddr3_review.py`, `check_block_copper.py` and `import_block.py` use `GetStandardLayerName`.
 - `tools/build_pcb.sh --rebuild` ends with `tools/refill_zones.py`: the import fills the zones before the placement
   is put back, and a stale fill under a moved pad reads as a clearance error.
 - **Still open for step 4:** the bottom-side heights against the baseboard parts (MECHANICAL.md); a look at the PHY

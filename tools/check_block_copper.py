@@ -101,7 +101,7 @@ def main():
                 if t.GetClass() == "PCB_VIA":
                     stats[side]["vias"] += 1
                 else:
-                    stats[side][f"mm {src.GetLayerName(t.GetLayer()) if side == 'source' else ours.GetLayerName(t.GetLayer())}"] += mm(t.GetLength())
+                    stats[side][f"mm {src.GetLayerName(t.GetLayer()) if side == 'source' else ours.GetStandardLayerName(t.GetLayer())}"] += mm(t.GetLength())
                     stats[side]["segments"] += 1
         missing, extra = sum((want - have).values()), sum((have - want).values())
         if missing or extra:

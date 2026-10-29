@@ -305,6 +305,9 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     3. **Step 4.4 fixes: done 2026-10-28** (`placement/hand_fixes.sh`, `tools/place_free.py`; results in
        LAYOUT_PLAN.md step 4). Left: bottom-side heights against the baseboard, a look at the PHY area.
        **No designator silkscreen** (user, 2026-10-29): hidden by `make_board.py`.
+       **Copper layers named** (user, 2026-10-29): 1.Top, 2.GND, 3.Sig, 4.GND, 5.Sig, 6.GND, 7.Sig, 8.Bottom
+       (`board_setup.py` LAYER_NAMES; files keep the standard names, scripts use `GetStandardLayerName`). Board
+       re-made from the schematic 2026-10-29 (`--rebuild`): no change, parity 0.
     4. **U801 fan-out:** its inner CSP balls (C2, C4, D2, D4) need vias between the 1.0 mm-pitch balls (the router
        wanted below-standard vias); decide with the flash placement.
     - Note: `tools/build_pcb.sh --rebuild` recreates the board (make_board → board_setup → import_block →
