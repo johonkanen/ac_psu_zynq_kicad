@@ -48,6 +48,9 @@ Seen from the top: pin 2 is left of pin 1 and pin 37 is above pin 1. With the Ki
 `Connector_PinSocket_1.27mm:PinSocket_2x19_P1.27mm_Vertical` this is **B.Cu, orientation 180°, at the pin 1
 position**. Note: KiCad's pcbnew flip + orientation 0 gives this numbering (verified by `tools/make_board.py`).
 The Agilex 5 card (after its 2026-10-24 change) is the same within 0.03 mm.
+- **Pads: 0.9 mm round, 0.6 mm drill** (library 1.0/0.7; as on the Ti135 card), set by `tools/make_board.py`
+  (`PAD_SIZE`), 2026-10-29: the gap between pads is 0.37 mm, so one 0.1 mm track passes between two pins with
+  0.135 mm clearance (checked by DRC with test tracks across and along the rows). Annular ring 0.15 mm.
 
 ## J6: 2×3 1.27 mm on the bottom (baseboard J12, 5 V supply)
 

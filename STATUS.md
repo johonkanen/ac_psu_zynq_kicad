@@ -303,6 +303,10 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     and `tools/p2k/bin/kipy -I tools/jlc/jlc_bom_cpl.py kicad/zynq_card.kicad_pcb reports/jlc/pos.csv reports/jlc
     --skip J1,J2,J3,J5,J6,J9`: 80 lines, 303 parts, all with an LCSC number; `python3 -I tools/jlc/stock_check.py
     reports/jlc/bom_jlcpcb.csv --boards 5`. U20 is XC7Z020-2CLG484I (user: −2 or −3, any temperature grade).
+  - **J3 pads 0.9 mm / 0.6 mm drill** (2026-10-29, `make_board.py` `PAD_SIZE`, as on the Ti135 card): a 0.1 mm
+    track passes between two pins (0.37 mm gap; MECHANICAL.md J3). DRC: one more lib_footprint_mismatch (99).
+  - The sheets were saved once from eeschema (2026-10-29, user): format and field order only (all 309 LCSC fields
+    and every Value/Footprint/MPN unchanged). `build_schematic.sh` writes them back in the script format.
   - **Start here next session (left off 2026-10-28):**
     1. **Pose A0 confirmed by the user (2026-10-28).**
     2. **E1 done (2026-10-29):** `tools/block_e1.py` (run by `--rebuild`): byte 0 CK − DQS +27.5 ps, CK P/N 0.0/0.1 ps,
@@ -363,7 +367,14 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
       the block's via sizes.
 - [ ] **The DDR3L temperature grade:** standard 0…95 °C (C253882) or IT −40…95 °C (C367428).
 - [ ] **Baseboard U8 upgrade to 1.5–2 A:** confirm it in the `ac_psu_kicad` redraw.
-- [ ] **ADS7056 stock** at JLC (−6 orderable on 2026-10-27).
+- [ ] **ADS7056 stock** at JLC (−6 orderable on 2026-10-27, −2 on 2026-10-29): wait, Global Sourcing / consign, or
+      another ADC.
+- [ ] **Path to the order** (2026-10-29): (1) JLC quote: stack-up, 0.102/0.102 mm on 1 oz inner, 0.48/0.25 mm vias;
+      (2) close phase 3 (bottom heights vs the baseboard, PHY area, U801 fan-out, layer renders); (3) phase 4
+      routing (E5 planelet + H10 via, VCCO_34/35, power/pours, MIO/RGMII/MDI/eMMC/QSPI, PL I/O, GND stitching);
+      (4) phase 5 sign-off (DRC 0 + parity 0, block check, ddr3_review both DRAMs, Vivado PS7 board delays,
+      routed-board review, DFM); (5) order files: `tools/jlc/fab_outputs.sh ... --skip J1,J2,J3,J5,J6,J9`,
+      stock check, JLC placement preview (rotations, D7 polarity); hand-solder the connectors.
 - [ ] Optional: report pinguz97's two DDR faults on its issue #3 (public; ask the user first).
 
 ## How to run the tools

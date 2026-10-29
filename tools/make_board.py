@@ -62,6 +62,10 @@ FIXED = {
     "J6": ("bottom", J6_PADS, J6_PADS["1"]),
     "J9": ("top", J9_PADS, J9_ORIGIN),
 }
+# smaller THT pads, so a track fits between them: reference -> (pad diameter, drill) mm. J3 at 1.27 mm pitch: the
+# library's 1.0/0.7 leaves 0.27 mm; 0.9/0.6 (as on the Ti135 card) leaves 0.37 mm for a 0.1 mm track with 0.135 mm
+# each side, annular ring 0.15 mm. The socket's tails (HC-PM127-4.3H-2x19PZ) fit a 0.6 mm hole
+PAD_SIZE = {"J3": (0.9, 0.6)}
 # soft positions: reference -> (x, y, orientation, side)
 SOFT = {
     "J5": (152.912, 114.454, 90.0, "top"),  # LCD header, Ti60 J4 / Agilex J5 position
@@ -221,6 +225,10 @@ def main():
             if cm["dnp"]:
                 fp.SetDNP(True)
             for pad in fp.Pads():
+                if ref in PAD_SIZE:
+                    d, drill = PAD_SIZE[ref]
+                    pad.SetSize(pcbnew.F_Cu, V(d, d))
+                    pad.SetDrillSize(V(drill, drill))
                 net = pin_net.get((ref, pad.GetNumber()))
                 pad.SetNet(netinfo[net] if net is not None else None)
                 fn, typ = pins.get((ref, pad.GetNumber()), ("", ""))
