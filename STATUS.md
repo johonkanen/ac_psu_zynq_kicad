@@ -313,7 +313,8 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
        all PASS derated (REUSE_LOG.md, "E1 as built"). E2 (DQS3 pair, 9.0 ps at U15) stays optional.
     3. **Step 4.4 fixes: done 2026-10-28** (`placement/hand_fixes.sh`, `tools/place_free.py`; results in
        LAYOUT_PLAN.md step 4). Heights and PHY area done 2026-10-29 (`tools/check_heights.py`; TX series R at the SoC
-       end, R606 out of the eMMC ball field). C67 → 22 µF 1206 (REUSE_LOG E12, user): all pairs pass, tightest
+       end, R606 out of the eMMC ball field). PHY moved in front of J9 (zynq_mini arrangement, user): MDI 4.3-7.2 mm.
+       C67 → 22 µF 1206 (REUSE_LOG E12, user): all pairs pass, tightest
        0.70 mm. The H1 push-pin barb over U17 fits (user).
        Sheets saved by eeschema 10 (file version 20260306) have no `(embedded_fonts no)`, which p2k's
        `Sheet._add()` inserts before: `tools/sheets/_common.py` puts it back in `Sheet.clear()` (a fix for p2k itself

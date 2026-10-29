@@ -283,6 +283,13 @@ and restored them, and those scores (in brackets) were too kind to A0.
   field (U20's TX balls are in its NE corner; no room under U20, the eMMC fills F at the block edge), in ball order.
   **R606** (MIO7 strap on `emmc_rst_n`) had gone to the eMMC's K5 ball inside its ball field (B.Cu): now on top of
   that column. Both in `placement/hand_fixes.sh`.
+- **PHY in front of the magjack (2026-10-29, as on the zynq_mini; user):** U901 moved from south of J9 to J9's pin
+  side, (185.5, 61.6), 180 deg: MDI pins facing the jack (MDI 4.3-7.2 mm to J9's pins, was 11.6-19.1), RX side west
+  toward the SoC, TX side north (the TX traces wrap round to it), crystal side south. F.Cu: decaps, FB901, RSET, RX
+  series 22 R around it; B.Cu: Y901 + load caps, straps, LED/MDIO/INT pull-ups, U902 reset buffer + parts. About
+  10 x 14 mm. Straight-line SoC-PHY: TX 32.5-40.6 mm (was 24.7-30.1), RX 26.3-37.5 (was 29.2-40.1). The zynq_mini's
+  PHY is an RTL8211E-VB/VL (QFN-48 6 x 6, different pinout), so only the arrangement is copied; its repo has the
+  schematic PDF only. `placement/hand_fixes.sh` (last section).
 - **U801 fan-out (2026-10-29, `tools/fanout_u801.py`, run by `build_pcb.sh --rebuild`):** each of the 9 used balls
   (A4 `ps_por_n`, B2 SCLK, B3 GND, B4 1V8, C2 CS#, C4/D2/D3/D4 IO2/IO1/IO0/IO3) takes an F.Cu stub (0.1 mm, GND/1V8
   0.2 mm) diagonally outward to a standard **0.48/0.25 mm via between four balls**: 0.707 mm from each pad centre, so

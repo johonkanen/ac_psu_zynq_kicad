@@ -37,3 +37,13 @@ SPECS=(
 "$R/tools/p2k/bin/kipy" "$R/tools/place_free.py" "$OUT" "$OUT" --clear-vias C801@U801.B4/5 R801@U801.C2/5 R601@U801.D3/6 \
     R602@U801.D2/6 R603@U801.C4/6 R604@U801.D4/6 R605@U801.B2/6 2>&1 | grep -v -e swig -e "Debug: Adding" \
     -e "Legacy zone" -e "best-effort"
+# The PHY in front of the magjack (as on the zynq_mini, 2026-10-29): U901 at J9's pin side, MDI facing the jack
+# (180 deg: RX west to the SoC, TX north, crystal side south); decaps, FB901, RSET and the RX series 22 R on F.Cu around
+# it; straps, LED/MDIO/INT pull-ups, the reset buffer and the crystal under it on B.Cu. MDI 4.2-7.1 mm to J9's pins.
+"$R/tools/p2k/bin/kipy" "$R/tools/place_free.py" "$OUT" "$OUT" U901@185.5,61.6,180:F/0.5 \
+    C921:F/6 C931:F/6 C934:F/6 C933:F/6 C936:F/6 C941@U901.29:F/6 C922:F/6 C932:F/6 C930:F/6 C935:F/6 \
+    C940@U901.29:F/6 FB901:F/6 C920:F/8 R931:F/6 R910:F/6 R912:F/6 R908:F/6 R911:F/6 R909:F/6 R907:F/6 \
+    Y901@U901.36:B/6 C910@Y901.1:B/4 C911@Y901.3:B/4 \
+    R920:B/6 R921:B/6 R922:B/6 R923:B/6 R924:B/6 R925:B/6 R926:B/6 R927:B/6 R928:B/8 R950@U901.34:B/8 R929:B/8 \
+    R930:B/8 U902@U901.12:B/10 C901:B/8 R932:B/8 R933:B/10 C951@U902.5:B/10 C950@J9.1:F/6 2>&1 \
+    | grep -v -e swig -e "Debug: Adding" -e "Legacy zone" -e "best-effort"

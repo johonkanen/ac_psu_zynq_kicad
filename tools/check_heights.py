@@ -32,6 +32,7 @@ CARD_H = {
     "C_0402_1005Metric": 0.55,                   # CL05x: 0.5 +/- 0.05
     "R_Array_Convex_4x0402": 0.45,               # 4D02WGJ0103TCE
     "SOT-563": 0.60,                             # TLV62585P
+    "SOT-353_SC-70-5": 1.10,                     # 74LVC1G07GW (U902)
     "C_0603_1608Metric": 0.90,                   # CL10A106KP8: 0.8 +/- 0.1 (also D7 LED, FB1 0 R)
     "L_0603_1608Metric": 0.90,                   # BLM18SG
     "Crystal_SMD_3225-4Pin_3.2x2.5mm": 0.90,     # X322525MRB4SI
