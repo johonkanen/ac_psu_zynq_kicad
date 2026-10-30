@@ -9,12 +9,15 @@ Ported from the Ti135 card (efinix_soc_board/tools/board_setup.py); the values a
   F/In2/In4/In6, B.Cu for pours, power and parts.
 - Net classes (kicad/zynq_card.kicad_pro): the block's DDR3 geometry (0.102/0.102 mm, 0.48/0.25 mm vias: what
   juliancoy routed, 39.5-45.5 ohm on the inner layers), the MIO interfaces (0.1 mm inner, about 40 ohm), the MDI pairs
-  (0.35/0.20 mm on F.Cu = 102 ohm), power.
+  (0.35/0.20 mm on F.Cu = 102 ohm), power, and the PL I/O (`pl_io`: the pin plan's signals, Default geometry).
+  `mio_fast` and `pl_io` have a PCB colour (COLORS) to pick them out of the BGA while routing: pcbnew's Appearance
+  panel, Nets tab, "Net colors: All".
 - Design rules (kicad/zynq_card.kicad_dru): JLC 8-layer minimums in the project, DDR3 widths and MDI geometry in the
   rule file. Inside the block (rule area `ddr3_block`, drawn by tools/import_block.py) the copied copper is checked
   only against the minimums: it is never re-widthed (PLAN.md §4.3).
 Plain python3 (s-expression edit of the saved board).
 """
+import csv
 import json
 import os
 import sys
@@ -103,6 +106,8 @@ NETCLASSES = [
     # MDI: 0.35/0.20 mm on F.Cu = 102 ohm (§6.4)
     # (class clearance 0.1: the PHY's QFN pads are on 0.4 mm pitch; the 0.2 mm track spacing is a rule)
     ("mdi", 0.35, 0.1, 0.48, 0.25, 0.35, 0.2),
+    # PL I/O (banks 33/34: the pin plan's signals, on the SoC side of any series part); colour only
+    ("pl_io", 0.1, 0.1, 0.48, 0.25, 0.1, 0.2),
     ("PWR", 0.3, 0.1, 0.48, 0.25, 0.1, 0.2),
     ("PWR_CORE", 0.5, 0.1, 0.48, 0.25, 0.1, 0.2),
 ]
@@ -118,6 +123,10 @@ PATTERNS = [
     ("PWR", r"^/09 ethernet/phy_(avdd33|vdd10|dvdd_rg)$"),
     ("PWR_CORE", r"^(1V0|5V0)$"),
 ]
+with open(os.path.join(ROOT, "vivado", "pinplan", "zynq_pinplan.csv")) as _f:
+    PATTERNS.append(("pl_io", r"^/(11 soc_pl/)?(" + "|".join(sorted(r["signal"] for r in csv.DictReader(_f))) + ")$"))
+# net class -> PCB colour (shown with "Net colors: All"); the other classes keep none
+COLORS = {"mio_fast": "rgba(0, 200, 255, 1.000)", "pl_io": "rgba(80, 255, 0, 1.000)"}
 
 
 def netclasses():
@@ -129,7 +138,8 @@ def netclasses():
         c = dict(tmpl)
         c.update({"name": name, "track_width": tw, "clearance": cl, "via_diameter": via, "via_drill": drill,
                   "diff_pair_width": dpw, "diff_pair_gap": dpg, "microvia_diameter": 0.2, "microvia_drill": 0.1,
-                  "tuning_profile": "", "priority": len(classes) if name != "Default" else 2147483647})
+                  "tuning_profile": "", "priority": len(classes) if name != "Default" else 2147483647,
+                  "pcb_color": COLORS.get(name, "rgba(0, 0, 0, 0.000)")})
         classes.append(c)
     ns["classes"] = classes
     ns["netclass_patterns"] = [{"netclass": c, "pattern": p} for c, p in PATTERNS]
