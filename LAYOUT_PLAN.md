@@ -290,6 +290,22 @@ and restored them, and those scores (in brackets) were too kind to A0.
   10 x 14 mm. Straight-line SoC-PHY: TX 32.5-40.6 mm (was 24.7-30.1), RX 26.3-37.5 (was 29.2-40.1). The zynq_mini's
   PHY is an RTL8211E-VB/VL (QFN-48 6 x 6, different pinout), so only the arrangement is copied; its repo has the
   schematic PDF only. `placement/hand_fixes.sh` (last section).
+- **PHY area tightened (2026-10-30, after the Avaota A1, user):** the open boards with this PHY were surveyed (GitHub
+  code search): Avaota A1 (Allwinner T527, CERN-OHL-S: reference only, our card is MIT) has the same HR911130A with the
+  PHY in front of its pins, MDI straight in on the top layer; Antmicro's DC-SCM carrier (Apache-2.0) has the
+  RTL8211FDI-CG but no magjack. Avaota keeps its jack side for the MDI (0201 parts, no RX series resistors), so here:
+  the **MDI corridor** (U901 pins to J9's courtyard) and the **TX/MDC/MDIO exit** north of U901 are now free of F.Cu
+  parts (`place_free.py --keepout`). **C933/C934** (VDD10, pins 3 and 8) are on B.Cu just outside those pins, (+3.95,
+  +/-1.48) from U901, 90 deg: at routing each pin takes a 0.48/0.25 via at (+3.25, +/-1.0), between the MDI pins
+  (0.11 mm to a 0.1 mm neck-down at the neighbouring pins), a B.Cu stub to the cap, its GND pad to U901's B.Cu
+  exposed pad (thermal vias). FB901 and C920 (90 deg) moved north-east, out of the D pair's path; R909/R911 (RX) and
+  C930 moved out of the TX exit to the north-west corner; R933 sits beside U902 and R950 at J9's LED pin (B.Cu). The
+  RX resistors stay split round the west side: the block keep-out (x 179.5) leaves 2.85 mm there, one 0402 column,
+  and an Avaota-style column of six in pin order would need 3-4 traces in a 0.5 mm fan-out channel and would cross
+  pins 28-30. `placement/hand_fixes.sh` (last section). DRC unchanged.
+  For the breakout (`tools/board_setup.py`): the PHY rails (`phy_avdd33`, `phy_vdd10`, `phy_dvdd_rg`) are net class
+  `phy_pwr`, 0.2 mm (a 0.3 mm `PWR` track left 0.05 mm to the next 0.2 mm pad on the 0.4 mm pitch), and the rule
+  `mdi_breakout` lets the pairs leave the pads at 0.2/0.2 mm (min 0.1 mm, class clearance) inside U901's courtyard.
 - **U801 fan-out (2026-10-29, `tools/fanout_u801.py`, run by `build_pcb.sh --rebuild`):** each of the 9 used balls
   (A4 `ps_por_n`, B2 SCLK, B3 GND, B4 1V8, C2 CS#, C4/D2/D3/D4 IO2/IO1/IO0/IO3) takes an F.Cu stub (0.1 mm, GND/1V8
   0.2 mm) diagonally outward to a standard **0.48/0.25 mm via between four balls**: 0.707 mm from each pad centre, so

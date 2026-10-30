@@ -9,7 +9,8 @@ Ported from the Ti135 card (efinix_soc_board/tools/board_setup.py); the values a
   F/In2/In4/In6, B.Cu for pours, power and parts.
 - Net classes (kicad/zynq_card.kicad_pro): the block's DDR3 geometry (0.102/0.102 mm, 0.48/0.25 mm vias: what
   juliancoy routed, 39.5-45.5 ohm on the inner layers), the MIO interfaces (0.1 mm inner, about 40 ohm), the MDI pairs
-  (0.35/0.20 mm on F.Cu = 102 ohm), power, and the PL I/O (`pl_io`: the pin plan's signals, Default geometry).
+  (0.35/0.20 mm on F.Cu = 102 ohm, 0.2/0.2 mm breakout inside U901's courtyard), power (the PHY's own rails as
+  `phy_pwr`, 0.2 mm for its 0.4 mm-pitch pads), and the PL I/O (`pl_io`: the pin plan's signals, Default geometry).
   `mio_fast` and `pl_io` have a PCB colour (COLORS) to pick them out of the BGA while routing: pcbnew's Appearance
   panel, Nets tab, "Net colors: All".
 - Design rules (kicad/zynq_card.kicad_dru): JLC 8-layer minimums in the project, DDR3 widths and MDI geometry in the
@@ -109,6 +110,9 @@ NETCLASSES = [
     # PL I/O (banks 33/34: the pin plan's signals, on the SoC side of any series part); colour only
     ("pl_io", 0.1, 0.1, 0.48, 0.25, 0.1, 0.2),
     ("PWR", 0.3, 0.1, 0.48, 0.25, 0.1, 0.2),
+    # the PHY's own rails (AVDD33 via FB901, VDD10 and DVDD_RG from its LDOs; tens of mA): their pins are 0.2 mm pads
+    # on 0.4 mm pitch, between the MDI and RGMII pins, so 0.2 mm (a 0.3 mm PWR track has 0.05 mm to the next pad)
+    ("phy_pwr", 0.2, 0.1, 0.48, 0.25, 0.1, 0.2),
     ("PWR_CORE", 0.5, 0.1, 0.48, 0.25, 0.1, 0.2),
 ]
 PATTERNS = [
@@ -120,7 +124,7 @@ PATTERNS = [
     ("mdi", r"^/09 ethernet/eth_mdi_[a-d]_[PN]$"),
     ("PWR", r"^(1V8|1V35|3V3|3V3_analog|DDR3_VTT)$"),
     ("PWR", r"^/05 soc_power/(VCCPLL|VCCAUX)$"),
-    ("PWR", r"^/09 ethernet/phy_(avdd33|vdd10|dvdd_rg)$"),
+    ("phy_pwr", r"^/09 ethernet/phy_(avdd33|vdd10|dvdd_rg)$"),
     ("PWR_CORE", r"^(1V0|5V0)$"),
 ]
 with open(os.path.join(ROOT, "vivado", "pinplan", "zynq_pinplan.csv")) as _f:
@@ -175,6 +179,12 @@ DRU_TEXT = """(version 1)
 (rule "mdi_spacing"
 	(condition "A.Type == 'Track' && A.hasNetclass('mdi') && A.NetName != B.NetName && !B.inDiffPair('*')")
 	(constraint clearance (min 0.2mm)))
+# breakout at U901: the QFN pads are 0.2 mm on 0.4 mm pitch, so the pairs leave them at 0.2/0.2 mm (down to 0.1 mm
+# beside the VDD10 vias of pins 3 and 8) and widen to 0.35 mm outside the package's courtyard
+(rule "mdi_breakout"
+	(condition "A.hasNetclass('mdi') && A.intersectsCourtyard('U901')")
+	(constraint track_width (min 0.1mm) (opt 0.2mm) (max 0.37mm))
+	(constraint clearance (min 0.1mm)))
 (rule "mdi_layers"
 	(condition "A.Type == 'Track' && A.hasNetclass('mdi') && A.Layer != 'F.Cu'")
 	(constraint disallow track))

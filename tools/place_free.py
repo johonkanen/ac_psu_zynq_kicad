@@ -18,6 +18,8 @@ switching and clock parts 2.5 mm away: LAYOUT_PLAN.md step 4). No copper is move
 afterwards (they flow around the new pads).
 --clear-vias: also no via (any net) inside the part's courtyard, so nothing sits on top of a via (a BGA's fan-out
 vias under its package: the parts go beside the via field, not over it).
+--keepout=SIDE:X0,Y0,X1,Y1 (repeatable): no courtyard of a part placed on SIDE may overlap that rectangle (mm), for
+copper that is to come (the PHY's MDI corridor to its magjack, its RGMII exit).
 """
 import math
 import sys
@@ -31,7 +33,12 @@ RAILS = {"GND", "1V0", "1V8", "1V35", "3V3", "5V0", "3V3_analog", "DDR3_VTT", "/
 
 b = pcbnew.LoadBoard(sys.argv[1])
 CLEAR_VIAS = "--clear-vias" in sys.argv[3:]
-specs = [a for a in sys.argv[3:] if a != "--clear-vias"]
+KEEPOUT = {"F": [], "B": []}
+for a in sys.argv[3:]:
+    if a.startswith("--keepout="):
+        side, r = a.split("=", 1)[1].split(":")
+        KEEPOUT[side].append(tuple(float(v) for v in r.split(",")))
+specs = [a for a in sys.argv[3:] if not a.startswith("--")]
 fps = {f.GetReference(): f for f in b.GetFootprints()}
 eb = b.GetBoardEdgesBoundingBox()
 EX0, EY0, EX1, EY1 = mm(eb.GetLeft()), mm(eb.GetTop()), mm(eb.GetRight()), mm(eb.GetBottom())
@@ -117,7 +124,7 @@ def fits(f):
             return False
     if any(rect_dist(cf, (hx, hy, hx, hy)) < RING for hx, hy in HOLES):
         return False
-    for oc in courts[lay]:
+    for oc in courts[lay] + KEEPOUT["B" if f.IsFlipped() else "F"]:
         if cf[0] < oc[2] and oc[0] < cf[2] and cf[1] < oc[3] and oc[1] < cf[3]:
             return False
     if CLEAR_VIAS and any(rect_dist(cf, (x, y, x, y)) < dc - CLR + MARGIN for x, y, n, dc, dh in vias_near(cf)):

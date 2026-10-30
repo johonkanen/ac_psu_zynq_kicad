@@ -20,6 +20,12 @@
 (rule "mdi_spacing"
 	(condition "A.Type == 'Track' && A.hasNetclass('mdi') && A.NetName != B.NetName && !B.inDiffPair('*')")
 	(constraint clearance (min 0.2mm)))
+# breakout at U901: the QFN pads are 0.2 mm on 0.4 mm pitch, so the pairs leave them at 0.2/0.2 mm (down to 0.1 mm
+# beside the VDD10 vias of pins 3 and 8) and widen to 0.35 mm outside the package's courtyard
+(rule "mdi_breakout"
+	(condition "A.hasNetclass('mdi') && A.intersectsCourtyard('U901')")
+	(constraint track_width (min 0.1mm) (opt 0.2mm) (max 0.37mm))
+	(constraint clearance (min 0.1mm)))
 (rule "mdi_layers"
 	(condition "A.Type == 'Track' && A.hasNetclass('mdi') && A.Layer != 'F.Cu'")
 	(constraint disallow track))

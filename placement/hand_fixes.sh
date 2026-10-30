@@ -47,3 +47,15 @@ SPECS=(
     R920:B/6 R921:B/6 R922:B/6 R923:B/6 R924:B/6 R925:B/6 R926:B/6 R927:B/6 R928:B/8 R950@U901.34:B/8 R929:B/8 \
     R930:B/8 U902@U901.12:B/10 C901:B/8 R932:B/8 R933:B/10 C951@U902.5:B/10 C950@J9.1:F/6 2>&1 \
     | grep -v -e swig -e "Debug: Adding" -e "Legacy zone" -e "best-effort"
+# The PHY area tightened (2026-10-30, after the Avaota A1 PHY layout, U12 + HR911130A; used only as a reference, it is
+# CERN-OHL-S): the MDI corridor between U901 and J9 and the TX/MDC/MDIO exit north of U901 are kept free of F.Cu parts
+# (--keepout). The VDD10 decaps of pins 3 and 8 (C933, C934) go on B.Cu just outside those pins: one via per pin
+# between the MDI pins (x +3.25 from U901), the GND pad to the exposed pad's B.Cu copper. FB901/C920 move north-east,
+# out of the D pair's path; R909/R911 (RX, north) and C930 out of the TX exit, to the north-west corner; R933 to U902,
+# R950 to J9's LED pin. The RX resistors stay split around the west side: the block keep-out leaves 2.85 mm there.
+"$R/tools/p2k/bin/kipy" "$R/tools/place_free.py" "$OUT" "$OUT" --keepout=F:188.34,58.6,190.07,64.6 \
+    --keepout=F:189.4,56.9,190.07,66.3 --keepout=F:183.5,52.5,186.3,58.455 \
+    C933@189.45,63.08,90:B/0.5 C934@189.45,60.12,90:B/0.5 \
+    C930@182.3,57.95,0:F/1 R909@182.3,56.9,0:F/1 R911@182.3,55.85,0:F/1 \
+    C920@187.3,55.6,90:F/1.5 FB901@188.9,56.0,90:F/1.5 R933:B/8 R950@J9.11:B/10 2>&1 \
+    | grep -v -e swig -e "Debug: Adding" -e "Legacy zone" -e "best-effort"

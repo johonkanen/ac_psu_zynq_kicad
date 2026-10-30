@@ -314,6 +314,8 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     3. **Step 4.4 fixes: done 2026-10-28** (`placement/hand_fixes.sh`, `tools/place_free.py`; results in
        LAYOUT_PLAN.md step 4). Heights and PHY area done 2026-10-29 (`tools/check_heights.py`; TX series R at the SoC
        end, R606 out of the eMMC ball field). PHY moved in front of J9 (zynq_mini arrangement, user): MDI 4.3-7.2 mm.
+       PHY area tightened after the Avaota A1 (2026-10-30): MDI corridor and TX exit free of F.Cu parts, C933/C934 on
+       B.Cu (LAYOUT_PLAN.md step 4).
        C67 → 22 µF 1206 (REUSE_LOG E12, user): all pairs pass, tightest
        0.70 mm. The H1 push-pin barb over U17 fits (user).
        Sheets saved by eeschema 10 (file version 20260306) have no `(embedded_fonts no)`, which p2k's
