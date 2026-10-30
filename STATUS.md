@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-28** (phase 3: pose trials (step 3) and a rough placement of every part (step 4) at pose A0.
+Last updated: **2026-10-30** (phase 3 closed: layer renders, E13 C99 out from under the heatsink. Before that, 2026-10-28, phase 3: pose trials (step 3) and a rough placement of every part (step 4) at pose A0.
 Before that, phase 3 steps 1–2: board, rules, and the block copper imported (2026-10-27). Before that, phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC), 11 (PL banks), 12 (ADC) and 13 (connectors) done: **the schematic is complete**).
 Read this first if you are picking the work up (human or agent).
 
@@ -325,6 +325,12 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
        re-made from the schematic 2026-10-29 (`--rebuild`): no change, parity 0.
     4. ~~**U801 fan-out**~~ done 2026-10-29 (`tools/fanout_u801.py`, run by `--rebuild`): 9 standard 0.48/0.25 mm vias
        between the balls (LAYOUT_PLAN.md step 4). U801 stays at (183.8, 93.85).
+    5. **Layer renders done 2026-10-30** (`reports/layers/`, gitignored: one PNG per copper layer, top/bottom assembly,
+       3D top/bottom; `kicad-cli pcb export pdf` + `pdftoppm`, cropped). They showed **C99** (100 µF 1210, 2.7 mm)
+       1.2-1.4 mm inside the heatsink base: **E13** (`tools/block_e13.py`, run by `--rebuild`) moves it 2.2 mm north,
+       GND via kept and joined by a 0.3 mm F.Cu track. DRC unchanged, block check 0 failures, `--rebuild` reproduces
+       it. `place_free.py` checks only our parts against the heatsink base, not the block's. **Phase 3 is closed
+       apart from the JLC quote; next: phase 4 routing.**
     - Note: `tools/build_pcb.sh --rebuild` recreates the board (make_board → board_setup → import_block →
       apply_placement); safe until routing outside the block starts.
 - Open from phase 2:
@@ -376,7 +382,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 - [ ] **ADS7056 stock** at JLC (−6 orderable on 2026-10-27, −2 on 2026-10-29): wait, Global Sourcing / consign, or
       another ADC.
 - [ ] **Path to the order** (2026-10-29): (1) JLC quote: stack-up, 0.102/0.102 mm on 1 oz inner, 0.48/0.25 mm vias;
-      (2) close phase 3 (layer renders; heights, PHY area and U801 fan-out done); (3) phase 4
+      (2) ~~close phase 3~~ done 2026-10-30 (layer renders, E13); (3) phase 4
       routing (E5 planelet + H10 via, VCCO_34/35, power/pours, MIO/RGMII/MDI/eMMC/QSPI, PL I/O, GND stitching);
       (4) phase 5 sign-off (DRC 0 + parity 0, block check, ddr3_review both DRAMs, Vivado PS7 board delays,
       routed-board review, DFM); (5) order files: `tools/jlc/fab_outputs.sh ... --skip J1,J2,J3,J5,J6,J9`,
