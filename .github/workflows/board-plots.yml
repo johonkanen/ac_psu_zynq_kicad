@@ -6,8 +6,9 @@ on:
   workflow_dispatch:
 jobs:
   plots:
-    uses: johonkanen/kicad-board-plots/.github/workflows/plots.yml@v1
+    uses: johonkanen/kicad-board-plots/.github/workflows/plots.yml@v1.1
     with:
       boards: kicad/zynq_card.kicad_pcb   # not the juliancoy source board in reference/zynqpcb
+      render-3d: true
     permissions:
       contents: write
