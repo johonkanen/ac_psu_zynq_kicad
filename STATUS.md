@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-30** (phase 3 closed: layer renders, E13 C99 out from under the heatsink. Before that, 2026-10-28, phase 3: pose trials (step 3) and a rough placement of every part (step 4) at pose A0.
+Last updated: **2026-10-31** (phase 4 started: U20 I/O breakout stubs, REUSE_LOG E14: 55 of 89 bare signal balls escaped by `tools/fanout_u20.sh`, 34 left; 0.30/0.15 mm via-in-pad allowed under U20, rule `u20_via_in_pad`. Before that, 2026-10-30, phase 3 closed: layer renders, E13 C99 out from under the heatsink. Before that, 2026-10-28, phase 3: pose trials (step 3) and a rough placement of every part (step 4) at pose A0.
 Before that, phase 3 steps 1–2: board, rules, and the block copper imported (2026-10-27). Before that, phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC), 11 (PL banks), 12 (ADC) and 13 (connectors) done: **the schematic is complete**).
 Read this first if you are picking the work up (human or agent).
 
@@ -378,7 +378,11 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 - [ ] **Heatsink:** the push-pin grip range for 1.6 mm board + package + tape. (The barb protrusion fits the gap: user,
       2026-10-29.)
 - [ ] **JLC quote:** the JLC081611-7628 surcharge, 1 oz inner minimum width/space (the block needs 0.102/0.102 mm), and
-      the block's via sizes.
+      the block's via sizes; the 0.30/0.15 mm via-in-pad under U20 (E14), filled and capped (POFV, free on 6+ layers).
+- [ ] **U20 breakout, the 34 balls left (E14):** most MIO ones (RGMII RX_CTL/RXD0/RXD2/TX_CTL/TXD0/TXD2, MDC, MDIO,
+      SD, eth_rst/int) are walled in by our B.Cu parts under the BGA (C504, C529, FB501, R607-R611, C601, C521/C525),
+      which sit on juliancoy's escape vias. Moving them (as the Ti135 card did with `place_fanout_clearance.py`) and
+      re-running `tools/fanout_u20.sh` would copy his escapes; else route them by hand.
 - [ ] **The DDR3L temperature grade:** standard 0…95 °C (C253882) or IT −40…95 °C (C367428).
 - [ ] **Baseboard U8 upgrade to 1.5–2 A:** confirm it in the `ac_psu_kicad` redraw.
 - [ ] **ADS7056 stock** at JLC (−6 orderable on 2026-10-27, −2 on 2026-10-29): wait, Global Sourcing / consign, or

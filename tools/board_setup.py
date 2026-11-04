@@ -194,6 +194,14 @@ DRU_TEXT = """(version 1)
 	(condition "A.hasNetclass('mio_fast')")
 	(constraint track_width (min 0.09mm) (opt 0.1mm) (max 0.2mm)))
 
+# ---- U20 via-in-pad (tools/fanout_u20.sh): 0.30/0.15 mm in a 0.40 mm ball pad between the 0.48 mm dog-bones;
+# JLC fills and caps via-in-pad free on 6+ layers (POFV), 0.15 mm drill is in its multilayer range [verify at quote]
+(rule "u20_via_in_pad"
+	(condition "A.Type == 'Via' && A.intersectsCourtyard('U20')")
+	(constraint via_diameter (min 0.3mm))
+	(constraint hole_size (min 0.15mm))
+	(constraint annular_width (min 0.075mm)))
+
 # J3 corner pins 37/38: the hole positions come from the Ti60 card / baseboard (MECHANICAL.md) and sit
 # 0.89 mm from the top edge, so their pads are 0.39 mm from it. JLC's routed-edge minimum is 0.3 mm.
 (rule "j3_baseboard_edge"
