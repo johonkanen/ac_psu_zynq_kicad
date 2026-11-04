@@ -3,9 +3,11 @@
 
 Ported from the Ti135 card (efinix_soc_board/tools/sheets/13_adc.py, its parts and symbols), whose front end comes
 from the Agilex 3 card (~/dev/ti60f225_control_card docs/design-notes.md, "ADC front end for 2.5 MSPS"):
-- U1201 SN74LV4051APWR (C7793) on 3V3_analog (U341, sheet 3). TI SCLS428K: the 4051 pinout of the CD4051B symbol,
-  pins 7 and 8 both GND (the symbol's VEE pin goes to GND), logic inputs VIH = 0.7 VCC = 2.31 V at 3.3 V and
-  5.5 V tolerant, so adbsel0-2 come straight from bank 33 (3.3 V; the Ti135 card needed translators). INH to GND.
+- U1201 TMUX1308PWR (C970231, JLC extended; the Ti135 card's SN74LV4051APWR before) on 3V3_analog (U341, sheet 3).
+  TI SCDS426E: the 4051 pinout of the CD4051B symbol (S0-S7 = X0-X7, A0-A2 = A/B/C, EN = INH, active low), pin 7
+  N.C. (not internally connected; the symbol's VEE pin stays on GND), pin 8 GND. Logic inputs 1.8 V compatible,
+  VIH 1.15 V / VIL 0.8 V at 3.3 V, 5.5 V tolerant, so adbsel0-2 come straight from bank 33. EN to GND.
+  RON 120 R typ / 370 R max at 3.3 V, CD(ON) 40 pF: with the monitor R (up to 1k) settling is ~ 0.1 us per tau.
   X0 = GND as a zero reference.
 - U1202 OPA365 buffer (50 MHz; the ADS7056 kickback RC needs UGB >= 28 MHz).
 - Kickback RC at AINP: 33 R + 680 p C0G (ADS7056 data sheet 2.5 MSPS design).
@@ -24,8 +26,8 @@ sh.text("ADC chain: mux U1201 -> buffer U1202 -> ADS7056 U1203 (Ti135 sheet 13; 
         "Full scale 0..3.3 V (AVDD = reference, 3V3_analog). DVDD on 3V3: SPI and selects straight to bank 33.",
         g(14), g(14))  # noqa: F405
 
-# mux (SN74LV4051A, CD4051B symbol: same pinout, pin 7 = GND on the TI part)
-m = sh.place("CD4051B", "U1201", g(80), g(80), value="SN74LV4051APWR", fields={"LCSC": "C7793"})
+# mux (TMUX1308, CD4051B symbol: same pinout, pin 7 = N.C. on the TI part, tied to GND)
+m = sh.place("CD4051B", "U1201", g(80), g(80), value="TMUX1308PWR", fields={"LCSC": "C970231"})
 attach(sh, m, "13", "power", "GND", 3)  # X0 = zero reference  # noqa: F405
 for pin, net in (("14", "mon_1v0"), ("15", "mon_1v8"), ("12", "mon_3v3"), ("1", "isoada2"),
                  ("5", "mon_1v35"), ("2", "isoada3"), ("4", "isoada1")):
@@ -37,7 +39,7 @@ for pin in ("6", "7", "8"):
 attach(sh, m, "16", "power", "3V3_analog", 3)  # noqa: F405
 attach(sh, m, "3", "label", "adc_mux_out", 4)  # noqa: F405
 cap_row(sh, g(60), g(120), "3V3_analog", [("C1201", "1u", None)], "U1201 VCC")  # noqa: F405
-sh.text("SN74LV4051A (SCLS428K): pins 7/8 GND; VIH 2.31 V at 3.3 V", g(56), g(56))  # noqa: F405
+sh.text("TMUX1308 (SCDS426E): pin 7 N.C. (GND), pin 8 GND; EN active low; VIH 1.15 V at 3.3 V", g(56), g(56))  # noqa: F405
 
 # rail monitors (series R limits the current into the mux)
 sh.text("Rail monitors", g(14), g(140))  # noqa: F405

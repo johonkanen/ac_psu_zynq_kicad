@@ -2360,7 +2360,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "SN74LV4051APWR"
+		(property "Value" "TMUX1308PWR"
 			(at 105.41 85.09 0)
 			(effects
 				(font
@@ -2397,7 +2397,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C7793"
+		(property "LCSC" "C970231"
 			(at 101.6 101.6 0)
 			(effects
 				(font
@@ -3323,7 +3323,7 @@
 		)
 		(uuid "9de5e46d-c764-5696-99f0-16fee656f305")
 	)
-	(text "SN74LV4051A (SCLS428K): pins 7/8 GND; VIH 2.31 V at 3.3 V"
+	(text "TMUX1308 (SCDS426E): pin 7 N.C. (GND), pin 8 GND; EN active low; VIH 1.15 V at 3.3 V"
 		(exclude_from_sim no)
 		(at 71.12 71.12 0)
 		(effects

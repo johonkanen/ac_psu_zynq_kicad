@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The analog section placed as on the Ti135 card (kipy; tools/p2k/bin/kipy tools/place_analog.py [IN [OUT]]).
 
-The ADC chain (sheet 12: SN74LV4051A mux, OPA365 buffer, 33 R + 680 p kickback filter, ADS7056, rail-monitor
+The ADC chain (sheet 12: TMUX1308 mux, OPA365 buffer, 33 R + 680 p kickback filter, ADS7056, rail-monitor
 resistors, SPI series resistors) and the 3V3_analog LDO (U341) are the Ti135 card's sheet 13 with the refs renumbered.
 That card copied them from the Agilex 5 card (~/dev/agilex3_soc_control_card) and then adjusted them by hand, on the
 same outline with J3/J1/J2/J5 at the same coordinates as ours. So the parts take the Ti135 card's final positions and
@@ -31,7 +31,7 @@ PCB = os.path.join(ROOT, "kicad", "zynq_card.kicad_pcb")
 mm, FM = pcbnew.ToMM, pcbnew.FromMM
 # ours: (Ti135 ref, x, y from J3, rotation, value)
 TI135 = {
-    "U1201": ("U1301", 6.280, 20.897, 0, "SN74LV4051APWR"), "U1202": ("U1302", 6.231, 25.985, -90, "OPA365AIDBVR"),
+    "U1201": ("U1301", 6.280, 20.897, 0, "TMUX1308PWR"), "U1202": ("U1302", 6.231, 25.985, -90, "OPA365AIDBVR"),
     "U1203": ("U1303", 1.022, 32.062, 90, "ADS7056IRUGR"), "C1201": ("C1301", 8.440, 34.563, 90, "1u"),
     "C1202": ("C1302", 5.190, 29.076, 90, "680p C0G"), "C1203": ("C1303", 6.940, 17.589, 180, "100n"),
     "C1204": ("C1304", 7.405, 31.642, 90, "4u7"), "C1205": ("C1305", 8.681, 27.122, 90, "100n"),

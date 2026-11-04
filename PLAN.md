@@ -128,7 +128,7 @@ Bring-up step 3 (the Zynq DDR test) is the final proof. Plan the PS7 DDR setting
 | Stack-up | JLC08161H-3313, 1.6 mm | **JLC081611-7628, 1.6 mm, 1 oz inner** (decided 2026-10-26): GND on In1/In3/In5, signals on F/In2/In4/In6, the source's roles. 0.102 mm = 39.5 Ω on In2/In4 (§4.3) |
 
 **Kept from the earlier cards:** outline 76.000 × 65.127 mm, J3/J6 bottom-side sockets numbered like the baseboard,
-J9 HR911130A magjack and its position, J5 LCD, J1/J2 positions, the ADC front end (OPA365, SN74LV4051A, ADS7056),
+J9 HR911130A magjack and its position, J5 LCD, J1/J2 positions, the ADC front end (OPA365, SN74LV4051A (now TMUX1308, STATUS.md), ADS7056),
 the 10 k J3 pull-downs, `reference/baseboard_j11_pinout.csv`, `MECHANICAL.md`, and `tools/jlc`.
 
 ---

@@ -219,10 +219,14 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 - **Sheet 12 `12_adc`** (`tools/sheets/12_adc.py`): the Ti135 sheet 13 with its parts and symbols, refs renumbered
   to 12xx. The ADS7056 symbol comes from the Ti135 library (`from_ti135()` in `tools/gen_symbols.py`), and its
   footprint is copied into `lib/zynq_card.pretty`.
-  - **U1201 SN74LV4051APWR (C7793)**, on the CD4051B symbol as on the Ti135 card. Checked against TI SCLS428K: it has
-    the same 4051 pinout, pins 7 and 8 are both GND (the symbol's VEE pin goes to GND), and VIH = 0.7 VCC = 2.31 V
-    at 3.3 V (5.5 V tolerant). So the pin plan's part is right, and `adbsel0`–`2` come straight from bank 33 (the
-    Ti135 card needed translators). INH to GND, X0 = GND.
+  - **U1201 TMUX1308PWR (C970231, JLC extended)**, on the CD4051B symbol. It replaces the Ti135 card's
+    SN74LV4051APWR (user, 2026-11-04: TMUX1308 is available from JLC). Checked against TI SCDS426E: the same 4051
+    pinout (S0–S7, D, A0–A2, EN active low on pin 6). Pin 7 is N.C. (not internally connected) and stays tied to GND
+    through the symbol's VEE pin, so the footprint and layout don't change. Pin 8 is GND. Logic inputs are 1.8 V
+    compatible (VIH 1.15 V, VIL 0.8 V at 3.3 V; 5.5 V tolerant), so `adbsel0`–`2` come straight from bank 33 (the
+    Ti135 card needed translators). EN to GND, X0 = GND. RON is 120 Ω typ / 370 Ω max at 3.3 V and CD(ON) 40 pF;
+    with the monitor resistors (up to 1 k) that is about 0.1 µs per time constant after a channel change, so allow
+    about 1.5 µs before the first 14-bit sample.
   - U1202 OPA365AIDBVR, 33 R + 680 p C0G kickback RC, **U1203 ADS7056IRUGR: AVDD 3V3_analog (U341), DVDD 3V3**
     (SBAS769: DVDD 1.65–3.6 V, independent of AVDD; pin map checked). 33 R series on CS/SCLK/SDO.
   - Rail monitors: X1 1V0 (100 R), X2 1V8, X3 3V3/2 (1k/1k), X5 1V35; these were VCORE/1V8/3V3/1V1 on the Ti135

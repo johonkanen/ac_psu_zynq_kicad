@@ -14085,7 +14085,7 @@
 				)
 			)
 		)
-		(property "Value" "SN74LV4051APWR"
+		(property "Value" "TMUX1308PWR"
 			(at 0 3.45 90)
 			(layer "F.Fab")
 			(uuid "4d987b08-4b29-42b1-bfda-7195cbfbc63d")
@@ -14130,7 +14130,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C7793"
+		(property "LCSC" "C970231"
 			(at 0 0 90)
 			(layer "F.SilkS")
 			(hide yes)
