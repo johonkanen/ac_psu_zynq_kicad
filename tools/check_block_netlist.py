@@ -57,6 +57,8 @@ FP_SWAP = {
     "C67": ("Capacitor_SMD:C_1206_3216Metric", 0.1,
             "E12: 22 uF 1206 (1.8 mm max) instead of 100 uF 1210 (2.7 mm): over baseboard U17; pads 0.075 mm out"),
 }
+# block parts left out of our schematic on purpose (the import then drops their copper)
+REMOVED = {"C28": "E15: 1V0 100 uF bulk dropped, the TLV62585 is rated for 10-47 uF out"}
 EXPECTED = {
     ("U20", "H10"): "E5: VCCPLL through FB501, not straight on +1V8",
     ("C59", "1"): "E6: MIO1 (E12) cap, the MIO banks are 1.8 V here",
@@ -155,6 +157,11 @@ def main():
                       f"({FP_SWAP[r][2]})")
             else:
                 fails.append(f"{r}: footprint {comps[r]['footprint']} != source {src_fp[r]}")
+    for r, why in REMOVED.items():
+        if r in comps:
+            fails.append(f"{r}: on our schematic, but REMOVED ({why})")
+        else:
+            print(f"expected difference {r}: not on our board ({why})")
     # connectivity by pad sets
     by_ours, by_src = collections.defaultdict(set), collections.defaultdict(set)
     for k in keys:

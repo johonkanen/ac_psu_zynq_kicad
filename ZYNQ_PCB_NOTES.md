@@ -66,6 +66,8 @@ allows, as on the source boards.
 
 UG933 allows consolidating bulk capacitors when rails are merged (*Bulk Capacitor Consolidation Rules*, Ch. 3).
 Sheet 5 (`tools/sheets/05_soc_power.py`) counts the block's caps per merged rail and adds the rest (C501–C529).
+**The bulk is trimmed below this table (REUSE_LOG E15, 2026-11-04):** the TLV62585 bucks are rated for 10–47 µF out,
+so 1V0 keeps no bulk past the buck's own 2 × 22 µF and 1V8 one 47 µF; bank 35 (no signals) has no caps.
 0.47 µF parts go under the BGA on B.Cu, as on the earlier cards.
 
 ## 3. Power sequencing and reset (DS187, UG585)

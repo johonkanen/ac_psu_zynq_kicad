@@ -20,6 +20,9 @@ Block changes (REUSE_LOG.md):
   from VCCPAUX; juliancoy had the bead on VCCAUX instead). FB1 stays on its land as a 0 ohm jumper, so VCCAUX is on
   1V8 and the 1V8 caps count for it.
 - E6: C59 (ball E12) and C122 (ball C6) were +3V3 MIO caps on juliancoy; both MIO banks are 1.8 V here.
+- E15: bulk trimmed (user, 2026-11-04). The TLV62585 bucks (sheet 3) are rated for 10-47 uF out; the UG933 bulk put
+  ~600 uF on 1V0 and ~460 uF on 1V8. Dropped: block C28 (1V0 100 uF), ours C501 (330 uF tantalum), C502 (100 uF),
+  C508-C510 (1V8 100 uF), C512 (1V8 47 uF) and C522-C527 (bank 35, no signals). The refs of the rest stay (DROP).
 """
 import os
 
@@ -30,8 +33,10 @@ from p2k.sexpr import find
 
 # power.sch decaps in the block copper: footprint centre within 4 mm of the U20 body (|dx|, |dy| <= 13.5 mm from the
 # U20 centre on DFTBoard.kicad_pcb). C6/C12/C22/C25/C27/C32 (bulk at 15-22 mm, among juliancoy's regulators) are out.
-BLOCK = {"C4", "C5", "C8", "C9", "C11", "C14", "C15", "C17", "C18", "C19", "C20", "C23", "C24", "C26", "C28", "C29",
+BLOCK = {"C4", "C5", "C8", "C9", "C11", "C14", "C15", "C17", "C18", "C19", "C20", "C23", "C24", "C26", "C29",
          "C30", "C31", "C33", "C34", "FB1"}
+# E15: ours generated and numbered as before, then dropped, so the other C5xx keep their refs (and board places)
+DROP = {"C501", "C502", "C508", "C509", "C510", "C512", "C522", "C523", "C524", "C525", "C526", "C527"}
 # E5: the source wire from C6/C5 to the VCCPLL pin (H10); the C5-C6 stub then hangs loose and is pruned
 E5_CUT = [(3200, 5800, 10150, 5800)]
 E5_FB1 = {"value": "0", "fields": {"Description": "0 ohm jumper on juliancoy's VCCAUX bead land (REUSE_LOG E5)",
@@ -85,14 +90,14 @@ NOTE = ("U20 unit 9 and the SoC decoupling. Left/bottom: juliancoy/zynqPCB power
         "UG933 Tables 3-1/3-2 (CLG484, Z-7020) per merged rail; the C5xx rows add what the block lacks.\n"
         "0.47 uF within 12.7 mm of the BGA edge, 4.7 uF within 50 mm, bulk anywhere near (UG933 Ch. 3).")
 
-COUNT = ("UG933 count, block + C5xx:\n"
-         "1V0  (VCCINT+VCCBRAM+VCCPINT): 330u 1, 100u 2, 4u7 4, 470n 8\n"
-         "     block C28 100u, C9 C24 4u7, C8 C23 C29 C30 C31 470n (+ C11 10u)\n"
-         "1V8  (VCCAUX+VCCPAUX+MIO0+MIO1+VCCO_0): 100u 3, 47u 2, 4u7 4, 470n 5\n"
+COUNT = ("UG933 count, block + C5xx (bulk trimmed, E15: TLV62585 Cout 10-47 uF; 3V3 bank 35 unused):\n"
+         "1V0  (VCCINT+VCCBRAM+VCCPINT): UG933 330u 1, 100u 2, 4u7 4, 470n 8; here no bulk past the buck's 2 x 22u\n"
+         "     block C9 C24 4u7, C8 C23 C29 C30 C31 470n (+ C11 10u; C28 100u dropped, E15)\n"
+         "1V8  (VCCAUX+VCCPAUX+MIO0+MIO1+VCCO_0): UG933 100u 3, 47u 2, 4u7 4, 470n 5; here bulk 47u 1 (C511)\n"
          "     block C5 C19 C20 C59 C122 4u7, C4 C14 C15 C17 C18 C34 470n (+ C26 C33 10u)\n"
          "VCCPLL: 120R bead + 10u 0603 + 0.47-4.7u 0402 within 5.1 mm of the H10/GND vias\n"
          "1V35 (VCCO_DDR): 100u 1, 4u7 1, 470n 4; sheet 1 has C99 100u, C100 4u7, C101 470n\n"
-         "3V3  (VCCO_13/33/34/35): 47u 1 (one per four HR banks), 4u7 8, 470n 16\n"
+         "3V3  (VCCO_13/33/34/35): 47u 1 (one per four HR banks), 4u7 8, 470n 16; bank 35 has no signals: 4u7 6, 470n 12\n"
          "     block C61 47u, C67 22u (E12), C57 C114 4u7, ten 470n (banks 13/33; banks 34/35 had VCCO on GND)")
 
 
@@ -110,10 +115,10 @@ def main():
 
     # UG933 rows: what the block lacks (C5xx), and the block's caps from juliancoy's other sheets
     rows = [
-        ((g(10), g(48)), "1V0", "1V0: VCCINT/VCCBRAM/VCCPINT bulk and the missing mid/high-frequency caps",  # noqa: F405
+        ((g(10), g(48)), "1V0", "1V0: VCCINT/VCCBRAM/VCCPINT, the missing mid/high-frequency caps (bulk dropped, E15)",  # noqa: F405
          caps([("330u", 1, C7343, "C_Polarized"), ("100u", 1, C1210), ("4u7", 2, C0402),
                ("470n", 3, C0402)])),
-        ((g(90), g(48)), "1V8", "1V8: VCCPAUX, MIO0, MIO1 100u; VCCAUX, VCCO_0 47u",  # noqa: F405
+        ((g(90), g(48)), "1V8", "1V8 bulk: one 47u (the UG933 100u x3 + 47u x2 trimmed, E15)",  # noqa: F405
          caps([("100u", 3, C1210), ("47u", 2, C1210)])),
         ((g(150), g(48)), "1V35", "1V35 VCCO_DDR: 3 more 470n at bank 502",  # noqa: F405
          caps([("470n", 3, C0402)])),
@@ -126,6 +131,9 @@ def main():
         ((g(150), g(180)), "1V8", "Block, E6: MIO1 (E12), MIO0 (C6)", BLOCK_OTHER_1V8),  # noqa: F405
     ]
     for (x, y), rail, title, cs in rows:
+        cs = [c for c in cs if c[0] not in DROP]
+        if not cs:
+            continue
         cap_row(sh, x, y, rail, cs, title, pitch=g(8))  # noqa: F405
 
     # E5: VCCPLL. H10 is the top pin of the converted unit 9, at the source position (10150, 5800) mil

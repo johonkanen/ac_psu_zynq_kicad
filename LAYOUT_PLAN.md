@@ -273,7 +273,7 @@ and restored them, and those scores (in brackets) were too kind to A0.
   card frame through J11/J12 (fit 1 um) and checks every overlapping pair of card B.Cu part and baseboard top part
   (max package heights, courtyards + 0.3 mm) against the 5.3 mm gap with 0.3 mm margin. **All pass**: C67
   (juliancoy's 100 u 1210 on 3V3, 2.7 mm max) over baseboard **U17** (Si8661 SOIC-16W, 2.65 mm) left −0.05 mm, so C67
-  is now 22 u 1206 (REUSE_LOG E12, user): 0.85 mm. Tightest L331 over D1 (SMA) 0.70 mm, C28 over U12 1.15 mm. The
+  is now 22 u 1206 (REUSE_LOG E12, user): 0.85 mm. Tightest L331 over D1 (SMA) 0.70 mm, C28 over U12 1.15 mm (C28 removed since, E15). The
   heatsink push-pin **H1 lands on U17** (2.65 mm below the card); the barb goes a few mm and fits (user, 2026-10-29).
   H2 is 1.7 mm from U15. Baseboard H4 (mounting
   hole) is under the card with no card part within 5 mm; U8 and the 35 mm C12 have courtyards touching the card edge.

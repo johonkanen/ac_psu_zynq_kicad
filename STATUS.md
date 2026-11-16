@@ -1,6 +1,6 @@
 # Status and handoff
 
-Last updated: **2026-10-31** (phase 4 started: U20 I/O breakout stubs, REUSE_LOG E14: 55 of 89 bare signal balls escaped by `tools/fanout_u20.sh`, 34 left; 0.30/0.15 mm via-in-pad allowed under U20, rule `u20_via_in_pad`. Before that, 2026-10-30, phase 3 closed: layer renders, E13 C99 out from under the heatsink. Before that, 2026-10-28, phase 3: pose trials (step 3) and a rough placement of every part (step 4) at pose A0.
+Last updated: **2026-11-04** (SoC bulk decoupling trimmed, REUSE_LOG E15: the TLV62585 bucks are rated for 10–47 µF out; 13 caps removed incl. block C28. ADC mux U1201 → TMUX1308. Before that, 2026-10-31, phase 4 started: U20 I/O breakout stubs, REUSE_LOG E14: 55 of 89 bare signal balls escaped by `tools/fanout_u20.sh`, 34 left; 0.30/0.15 mm via-in-pad allowed under U20, rule `u20_via_in_pad`. Before that, 2026-10-30, phase 3 closed: layer renders, E13 C99 out from under the heatsink. Before that, 2026-10-28, phase 3: pose trials (step 3) and a rough placement of every part (step 4) at pose A0.
 Before that, phase 3 steps 1–2: board, rules, and the block copper imported (2026-10-27). Before that, phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC), 11 (PL banks), 12 (ADC) and 13 (connectors) done: **the schematic is complete**).
 Read this first if you are picking the work up (human or agent).
 
@@ -52,6 +52,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 | Power | 5V_ISOL from J6. 0.89 A typical / 1.44 A high, so it relies on the baseboard U8 upgrade to 1.5–2 A (decided in the Ti135 work). 4 × TLV62585 (1V0, 1V8, 1V35, 3V3) + the block's TPS51200 (VTT) + NCP163 (3V3_analog) |
 | Outline, J3/J6/J9/J5 | as the other cards (`MECHANICAL.md`); J3/J6 bottom-side sockets numbered like the baseboard |
 | J3 safe state | PUDC_B (K16) tied to VCCO_34 + 10 k pull-downs on every J3 pin |
+| SoC bulk decoupling | **below UG933, within the TLV62585 rating** (user, 2026-11-04; REUSE_LOG E15). The bucks are rated for 10–47 µF out; the UG933 bulk put ~600 µF on 1V0 and ~460 µF on 1V8. Removed: block C28 (1V0 100 µF), C501 (330 µF tantalum), C502, C508–C510 (100 µF), C512 (47 µF), and C522–C527 (bank 35 has no signals). The mid/high-frequency 4.7/0.47 µF counts stay at UG933. The Zynq mini (`~/dev/zynq_mini_example_project`, XC7Z010, MP2143/MP2145) runs with about 170–240 µF per rail and 100 nF parts. Check by a load-step test on 1V0/1V8 on the first boards |
 
 ## Where we left off
 
@@ -89,10 +90,12 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
     coordinates. juliancoy's regulators, LM3880 sequencers, sense resistors and their bulk caps are dropped.
   - Also in the block, with source refs: the 16 3V3 caps under U20 that juliancoy drew on other sheets (C46…C122;
     REUSE_LOG).
-  - Ours: FB501 + C528/C529 (VCCPLL, E5), and C501–C527, which bring each merged rail up to UG933 Tables 3-1/3-2
-    (CLG484 Z-7020; the count is a note on the sheet). That is 330 µF tantalum + 100 µF + 2 × 4.7 µF + 3 × 0.47 µF on
+  - Ours: FB501 + C528/C529 (VCCPLL, E5), and C501–C527, which brought each merged rail up to UG933 Tables 3-1/3-2
+    (CLG484 Z-7020; the count is a note on the sheet). That was 330 µF tantalum + 100 µF + 2 × 4.7 µF + 3 × 0.47 µF on
     1V0, 3 × 100 µF + 2 × 47 µF on 1V8, 3 × 0.47 µF on 1V35, and 3 × 4.7 µF + 3 × 0.47 µF each for VCCO_34 and
-    VCCO_35. Banks 34/35 had VCCO on GND on juliancoy, so they have no caps in the block.
+    VCCO_35. Banks 34/35 had VCCO on GND on juliancoy, so they have no caps in the block. **E15 (2026-11-04)
+    removed the bulk (C501, C502, C508–C510, C512, block C28) and the VCCO_35 caps (C522–C527)**; the other refs stay.
+    Now per rail: 1V0 15 caps / 77 µF, 1V8 20 / 110 µF, 1V35 14 / 150 µF, 3V3 29 / 133 µF (nominal).
   - Block changes: E5 (VCCPLL), E6 (C59/C122 → 1V8 for the MIO banks), E7 (planned, copper: VCCO_MIO balls
     +3V3 → 1V8, VCCO_34/35 balls GND → 3V3).
   - **`tools/check_block_netlist.py` covers sheets 1 and 5: 0 failures.** That is 99 parts, 555 pads (172 U20 balls)
@@ -384,7 +387,7 @@ eMMC, Ethernet, QSPI, PL I/O, connectors) is designed and routed here.
 - [ ] **JLC quote:** the JLC081611-7628 surcharge, 1 oz inner minimum width/space (the block needs 0.102/0.102 mm), and
       the block's via sizes; the 0.30/0.15 mm via-in-pad under U20 (E14), filled and capped (POFV, free on 6+ layers).
 - [ ] **U20 breakout, the 34 balls left (E14):** most MIO ones (RGMII RX_CTL/RXD0/RXD2/TX_CTL/TXD0/TXD2, MDC, MDIO,
-      SD, eth_rst/int) are walled in by our B.Cu parts under the BGA (C504, C529, FB501, R607-R611, C601, C521/C525),
+      SD, eth_rst/int) are walled in by our B.Cu parts under the BGA (C504, C529, FB501, R607-R611, C601, C521; C525 removed in E15),
       which sit on juliancoy's escape vias. Moving them (as the Ti135 card did with `place_fanout_clearance.py`) and
       re-running `tools/fanout_u20.sh` would copy his escapes; else route them by hand.
 - [ ] **The DDR3L temperature grade:** standard 0…95 °C (C253882) or IT −40…95 °C (C367428).
