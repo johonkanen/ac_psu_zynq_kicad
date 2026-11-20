@@ -60,7 +60,7 @@ Status: phase 3, placement (schematic done, DDR3 block imported, parts placed); 
 </tr>
 <tr>
 <td align="center"><img src="https://raw.githubusercontent.com/johonkanen/ac_psu_zynq_kicad/renders/zynq_card/In6_Cu.svg" width="400"><br><b>In6.Cu: signal, VCCAUX, 3V3, 1V0 pours</b></td>
-<td align="center"><img src="https://raw.githubusercontent.com/johonkanen/ac_psu_zynq_kicad/renders/zynq_card/B_Cu.svg" width="400"><br><b>B.Cu: signal, 1V8, 1V35, DDR3_VTT pours (bottom, seen from the top)</b></td>
+<td align="center"><img src="https://raw.githubusercontent.com/johonkanen/ac_psu_zynq_kicad/renders/zynq_card/B_Cu.svg" width="400"><br><b>B.Cu: signal, 1V8, 1V35, DDR3_VTT, 3V3, 5V0 and 2 more pours (bottom, seen from the top)</b></td>
 </tr>
 </table>
 
