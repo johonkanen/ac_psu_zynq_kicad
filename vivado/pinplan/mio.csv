@@ -8,12 +8,12 @@ mio,function,note
 6,qspi0_sclk,strap BOOT_MODE[4] = 0 (PLL on): 20 k to GND
 7,gpio: emmc_rst_n,strap VMODE[0] = 1 (bank 500 1.8 V): 20 k to VCCO_MIO0; MIO7 is output-only
 8,qspi_fbclk,strap VMODE[1] = 1 (bank 501 1.8 V): 20 k to VCCO_MIO0; nothing else on this pin (feedback mode)
-9,gpio: eth_rst_n,to the RTL8211F PHYRSTB through an open-drain buffer (3.3 V input)
-10,gpio: eth_int_n,RTL8211F INTB (open drain): pull-up to 1V8 [verify INTB level]
+9,gpio: spare,"was eth_rst_n until 2026-11-20: ball C4 has no escape (routing)"
+10,gpio: spare,"was eth_int_n until 2026-11-20: ball G7 has no escape (routing)"
 11,gpio: spare,
 12,gpio: spare,
-13,gpio: spare,
-14,gpio: spare,"was the VTT enable on juliancoy; not used here (REUSE_LOG E3)"
+13,gpio: eth_rst_n,to the RTL8211F PHYRSTB through an open-drain buffer (3.3 V input)
+14,gpio: eth_int_n,RTL8211F INTB (open drain): pull-up to 1V8 [verify INTB level]
 15,gpio: spare,
 16,enet0_tx_clk,RGMII (HSTL 1.8 V)
 17,enet0_txd0,RGMII

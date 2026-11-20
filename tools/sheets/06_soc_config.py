@@ -49,7 +49,8 @@ sh.text("PS MIO banks 500/501 (1.8 V) and bank 0 (configuration, 1.8 V as on jul
 # ---------------------------------------------------------------- unit 6: bank 500 (QSPI, straps, GPIO, PS_CLK/POR)
 MIO0 = {"A1": ("qspi_cs_n", "output"), "A2": ("qspi_io0", "bidirectional"), "F6": ("qspi_io1", "bidirectional"),
         "E4": ("qspi_io2", "bidirectional"), "A3": ("qspi_io3", "bidirectional"), "A4": ("qspi_sclk", "output"),
-        "D5": ("emmc_rst_n", "output"), "C4": ("eth_rst_n", "output"), "G7": ("eth_int_n", "input"),
+        "D5": ("emmc_rst_n", "output"), "A6": ("eth_rst_n", "output"), "B6": ("eth_int_n", "input"),  # MIO13/14
+        # (2026-11-20; were MIO9/10 on C4/G7, balls without an escape. B6 was juliancoy's VTT enable, REUSE_LOG E3)
         "F7": ("ps_clk", "input"), "B5": ("ps_por_n", "input")}
 u6 = place_unit(sh, "XC7Z020-CLG484", "U20", g(72), g(30), 6)  # noqa: F405
 for ball in u6.pins:
@@ -60,9 +61,9 @@ for ball in u6.pins:
     elif ball in ("B3", "C6"):  # VCCO_MIO0 (stacked)
         if ball == "B3":
             attach(sh, u6, ball, "power", "1V8", n=4, side="left")  # noqa: F405
-    else:  # MIO0, MIO11-15: spare (MIO14 was juliancoy's VTT enable, REUSE_LOG E3)
+    else:  # MIO0, 9-12, 15: spare
         attach(sh, u6, ball, "nc")  # noqa: F405
-sh.text("MIO0, MIO11-15: spare", g(98), g(64))  # noqa: F405
+sh.text("MIO0, 9-12, 15: spare", g(98), g(64))  # noqa: F405
 
 # boot straps, MIO[8:2] (UG585 Boot Mode Pin Settings): one 20 k each, pull-ups to VCCO_MIO0
 SX, SY = g(14), g(104)  # noqa: F405

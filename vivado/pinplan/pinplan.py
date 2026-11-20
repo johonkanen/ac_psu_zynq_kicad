@@ -9,8 +9,10 @@ schematic), ps7.tcl (PS7 settings). Outputs: zynq_pinplan.csv (signal -> ball), 
 configured them), and build/ (the Vivado project and reports, git-ignored).
 
 The ball choice inside a bank is a first pass: balls are taken from the package edge inwards, clock-capable (MRCC/SRCC)
-and VREF balls are kept free, and PUDC_B is never used (it is tied to VCCO_34, ZYNQ_PCB_NOTES.md §5). The order is
-re-done once the parts are placed (pin swaps inside a bank are free), as with the Ti135 pin-plan loop."""
+and VREF balls are kept free, and PUDC_B is never used (it is tied to VCCO_34, ZYNQ_PCB_NOTES.md §5).
+balls.csv (signal, ball) fixes balls from the layout and wins over that first pass: since 2026-11-19 the J3 signals
+sit on package-edge balls only (bank 34 south edge, banks 33 and 13 west edge, in J3 pin order), so that each escapes
+on F.Cu without a via under the BGA."""
 import argparse, csv, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -63,7 +65,19 @@ for b, lst in free.items():   # package edge first: the outermost column/row of 
     lst.sort(key=lambda p: ((22 - rc(p["pin"])[1]) if edge_right else (len(ROWS) - 1 - rc(p["pin"])[0]),
                             rc(p["pin"])))
 assign = {}
+# balls.csv: balls fixed by the layout (routing chain, tools/route.sh), any PL bank; the rest are assigned as above
+fixed_csv = os.path.join(HERE, "balls.csv")
+fixed = {r["signal"]: r["ball"] for r in csv.DictReader(open(fixed_csv))} if os.path.exists(fixed_csv) else {}
+for sig_name, ball in fixed.items():
+    hit = [(b, p) for b, lst in free.items() for p in lst if p["pin"] == ball]
+    if not hit or sig_name not in {s["signal"] for s in sigs}:
+        sys.exit(f"balls.csv: {sig_name} -> {ball}: not a free user I/O ball (clock-capable, VREF and PUDC balls are kept free)")
+    b, p = hit[0]
+    free[b].remove(p)
+    assign[sig_name] = (ball, b, p["func"])
 for s in sigs:
+    if s["signal"] in assign:
+        continue
     b = banks[s["group"]]
     if not free.get(b):
         sys.exit(f"bank {b} is full ({s['signal']})")

@@ -10,6 +10,8 @@ the stub end. His escape is walked from the ball through his copper while it sta
 another pad is skipped. A ball whose copied copper would come closer than CLEAR to our copper on another net (our
 parts and E-edits under the BGA differ from his) is dropped and listed. The balls he does not escape (his GND and
 unused balls: bank 34 for J3, some MIO) get theirs from tools/fanout_u20.sh. Idempotent: a ball with copper is left.
+ESCAPE_U20_MOVABLE=REF,REF,...: our parts whose pads do not count as a clash, because tools/route/refan_u20.sh puts
+them at a free spot afterwards (our B.Cu parts under U20 that sat on his escape vias).
 """
 import os
 import sys
@@ -99,7 +101,8 @@ def main():
     spad = {p.GetNumber(): g.index[p.m_Uuid.AsString()] for p in su.Pads()}
 
     others = [t for t in b.GetTracks()]
-    others += [p for fp in b.GetFootprints() for p in fp.Pads()]
+    movable = set(filter(None, os.environ.get("ESCAPE_U20_MOVABLE", "").split(",")))   # parts re-placed afterwards
+    others += [p for fp in b.GetFootprints() if fp.GetReference() not in movable for p in fp.Pads()]
     done, skipped, dropped = [], [], []
     for ball, pad in sorted(bare_signal_balls(b, u).items()):
         net = pad.GetNet()

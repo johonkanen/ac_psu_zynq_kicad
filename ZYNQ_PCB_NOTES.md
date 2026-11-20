@@ -146,7 +146,7 @@ Checked in Vivado 2024.2 by `vivado/pinplan/pinplan.py`. The full table with eve
 | SD0 → eMMC (4-bit) | 40 CLK, 41 CMD, 42–45 DAT0–3 | 501 | LVCMOS 1.8 V, fast slew, 50 MHz. **0 Ω (40–60 Ω) series on CLK at the MIO pin**; DAT/CMD to CLK skew 50–200 ps (UG933 *SDIO*). Zynq-7000 SDIO is 4-bit, SD 2.0 high speed ≤ 50 MHz: no HS200/HS400, so DAT4–7 and DS stay unused (pull-ups only). No card detect: `non-removable` in the device tree |
 | UART1 (console) | 48 TX, 49 RX | 501 | **decided 2026-10-27:** PS UART on 1.8 V MIO + a translator to the 3.3 V J2 header. TX and RX go opposite ways, so it needs per-bit direction: **not** an SN74LVC2T45 (one DIR for both bits); e.g. an SN74AVC4T774 as on J1, or 2 × SN74LVC1T45. The FSBL and U-Boot can print before the PL is configured, which an EMIO/PL UART could not |
 | I2C0 | 50 SCL, 51 SDA | 501 | for an optional MAC-address EEPROM; 4.7 k to 1V8 at the far end; RC glitch filters (UG933 *IIC*) |
-| GPIO | 7 `emmc_rst_n` (output-only pin), 9 `eth_rst_n`, 10 `eth_int_n` | 500 | `eth_rst_n` drives the PHY's 3.3 V PHYRSTB through an open-drain buffer (as on the Ti135 card); `eth_int_n` pulled up to 1V8: INTB is open drain, 3.3 V tolerant (RTL8211F Rev. 1.7 Table 4), Vol 0.4 V < MIO VIL 0.63 V (closed 2026-10-27, sheet 9). The `eth_rst_n` pull-down is 1 k to beat the MIO reset pull-up (IRPU ≤ 220 µA) |
+| GPIO | 7 `emmc_rst_n` (output-only pin), 13 `eth_rst_n`, 14 `eth_int_n` (since the routing, 2026-11-20; were 9 and 10, whose balls C4/G7 have no escape) | 500 | `eth_rst_n` drives the PHY's 3.3 V PHYRSTB through an open-drain buffer (as on the Ti135 card); `eth_int_n` pulled up to 1V8: INTB is open drain, 3.3 V tolerant (RTL8211F Rev. 1.7 Table 4), Vol 0.4 V < MIO VIL 0.63 V (closed 2026-10-27, sheet 9). The `eth_rst_n` pull-down is 1 k to beat the MIO reset pull-up (IRPU ≤ 220 µA) |
 | spare | 0, 11–15, 28–39, 46, 47 | | MIO14 was juliancoy's VTT enable (REUSE_LOG E3). 28–39 would be USB0 (unused) |
 
 ### 4.4 PL pin plan (Vivado, 2026-10-27)
@@ -154,6 +154,9 @@ Checked in Vivado 2024.2 by `vivado/pinplan/pinplan.py`. The full table with eve
 **Result:** `vivado/pinplan/zynq_pinplan.csv` (signal → ball, bank, pin function), all LVCMOS33.
 - **Banks:** bank 34 has the 32 J3 signals (7 user I/O left). Bank 33 has the ADC (6), the LCD/touch (12) and the 2
   LEDs (20 left). Banks 13 and 35 are untouched (40 each).
+  **Since the routing (2026-11-20, `balls.csv`):** the J3 signals sit on package-edge balls only, in J3 pin order: 11
+  in bank 34 (south edge), 8 in bank 33 and 13 in bank 13 (west edge, which faces J3 at pose A0). Each escapes on
+  F.Cu or by juliancoy's own escape; in bank 34 alone they were up to 7 rows deep. Bank 35 is untouched.
 - **Why bank 34 for J3:** on the CLG484 grid (top view), the DDR (bank 502) is on the left edge and the MIO banks are
   top left. Banks 35/34/33 run down the right edge, and bank 13 is along the bottom. With the DDR side facing away
   from J3, the right edge faces J3, and bank 34 is in the middle of it.

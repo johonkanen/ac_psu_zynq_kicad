@@ -20,6 +20,8 @@ afterwards (they flow around the new pads).
 vias under its package: the parts go beside the via field, not over it).
 --keepout=SIDE:X0,Y0,X1,Y1 (repeatable): no courtyard of a part placed on SIDE may overlap that rectangle (mm), for
 copper that is to come (the PHY's MDI corridor to its magjack, its RGMII exit).
+--b-open=X0,Y0,X1,Y1 (repeatable): a rectangle of the block area where B.Cu parts may sit besides U20's courtyard
+(the strip east of U20, which has no DDR copper: the VCCPLL bead and its 10 uF, the config pull-ups).
 """
 import math
 import sys
@@ -38,6 +40,7 @@ for a in sys.argv[3:]:
     if a.startswith("--keepout="):
         side, r = a.split("=", 1)[1].split(":")
         KEEPOUT[side].append(tuple(float(v) for v in r.split(",")))
+B_OPEN = [tuple(float(v) for v in a.split("=", 1)[1].split(",")) for a in sys.argv[3:] if a.startswith("--b-open=")]
 specs = [a for a in sys.argv[3:] if not a.startswith("--")]
 fps = {f.GetReference(): f for f in b.GetFootprints()}
 eb = b.GetBoardEdgesBoundingBox()
@@ -119,7 +122,7 @@ def fits(f):
     if cf[0] < EX0 + EDGE or cf[1] < EY0 + EDGE or cf[2] > EX1 - EDGE or cf[3] > EY1 - EDGE:
         return False
     if cf[0] < BLOCK[2] and BLOCK[0] < cf[2] and cf[1] < BLOCK[3] and BLOCK[1] < cf[3]:
-        inside_u20 = U20[0] <= cf[0] and cf[2] <= U20[2] and U20[1] <= cf[1] and cf[3] <= U20[3]
+        inside_u20 = any(r[0] <= cf[0] and cf[2] <= r[2] and r[1] <= cf[1] and cf[3] <= r[3] for r in [U20] + B_OPEN)
         if lay == pcbnew.F_Cu or not inside_u20:
             return False
     if any(rect_dist(cf, (hx, hy, hx, hy)) < RING for hx, hy in HOLES):

@@ -148,10 +148,12 @@ def netclasses():
     ns["classes"] = classes
     ns["netclass_patterns"] = [{"netclass": c, "pattern": p} for c, p in PATTERNS]
     rules = pro.setdefault("board", {}).setdefault("design_settings", {}).setdefault("rules", {})
-    # JLC multilayer: 0.09 mm trace/space (3.5 mil), 0.2 mm via drill, 0.45 mm via pad; [verify at quote time]
-    # for 1 oz inner copper (STATUS.md open items). The block needs 0.102/0.102 and 0.48/0.25.
-    rules.update({"min_clearance": 0.09, "min_track_width": 0.09, "min_via_diameter": 0.45,
-                  "min_via_annular_width": 0.1, "min_through_hole_diameter": 0.2, "min_hole_clearance": 0.2,
+    # JLC multilayer: 0.09 mm trace/space (3.5 mil); [verify at quote time] for 1 oz inner copper (STATUS.md open
+    # items). The block needs 0.102/0.102 and 0.48/0.25. Vias down to 0.30/0.15 mm since the routing (2026-11-20), as
+    # on the Ti135 card's order: the eMMC and PHY breakouts and the MIO groups use them (tools/route.sh), routed at
+    # 0.125 mm clearance so that hole-to-copper stays 0.2 mm. The Default class via stays 0.48/0.25.
+    rules.update({"min_clearance": 0.09, "min_track_width": 0.09, "min_via_diameter": 0.3,
+                  "min_via_annular_width": 0.075, "min_through_hole_diameter": 0.15, "min_hole_clearance": 0.2,
                   "min_hole_to_hole": 0.25, "min_copper_edge_clearance": 0.5, "min_silk_clearance": 0.0,
                   "min_text_height": 0.8, "min_text_thickness": 0.15, "use_height_for_length_calcs": True})
     json.dump(pro, open(PRO, "w"), indent=2)

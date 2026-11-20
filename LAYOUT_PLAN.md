@@ -4,6 +4,9 @@ Written 2026-10-27, at the start of phase 3. It expands PLAN.md §4.2 (transfer)
 scripts. Routing outside the block is phase 4 (PLAN.md §5). The tools are KiCadRoutingTools (`~/dev/KiCadRoutingTools`,
 as in the Ti135 repo) and this repo's scripts, run with `tools/p2k/bin/kipy`.
 
+**Phase 4 (routing) is described in `STATUS.md` (first section) and in `tools/route.sh`; this file is phase 3.
+The placement changed for the routing (regulator cells, 12 parts under U20, pin plan): STATUS.md lists it.**
+
 ## Ground rules
 
 - `kicad/zynq_card.kicad_pcb` is the only real board. Tool runs work on copies in `work/`. A result is applied back

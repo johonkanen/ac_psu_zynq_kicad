@@ -10530,9 +10530,26 @@
 		)
 		(uuid "e9908899-0b7c-58e3-9dda-ae79654f4fda")
 	)
-	(no_connect
-		(at 91.44 73.66)
+	(wire
+		(pts
+			(xy 91.44 73.66) (xy 81.28 73.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
 		(uuid "d1f5314b-2e65-5b7f-a6ec-3d6c79826536")
+	)
+	(hierarchical_label "eth_rst_n"
+		(shape output)
+		(at 81.28 73.66 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "0a81e28e-81c5-5ddb-accb-7f477a2c1af3")
 	)
 	(wire
 		(pts
@@ -10542,7 +10559,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "0a81e28e-81c5-5ddb-accb-7f477a2c1af3")
+		(uuid "c2ee8199-0d99-5784-8f26-cdf9c5b0e2ac")
 	)
 	(symbol
 		(lib_id "zynq_card:1V8")
@@ -10612,7 +10629,7 @@
 	)
 	(no_connect
 		(at 91.44 68.58)
-		(uuid "c2ee8199-0d99-5784-8f26-cdf9c5b0e2ac")
+		(uuid "c64c3d87-3fec-5c7c-9907-275b4a1e6092")
 	)
 	(wire
 		(pts
@@ -10622,7 +10639,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "c64c3d87-3fec-5c7c-9907-275b4a1e6092")
+		(uuid "0c12519c-8ae2-550e-b357-441bbaae6b05")
 	)
 	(hierarchical_label "ps_por_n"
 		(shape input)
@@ -10633,15 +10650,11 @@
 			)
 			(justify right)
 		)
-		(uuid "0c12519c-8ae2-550e-b357-441bbaae6b05")
-	)
-	(no_connect
-		(at 91.44 76.2)
 		(uuid "0eea4b71-4742-59c7-b09c-168900e750aa")
 	)
 	(wire
 		(pts
-			(xy 91.44 63.5) (xy 81.28 63.5)
+			(xy 91.44 76.2) (xy 81.28 76.2)
 		)
 		(stroke
 			(width 0)
@@ -10649,9 +10662,9 @@
 		)
 		(uuid "9a50a622-dd59-57d9-870e-bd080f9bd1ec")
 	)
-	(hierarchical_label "eth_rst_n"
-		(shape output)
-		(at 81.28 63.5 180)
+	(hierarchical_label "eth_int_n"
+		(shape input)
+		(at 81.28 76.2 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -10661,8 +10674,12 @@
 		(uuid "2b73bcf0-5086-5871-b56a-7766be4fd8d4")
 	)
 	(no_connect
-		(at 91.44 71.12)
+		(at 91.44 63.5)
 		(uuid "a20c4552-7402-5d57-a0bc-db4f5ca9ebea")
+	)
+	(no_connect
+		(at 91.44 71.12)
+		(uuid "bdc7e258-7335-5b04-81e2-4824deb61802")
 	)
 	(wire
 		(pts
@@ -10672,7 +10689,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "bdc7e258-7335-5b04-81e2-4824deb61802")
+		(uuid "953b273d-3f13-5acf-939a-ae58e6e754f5")
 	)
 	(hierarchical_label "emmc_rst_n"
 		(shape output)
@@ -10683,7 +10700,7 @@
 			)
 			(justify right)
 		)
-		(uuid "953b273d-3f13-5acf-939a-ae58e6e754f5")
+		(uuid "13d0c285-a3da-59a8-bfef-2f088a72e56c")
 	)
 	(wire
 		(pts
@@ -10693,7 +10710,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "13d0c285-a3da-59a8-bfef-2f088a72e56c")
+		(uuid "50d4c30b-2f62-5ccb-aa09-810f2181bae3")
 	)
 	(hierarchical_label "qspi_io2"
 		(shape bidirectional)
@@ -10704,7 +10721,7 @@
 			)
 			(justify right)
 		)
-		(uuid "50d4c30b-2f62-5ccb-aa09-810f2181bae3")
+		(uuid "e17b8292-55cf-5248-9bd3-a67fa6526819")
 	)
 	(wire
 		(pts
@@ -10714,7 +10731,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "e17b8292-55cf-5248-9bd3-a67fa6526819")
+		(uuid "7231d79b-871d-530e-96f1-d9763a71ee40")
 	)
 	(label "qspi_fbclk"
 		(at 81.28 60.96 180)
@@ -10724,11 +10741,11 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "7231d79b-871d-530e-96f1-d9763a71ee40")
+		(uuid "a8ba114c-9eb6-589d-aa6b-430bda9e8e63")
 	)
 	(no_connect
 		(at 91.44 78.74)
-		(uuid "a8ba114c-9eb6-589d-aa6b-430bda9e8e63")
+		(uuid "e3539502-3dad-5bdf-99bf-7795f366ff37")
 	)
 	(wire
 		(pts
@@ -10738,7 +10755,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "e3539502-3dad-5bdf-99bf-7795f366ff37")
+		(uuid "62b19a9b-add5-52e7-89eb-f40a1e188c47")
 	)
 	(hierarchical_label "qspi_io1"
 		(shape bidirectional)
@@ -10749,7 +10766,7 @@
 			)
 			(justify right)
 		)
-		(uuid "62b19a9b-add5-52e7-89eb-f40a1e188c47")
+		(uuid "1d73a3c9-f385-51a8-9964-e9d65ae1b515")
 	)
 	(wire
 		(pts
@@ -10759,7 +10776,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "1d73a3c9-f385-51a8-9964-e9d65ae1b515")
+		(uuid "bc0515f5-7e33-54d9-9dbc-d98f9abb3858")
 	)
 	(hierarchical_label "ps_clk"
 		(shape input)
@@ -10770,34 +10787,17 @@
 			)
 			(justify right)
 		)
-		(uuid "bc0515f5-7e33-54d9-9dbc-d98f9abb3858")
+		(uuid "1a808090-9c0b-5db7-b4d2-4d8022ecf9ab")
 	)
 	(no_connect
 		(at 91.44 40.64)
-		(uuid "1a808090-9c0b-5db7-b4d2-4d8022ecf9ab")
-	)
-	(wire
-		(pts
-			(xy 91.44 66.04) (xy 81.28 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
 		(uuid "065567c7-fa6a-5610-b0bf-6666bb2071aa")
 	)
-	(hierarchical_label "eth_int_n"
-		(shape input)
-		(at 81.28 66.04 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
+	(no_connect
+		(at 91.44 66.04)
 		(uuid "f161acb5-3609-5e04-a736-9a93d210b7d3")
 	)
-	(text "MIO0, MIO11-15: spare"
+	(text "MIO0, 9-12, 15: spare"
 		(exclude_from_sim no)
 		(at 124.46 81.28 0)
 		(effects

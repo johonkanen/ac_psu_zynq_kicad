@@ -1,0 +1,89 @@
+{
+  "_comment": "Zynq control card (8-layer JLC081611-7628). Read by the kicad-agentic-routing scripts and tools/route.sh. Clearance 0.125 mm: with 0.30/0.15 mm vias on the board, 0.102 mm left 0.177 mm from a track to a via hole (rule: 0.2 mm).",
+  "project": "kicad/zynq_card",
+  "krt": "~/dev/KiCadRoutingTools",
+  "route_args": [
+    "--layers",
+    "F.Cu",
+    "In2.Cu",
+    "In4.Cu",
+    "In6.Cu",
+    "B.Cu",
+    "--track-width",
+    "0.1",
+    "--via-size",
+    "0.48",
+    "--via-drill",
+    "0.25",
+    "--clearance",
+    "0.125",
+    "--grid-step",
+    "0.05",
+    "--no-bga-zones",
+    "U20",
+    "U801",
+    "U1001",
+    "--escalation",
+    "off",
+    "--no-fix-drc-settings",
+    "--board-edge-clearance",
+    "0.5"
+  ],
+  "default_layer_costs": [
+    2,
+    1,
+    1,
+    1,
+    2
+  ],
+  "planes": {
+    "In1.Cu": [
+      "GND"
+    ],
+    "In3.Cu": [
+      "GND"
+    ],
+    "In5.Cu": [
+      "GND"
+    ],
+    "In4.Cu": [
+      "1V8"
+    ],
+    "In6.Cu": [
+      "3V3",
+      "1V0"
+    ]
+  },
+  "signal_layers": [
+    "F.Cu",
+    "In2.Cu",
+    "In4.Cu",
+    "In6.Cu",
+    "B.Cu"
+  ],
+  "power_nets": [
+    "GND",
+    "1V0",
+    "1V8",
+    "1V35",
+    "3V3",
+    "5V0",
+    "3V3_analog",
+    "VCCPLL",
+    "VCCAUX",
+    "DDR3_VTT",
+    "DDR3_VREF*",
+    "phy_*",
+    "5V_ISOL*"
+  ],
+  "groups_file": "tools/route_groups.json",
+  "fab": {
+    "via": [
+      0.3,
+      0.15
+    ],
+    "fiducials_per_side": 3,
+    "fiducial": "Fiducial:Fiducial_1mm_Mask2mm",
+    "fiducial_edge_keep": 1.5
+  }
+}
