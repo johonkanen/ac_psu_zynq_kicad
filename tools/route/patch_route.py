@@ -12,6 +12,8 @@
         joined nearest pair first
         --rip: when a pair has no path, find which one or two of our own routed nets block it, lift them, route
         the pair, route the lifted nets again; if any of that fails, everything is put back as it was
+    patch_route.py IN.kicad_pcb OUT.kicad_pcb --reroute NET,NET,...   lift these nets, join them again in this order
+    patch_route.py IN.kicad_pcb OUT.kicad_pcb --orphans               delete copper of our nets that reaches no pad
     patch_route.py IN.kicad_pcb OUT.kicad_pcb --repair DRC.json
         the nets of ours in clearance / hole violations are lifted and routed again here
     patch_route.py IN.kicad_pcb OUT.kicad_pcb --planes DRC.json
@@ -75,6 +77,12 @@ def add_track(t):
                           pcbnew.LayerName(t.GetLayer()), 0, True))
 
 
+def pad_layer(p):
+    """The copper layer of an SMD pad: its own, not its footprint's side (the PHY's thermal land on B.Cu belongs to
+    a top-side footprint)."""
+    return "B.Cu" if p.IsOnLayer(pcbnew.B_Cu) and not p.IsOnLayer(pcbnew.F_Cu) else "F.Cu"
+
+
 def rebuild_items():
     """Every pad, track and via of the board as obstacles (the last field: a track or via, which --rip may lift)."""
     items.clear()
@@ -86,7 +94,7 @@ def rebuild_items():
             through = p.GetAttribute() in (pcbnew.PAD_ATTRIB_PTH, pcbnew.PAD_ATTRIB_NPTH)
             dr = max(MM(p.GetDrillSize().x), MM(p.GetDrillSize().y)) / 2 if through else 0
             items.append(("rect", (MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom())), p.GetNetCode(),
-                          None if through else pcbnew.LayerName(f.GetLayer()), dr, False))
+                          None if through else pad_layer(p), dr, False))
     for t in b.GetTracks():
         add_track(t)
 
@@ -133,7 +141,7 @@ def geom(o):
         bb = o.GetBoundingBox()
         through = o.GetAttribute() == pcbnew.PAD_ATTRIB_PTH
         return [("pad", (MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom()), o),
-                 None if through else pcbnew.LayerName(o.GetParentFootprint().GetLayer()))]
+                 None if through else pad_layer(o))]
     if o.GetClass() == "PCB_VIA":
         q = o.GetPosition()
         return [("circle", (MM(q.x), MM(q.y), 0.05), None)]
@@ -166,6 +174,8 @@ def route(spec):
     return connect(spec, pa, pz, ra, rz, width, layers, via)
 
 
+_cy = b.FindFootprintByReference("U901").GetCourtyard(pcbnew.F_CrtYd).BBox()
+PHY = (MM(_cy.GetLeft()), MM(_cy.GetTop()), MM(_cy.GetRight()), MM(_cy.GetBottom()))
 MDI = {n.GetNetCode() for n in b.GetNetInfo().NetsByName().values() if "eth_mdi_" in n.GetNetname()}
 PLANE = {"3V3": ["In6.Cu"], "1V8": ["In4.Cu", "In2.Cu"], "1V0": ["In6.Cu"], "1V35": ["F.Cu", "B.Cu"], "5V0": ["B.Cu"],
          "GND": ["In1.Cu", "In3.Cu", "In5.Cu"]}
@@ -219,7 +229,13 @@ def connect(spec, pa, pz, ra, rz, width, layers, via, plane=False, soft=None):
         if n == code and not dr:
             continue
         lift = bool(soft) and is_track and n in soft
-        wide = 0.1 if (n in MDI) != (code in MDI) else 0.0     # the MDI pairs keep 0.2 mm to other nets (rule mdi_spacing)
+        # the MDI pairs keep 0.2 mm to other nets (rule mdi_spacing), but for their breakout inside the PHY's
+        # courtyard (rule mdi_breakout: 0.1 mm, the VDD10 vias of pins 3 and 8 sit between the pairs there)
+        wide = 0.0
+        if (n in MDI) != (code in MDI):
+            ib = bbox_of(kind, g)
+            if not (ib[0] < PHY[2] and PHY[0] < ib[2] and ib[1] < PHY[3] and PHY[1] < ib[3]):     # as KiCad: the item meets it
+                wide = 0.1
         bb = bbox_of(kind, g)
         if bb[2] < x0 - reach or bb[0] > x1 + reach or bb[3] < y0 - reach or bb[1] > y1 + reach:
             continue
@@ -295,7 +311,10 @@ def connect(spec, pa, pz, ra, rz, width, layers, via, plane=False, soft=None):
         j, i = divmod(c, nx)
         if plane:
             x, y = x0 + i * G, y0 + j * G
-            if c0 > 0.2 and not start[k][c] and in_pour(pname, layers[k], x, y, width / 2 + 0.03):
+            # ending in the pour on the track's own layer: only where that layer is the rail's plane (5V0 and 1V35
+            # on the outer layers). An outer GND pour piece may be the very fragment the pad sits in
+            if c0 > 0.2 and not start[k][c] and pname != "GND" and layers[k] in PLANE[pname] \
+                    and in_pour(pname, layers[k], x, y, width / 2 + 0.03):
                 end = (k, c)
                 break
             came_by_via = (k, c) in prev and prev[(k, c)][1] == c
@@ -372,6 +391,7 @@ import os
 import re
 
 RIP = "--rip" in sys.argv
+MAXV = int(os.environ.get("PATCH_MAX_LIFT", "3"))
 ALLG = json.load(open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "route_groups.json")))
 ok = []
 netpads = {}
@@ -405,11 +425,18 @@ ours = {n for g in ("signals", "phy_pwr", "soc_pwr") for n in ALLG[g]}
 code_of = {n: b.FindNet(n).GetNetCode() for n in ours if b.FindNet(n)}
 name_of = {c: n for n, c in code_of.items()}
 
+def hand(t):
+    """The user's hand-routed J3 pin <-> pull-down array links (B.Cu, west of x 141.5, 0.37 mm between the pins): this
+    router cannot redo them at its clearance, so a lift leaves them."""
+    return not isinstance(t, pcbnew.PCB_VIA) and MM(t.GetStart().x) < 141.5 and MM(t.GetEnd().x) < 141.5 \
+        and pcbnew.LayerName(t.GetLayer()) == "B.Cu"
+
+
 def lift(codes):
     """Delete the tracks and vias of these nets; what is needed to put them back."""
     saved = []
     for t in list(b.GetTracks()):
-        if t.GetNetCode() in codes:
+        if t.GetNetCode() in codes and not hand(t):
             via = isinstance(t, pcbnew.PCB_VIA)
             if isinstance(t, pcbnew.PCB_ARC):
                 return None                           # not ours to re-draw
@@ -417,9 +444,12 @@ def lift(codes):
             saved.append((via, cp(t.GetPosition()) if via else cp(t.GetStart()), None if via else cp(t.GetEnd()),
                           t.GetWidth(pcbnew.F_Cu) if via else t.GetWidth(), t.GetDrill() if via else 0,
                           None if via else t.GetLayer(), t.GetNet(), t.IsLocked()))
-    for t in [t for t in b.GetTracks() if t.GetNetCode() in codes]:
+    kept = [t for t in b.GetTracks() if t.GetNetCode() in codes and hand(t)]
+    for t in [t for t in b.GetTracks() if t.GetNetCode() in codes and not hand(t)]:
         b.Delete(t)                                   # Delete, not Remove: Remove leaves pcbnew's lists unusable
     items[:] = [it for it in items if not (it[5] and it[2] in codes)]
+    for t in kept:
+        add_track(t)
     return saved
 
 def put_back(saved):
@@ -482,7 +512,7 @@ def join_net(name, rip):
         if not r and rip:
             soft = set(code_of.values()) - {p.GetNetCode()}
             victims = connect(spec, p, q, box(p), box(q), 0.1, ALL, "0.3/0.15", soft=soft)
-            if victims and len(victims) <= 3:
+            if victims and len(victims) <= MAXV:
                 r = lift_and_retry(spec, victims, lambda: connect(spec, p, q, box(p), box(q), 0.1, ALL, "0.3/0.15"),
                                    lambda: len(parts(netpads[name])) < len(comps))
         if rip is not None:
@@ -550,6 +580,62 @@ elif "--repair" in args:
         ok.append(good)
         print(f"patch_route: {name.split('/')[-1]} ({v['type']}): {'re-routed' if good else 'put back, not repaired'}")
     print(f"patch_route: {sum(ok)} of {len(ok)} nets with violations re-routed")
+elif "--reroute" in args:
+    # --reroute NET,NET,...: lift these nets of ours (short names) and join them again in this order (the one that
+    # could not get through first); kept only if no net ends up in more pieces than before
+    short = {n.split("/")[-1]: n for n in ours}
+    names = [short[x] for x in args[args.index("--reroute") + 1].split(",")]
+    pieces = {n: len(parts(netpads[n])) for n in names}
+    before = {t.m_Uuid.AsString() for t in b.GetTracks()}
+    saved = lift({code_of[n] for n in names})
+    watch = {n: len(parts(netpads[n])) for n in ours if n not in names} if RIP else {}
+    for n in names:
+        join_net(n, None if not RIP else True)
+    after = {n: len(parts(netpads[n])) for n in names}
+    worse = [n for n, k in watch.items() if len(parts(netpads[n])) > k]
+    same_ok = os.environ.get("PATCH_ACCEPT_EQUAL") == "1"        # a re-route to cure a violation: no fewer pieces to gain
+    if RIP and (worse or not ((same_ok or sum(after.values()) < sum(pieces.values())) and all(after[n] <= pieces[n] for n in names))):
+        # with --rip other nets were lifted and re-laid on the way: nothing to put back piece by piece, so
+        # nothing is written at all
+        print("patch_route: pieces per net before -> after:", ", ".join(f"{n.split('/')[-1]} {pieces[n]} -> {after[n]}" for n in names),
+              "; worse:", [n.split("/")[-1] for n in worse])
+        print("patch_route: no gain, board not written")
+        sys.exit(2)
+    print("patch_route: pieces per net before -> after:", ", ".join(f"{n.split('/')[-1]} {pieces[n]} -> {after[n]}" for n in names))
+    if RIP or (sum(after.values()) < sum(pieces.values()) and all(after[n] <= pieces[n] for n in names)):
+        ok.append(True)                                     # (with --rip the failing case has left above)
+    else:
+        for t in [t for t in b.GetTracks() if t.m_Uuid.AsString() not in before]:
+            b.Delete(t)
+        codes = {code_of[n] for n in names}
+        items[:] = [it for it in items if not (it[5] and it[2] in codes)]
+        put_back(saved)
+        ok.append(False)
+        print("patch_route: put back (no gain)")
+elif "--orphans" in args:
+    # copper of our nets that reaches no pad (a breakout stub left beside the final route): deleted
+    b.BuildConnectivity()
+    conn = b.GetConnectivity()
+    seen, kill = set(), []
+    for t in b.GetTracks():
+        u = t.m_Uuid.AsString()
+        if u in seen or t.GetNetname() not in ours:
+            continue
+        comp, todo, pad = [t], [t], False
+        seen.add(u)
+        while todo:
+            for o in conn.GetConnectedItems(todo.pop()):
+                ou = o.m_Uuid.AsString()
+                if o.GetClass() == "PAD":
+                    pad = True
+                elif ou not in seen:
+                    seen.add(ou); comp.append(o); todo.append(o)
+        if not pad:
+            kill += comp
+    ids = {o.m_Uuid.AsString() for o in kill}
+    for t in [t for t in b.GetTracks() if t.m_Uuid.AsString() in ids]:
+        b.Delete(t)
+    print(f"patch_route: {len(ids)} items without a pad deleted")
 elif "--nets" in args:
     for g in args[args.index("--nets") + 1].split(","):
         for name in ALLG[g]:
@@ -583,7 +669,7 @@ elif "--planes" in args:
         res = connect(spec, p, None, r, r, wd, lays, "0.3/0.15", plane=True)
         if not res and RIP:
             victims = connect(spec, p, None, r, r, 0.1, lays, "0.3/0.15", plane=True, soft=set(code_of.values()))
-            if victims and len(victims) <= 3:
+            if victims and len(victims) <= MAXV:
                 res = lift_and_retry(spec, victims, lambda: connect(spec, p, None, r, r, 0.1, lays, "0.3/0.15", plane=True),
                                      lambda: True)
         ok.append(bool(res))

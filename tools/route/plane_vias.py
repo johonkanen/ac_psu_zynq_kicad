@@ -66,7 +66,7 @@ for f in b.GetFootprints():
         bb = p.GetBoundingBox()
         through = p.GetAttribute() == pcbnew.PAD_ATTRIB_PTH or p.GetAttribute() == pcbnew.PAD_ATTRIB_NPTH
         items.append(("rect", (MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom())), p.GetNetCode(),
-                      None if through else pcbnew.LayerName(f.GetLayer()), 0))
+                      None if through else ("B.Cu" if p.IsOnLayer(pcbnew.B_Cu) and not p.IsOnLayer(pcbnew.F_Cu) else "F.Cu"), 0))
 for t in b.GetTracks():
     add_item(t)
 

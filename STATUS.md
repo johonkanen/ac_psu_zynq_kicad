@@ -1,35 +1,35 @@
 # Status and handoff
 
-Last updated: **2026-11-20** (phase 4: the board is routed but for 18 connections, see the first section. Before that, 2026-11-04: SoC bulk decoupling trimmed, REUSE_LOG E15: the TLV62585 bucks are rated for 10–47 µF out; 13 caps removed incl. block C28. ADC mux U1201 → TMUX1308. Before that, 2026-10-31, phase 4 started: U20 I/O breakout stubs, REUSE_LOG E14: 55 of 89 bare signal balls escaped by `tools/fanout_u20.sh`, 34 left; 0.30/0.15 mm via-in-pad allowed under U20, rule `u20_via_in_pad`. Before that, 2026-10-30, phase 3 closed: layer renders, E13 C99 out from under the heatsink. Before that, 2026-10-28, phase 3: pose trials (step 3) and a rough placement of every part (step 4) at pose A0.
+Last updated: **2026-11-20** (phase 4: every net is routed, see the first section. Before that, 2026-11-04: SoC bulk decoupling trimmed, REUSE_LOG E15: the TLV62585 bucks are rated for 10–47 µF out; 13 caps removed incl. block C28. ADC mux U1201 → TMUX1308. Before that, 2026-10-31, phase 4 started: U20 I/O breakout stubs, REUSE_LOG E14: 55 of 89 bare signal balls escaped by `tools/fanout_u20.sh`, 34 left; 0.30/0.15 mm via-in-pad allowed under U20, rule `u20_via_in_pad`. Before that, 2026-10-30, phase 3 closed: layer renders, E13 C99 out from under the heatsink. Before that, 2026-10-28, phase 3: pose trials (step 3) and a rough placement of every part (step 4) at pose A0.
 Before that, phase 3 steps 1–2: board, rules, and the block copper imported (2026-10-27). Before that, phase 2: project skeleton, sheets 1 (the imported DDR3 block), 2–4 (power input, rails, sequencing), 5 (SoC power), 6 (SoC config), 7 (clocks), 8–10 (QSPI, Ethernet, eMMC), 11 (PL banks), 12 (ADC) and 13 (connectors) done: **the schematic is complete**).
 Read this first if you are picking the work up (human or agent).
 
-## Phase 4 routing (2026-11-20): routed but for 18 connections, not committed. Read this first
+## Phase 4 routing (2026-11-20): every net connected. Read this first
 
-`kicad/zynq_card.kicad_pcb` is the routed board (the board before routing: `work/before_routing.kicad_pcb`, and
-commit 89d963e). It comes from a rerunnable chain, `tools/route.sh` (kicad-agentic-routing skill), which reads the
-unrouted board from git (`BASE=89d963e`), works in `work/route/` (git-ignored) and writes
-`work/route/routed.kicad_pcb`; the last repair steps (below) were run by hand on that result.
+`kicad/zynq_card.kicad_pcb` is the routed board (the board before routing: commit 89d963e). It comes from a
+rerunnable chain, `tools/route.sh` (kicad-agentic-routing skill), which reads the unrouted board from git
+(`BASE=89d963e`), works in `work/route/` (git-ignored) and writes `work/route/routed.kicad_pcb`, followed by
+`tools/route/finish.sh` (the last connections; run step by step by hand, the script records the order).
 **Do not run `tools/build_pcb.sh --rebuild`: it would drop the routing.**
 
 **State of the board:**
-- Schematic parity 0. `check_block_copper.py` 0 failures (the copied block is locked during routing).
-  `check_heights.py` 0 failures. No short and no crossing.
-- **18 unconnected items:**
-  - signals: `phy_rxd2` (U901 pin 23 to its B.Cu track at R923) and `rgmii_txd2` (a 0.9 mm gap on In6 under U20,
-    at (170.0, 86.6) / (170.8, 86.4));
-  - supply pads: U20 R22 (3V3, VCCO_34), R928.1 (3V3), R606.1 / U1001 C6 (1V8), the block's F.Cu and B.Cu 1V35 pours
-    to each other (the F.Cu link patch of `power_zones.py` did not join them: check);
-  - GND: J9 pin 10 (inside `j9_no_pour`), and 11 small pieces of the F.Cu / B.Cu ground pours that hold a pad but
-    have no room for a via (PHY decoupling caps C921, C932, C933, C935/C936, C940, C941; C503, C513, C514, U301.1,
-    C1201, U1203.5, U1001 E7).
-- **DRC errors left:** 1 clearance (the `eth_rst_n` via at (188.10, 58.60) is 0.1 mm from MDI pair D, rule 0.2 mm),
-  1 hole-to-hole warning (two 5V0 vias at (203.27, 96.75) / (203.57, 96.75): delete one). Before the routing already:
-  63 `track_width` + 3 `diff_pair_gap` on the hand-routed MDI pairs (0.12 mm against the 0.33 mm `mdi` rule).
-- **To review:** the block's 1V8 pours on In2/In4 are cut into about 20 pieces by our signals west and east of U20
-  (every 1V8 pad is still connected, DRC); `plane_audit.py --detail` names the nets. 269 GND stitching vias and all
-  plane ties are 0.30/0.15 mm. No fiducials yet. No length matching: **the user meanders the flash and eMMC nets by
-  hand** (2026-11-20).
+- **0 unconnected items**, schematic parity 0, no short, crossing, clearance or hole error.
+  `check_block_copper.py` 0 failures (the copied block is locked during routing), `check_heights.py` 0 failures.
+- **DRC errors left, all from before the routing:** 63 `track_width` + 3 `diff_pair_gap` on the hand-routed MDI
+  pairs (0.12 mm against the 0.33 mm `mdi` rule).
+- **Warnings to look at:** 16 `track_dangling` (3 inherited from the block; 13 are breakout stubs of ours that the
+  final route left beside it. `drop_dangling.sh` cannot remove them safely: a route may join its stub mid-way) and
+  14 `via_dangling` (the block's 1V35 vias, as on the source).
+- **To review before ordering:**
+  - the block's 1V8 pours on In2/In4 are cut into about 20 pieces by our signals west and east of U20, and the
+    board-wide In4 1V8 / In6 3V3 pours have isolated islands near the eMMC and the PHY. Every pad is connected (DRC),
+    but six supply pads reach their rail by a 0.1 mm track instead of a plane via: U901 pin 29 (3V3, 11 mm), eMMC
+    ball C6 (1V8, 7.6 mm), R930, R928, R402 and a 1V8 via under U20. Widen or re-do by hand;
+  - `plane_audit.py --detail` (routing.json lists In4/In6) names the nets that fence each island;
+  - 6 GND stitching vias sit in the B.Cu 1V35 strip (holes only);
+  - parts moved in the finish: R923 (PHY strap) to B.Cu under R911, C932 (PHY 1.0 V decap) to B.Cu at (183.6, 57.95),
+    C514 (our 0.47 uF on 1V35) to (166.0, 78.6) on a 1V35 and a GND via under U20;
+  - no fiducials yet. No length matching: **the user meanders the flash and eMMC nets by hand** (2026-11-20).
 
 **Decisions taken for the routing, to confirm with the user:**
 - **Pin plan:** `vivado/pinplan/balls.csv` fixes the 32 J3 signals on package-edge balls in J3 pin order: 11 on
@@ -55,17 +55,19 @@ pours, tie (`tie_planes.sh`), tie2, sense, clean (`drop_dangling.sh`). About 65 
 - `tools/route/patch_route.py` is an exact small maze router (0.025 mm grid, real geometry, hole and MDI distances,
   `--rip` lifts up to three of our nets and puts them back if that does not help). It closes what KiCadRoutingTools
   calls boxed in. KRT's own supply step is not used (over an hour, long supply tracks).
-- After the chain, run by hand on its result (not yet chain steps): `patch.sh --repair` (nets in hole-clearance
-  violations re-routed), `patch.sh --tight --rip --nets signals,phy_pwr,soc_pwr`, `patch.sh --rip --planes`,
-  `drop_dangling.sh`. `routing.json` now routes at 0.125 mm clearance, which should make `--repair` unnecessary.
+- After the chain: `tools/route/finish.sh` (`--repair`, `--orphans`, two parts moved at the PHY, `--rip --nets`,
+  `tie_planes.sh`, `--rip --planes`, `--auto supply`, `place_c514.py`). `routing.json` now routes at 0.125 mm
+  clearance (0.102 mm left tracks 0.177 mm from 0.15 mm via holes), which should make `--repair` unnecessary.
+  `tools/route/patch.sh` must see the supply keep-outs (`work/route/keepouts.txt`): without them a re-routed net cut
+  the B.Cu 1V35 strip once.
 - The router is not deterministic: each run leaves a different handful open. A step may be killed from outside
   (another session's `pkill`): resume with `tools/route.sh "" STEP`.
 
 **Next steps:**
-1. Close the 18 items above (by hand in pcbnew, or `patch_route.py` specs after moving a cap), fix the two DRC items.
-2. Review the renders layer by layer; decide on the 1V8 pour pieces in the block; fiducials (`fab_fixes.py`).
+1. Review the renders layer by layer and the items under *To review* above; fiducials (`fab_fixes.py`).
+2. The MDI pairs against the `mdi` rule (0.12 mm as routed by hand, or change the rule).
 3. `ddr3_review.py` on both DRAMs (the block copper is unchanged, so this is a formality), then phase 5.
-4. Commit when the user asks. `LAYOUT_PLAN.md` still describes phase 3 only.
+4. `LAYOUT_PLAN.md` still describes phase 3 only.
 
 ## What this repository is
 
