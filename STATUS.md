@@ -12,24 +12,35 @@ rerunnable chain, `tools/route.sh` (kicad-agentic-routing skill), which reads th
 `tools/route/finish.sh` (the last connections; run step by step by hand, the script records the order).
 **Do not run `tools/build_pcb.sh --rebuild`: it would drop the routing.**
 
-**State of the board:**
-- **0 unconnected items**, schematic parity 0, no short, crossing, clearance or hole error.
-  `check_block_copper.py` 0 failures (the copied block is locked during routing), `check_heights.py` 0 failures.
-- **DRC errors left, all from before the routing:** 63 `track_width` + 3 `diff_pair_gap` on the hand-routed MDI
-  pairs (0.12 mm against the 0.33 mm `mdi` rule).
-- **Warnings to look at:** 16 `track_dangling` (3 inherited from the block; 13 are breakout stubs of ours that the
-  final route left beside it. `drop_dangling.sh` cannot remove them safely: a route may join its stub mid-way) and
-  14 `via_dangling` (the block's 1V35 vias, as on the source).
+**State of the board (after the supply-plane work of 2026-11-20, `tools/route/planes_fix.sh`):**
+- **0 unconnected items, 0 DRC errors**, schematic parity 0. `check_block_copper.py` 0 failures (the copied block is
+  locked during routing), `check_heights.py` 0 failures. `ddr3_review.py` on U16 and U15 as before the routing (all
+  PASS at the derated limits, byte 0 CK - DQS +27.5 ps).
+- **MDI:** the hand-routed nets stay (0.2 mm single tracks, 4.5-14 mm, matched in each pair but pair C: 4.5 / 6.7 mm).
+  The `mdi` class and rule now say that (`board_setup.py`): the jack's pinout has P and N in opposite pin rows and
+  there is no plane under them east of x 190 (`j9_no_pour`), so the 0.35/0.20 mm coupled pair of §6.4 cannot be had.
+- **Supply planes, measured by `tools/route/plane_reach.py`** (the vias under a part that the rail's pour reaches from
+  its regulator on the plane layer alone):
+
+  | Rail, layer | U20 | others |
+  |---|---|---|
+  | 1V0, In6 | 21 of 21 (was 1 of 22: two signals crossed the pour's neck) | |
+  | 3V3, In6 | 37 of 38 | PHY 3 of 3 (was 0), eMMC 5 of 5 |
+  | 1V8, In4 | 17 of 20 (left: three VCCO_MIO vias at U20's NE corner, joined on In2 / by their caps) | eMMC 5 of 5, flash 4 of 4 |
+  | 1V35, B.Cu | 8 of 9 | the DRAMs by the block's F.Cu pour, as on the source |
+
+  For that, about 60 of our signals were moved off In4/In6 inside the block area and beside the PHY and the eMMC
+  (`patch_route.py --evict`), and the 0.1 mm supply links of 3V3/1V8 were replaced by ties to plane copper that is
+  reached from the regulator (`PATCH_REACH=1`).
+- **Fiducials:** FID1-FID6, three per side (`tools/route/fiducials.py`), board-only.
+- **Warnings left:** 14 `track_dangling` (3 inherited from the block; 11 breakout stubs of ours that hold a route
+  which joins them mid-way) and 14 `via_dangling` (the block's 1V35 vias, as on the source).
 - **To review before ordering:**
-  - the block's 1V8 pours on In2/In4 are cut into about 20 pieces by our signals west and east of U20, and the
-    board-wide In4 1V8 / In6 3V3 pours have isolated islands near the eMMC and the PHY. Every pad is connected (DRC),
-    but six supply pads reach their rail by a 0.1 mm track instead of a plane via: U901 pin 29 (3V3, 11 mm), eMMC
-    ball C6 (1V8, 7.6 mm), R930, R928, R402 and a 1V8 via under U20. Widen or re-do by hand;
-  - `plane_audit.py --detail` (routing.json lists In4/In6) names the nets that fence each island;
-  - 6 GND stitching vias sit in the B.Cu 1V35 strip (holes only);
-  - parts moved in the finish: R923 (PHY strap) to B.Cu under R911, C932 (PHY 1.0 V decap) to B.Cu at (183.6, 57.95),
-    C514 (our 0.47 uF on 1V35) to (166.0, 78.6) on a 1V35 and a GND via under U20;
-  - no fiducials yet. No length matching: **the user meanders the flash and eMMC nets by hand** (2026-11-20).
+  - `DDR3_VTT_EN` now runs on In6 along the north board edge, above the DRAMs' margin (a static enable);
+  - a few supply pads still hang on short 0.2 mm tracks to a via: `plane_audit.py --detail` and the renders;
+  - parts moved for the routing since the placement: R923, R927 (PHY straps), C932 (PHY 1.0 V decap), C514;
+  - no length matching: **the user meanders the flash and eMMC nets by hand, last** (2026-11-20). The RGMII groups
+    are not matched either.
 
 **Decisions taken for the routing, to confirm with the user:**
 - **Pin plan:** `vivado/pinplan/balls.csv` fixes the 32 J3 signals on package-edge balls in J3 pin order: 11 on
@@ -55,7 +66,8 @@ pours, tie (`tie_planes.sh`), tie2, sense, clean (`drop_dangling.sh`). About 65 
 - `tools/route/patch_route.py` is an exact small maze router (0.025 mm grid, real geometry, hole and MDI distances,
   `--rip` lifts up to three of our nets and puts them back if that does not help). It closes what KiCadRoutingTools
   calls boxed in. KRT's own supply step is not used (over an hour, long supply tracks).
-- After the chain: `tools/route/finish.sh` (`--repair`, `--orphans`, two parts moved at the PHY, `--rip --nets`,
+- After the chain: `tools/route/finish.sh`, then `tools/route/planes_fix.sh` (the supply planes, above);
+  `finish.sh`: (`--repair`, `--orphans`, two parts moved at the PHY, `--rip --nets`,
   `tie_planes.sh`, `--rip --planes`, `--auto supply`, `place_c514.py`). `routing.json` now routes at 0.125 mm
   clearance (0.102 mm left tracks 0.177 mm from 0.15 mm via holes), which should make `--repair` unnecessary.
   `tools/route/patch.sh` must see the supply keep-outs (`work/route/keepouts.txt`): without them a re-routed net cut
@@ -64,10 +76,9 @@ pours, tie (`tie_planes.sh`), tie2, sense, clean (`drop_dangling.sh`). About 65 
   (another session's `pkill`): resume with `tools/route.sh "" STEP`.
 
 **Next steps:**
-1. Review the renders layer by layer and the items under *To review* above; fiducials (`fab_fixes.py`).
-2. The MDI pairs against the `mdi` rule (0.12 mm as routed by hand, or change the rule).
-3. `ddr3_review.py` on both DRAMs (the block copper is unchanged, so this is a formality), then phase 5.
-4. `LAYOUT_PLAN.md` still describes phase 3 only.
+1. Manufacturability check as for the Ti135 card, stock check, the [verify] items of the notes, the JLC quote.
+2. Board plots and README; `LAYOUT_PLAN.md` still describes phase 3 only.
+3. Length matching by the user, last. After it: `check_board.sh`, `plane_reach.py`, `check_block_copper.py` again.
 
 ## What this repository is
 

@@ -12,7 +12,10 @@
         joined nearest pair first
         --rip: when a pair has no path, find which one or two of our own routed nets block it, lift them, route
         the pair, route the lifted nets again; if any of that fails, everything is put back as it was
+    patch_route.py IN.kicad_pcb OUT.kicad_pcb [--keep-box X0,Y0,X1,Y1] --evict LAYER,LAYER:X0,Y0,X1,Y1 [--evict ...]
+        our nets with tracks on these layers in the rectangle are routed again with it closed, one at a time
     patch_route.py IN.kicad_pcb OUT.kicad_pcb --reroute NET,NET,...   lift these nets, join them again in this order
+    patch_route.py IN.kicad_pcb OUT.kicad_pcb --trim DRC.json BASE.kicad_pcb   dangling copper off, net by net, checked
     patch_route.py IN.kicad_pcb OUT.kicad_pcb --orphans               delete copper of our nets that reaches no pad
     patch_route.py IN.kicad_pcb OUT.kicad_pcb --repair DRC.json
         the nets of ours in clearance / hole violations are lifted and routed again here
@@ -35,6 +38,7 @@ LAYER:X0,Y0,X1,Y1 (LAYER * = every layer, vias too). Each spec is routed in turn
 path is reported and left open (exit code 1 at the end).
 """
 import heapq
+import os
 import math
 import sys
 
@@ -59,6 +63,14 @@ if TIGHT:
     CLR = 0.1005
 args = [a for a in args if a not in ("--dry", "--tight", "--rip")]
 b = pcbnew.LoadBoard(args[0])
+# the board's own rule areas that forbid tracks (the heatsink pins' rings on F.Cu/B.Cu): closed, by their bounding box
+for _z in b.Zones():
+    if _z.GetIsRuleArea() and _z.GetDoNotAllowTracks() and not _z.GetZoneName().startswith("ROUTE_TMP"):
+        _bb = _z.GetBoundingBox()
+        for _l in _z.GetLayerSet().Seq():
+            keepouts.append((pcbnew.LayerName(_l), (MM(_bb.GetLeft()) - 0.2, MM(_bb.GetTop()) - 0.2, MM(_bb.GetRight()) + 0.2, MM(_bb.GetBottom()) + 0.2)))
+if os.environ.get("PATCH_MARGIN"):
+    MARGIN = float(os.environ["PATCH_MARGIN"])      # search window beyond the two ends, mm (a long way round)
 eb = b.GetBoardEdgesBoundingBox()
 EX0, EY0, EX1, EY1 = MM(eb.GetLeft()), MM(eb.GetTop()), MM(eb.GetRight()), MM(eb.GetBottom())
 lid = {pcbnew.LayerName(l): l for l in b.GetEnabledLayers().CuStack()}
@@ -186,9 +198,40 @@ for _z in b.Zones():
             ZONES.setdefault((_z.GetNetname(), pcbnew.LayerName(_l)), []).append((_z, _l))
 
 
+# PATCH_REACH=1: a plane counts only where its pour is reached from the rail's regulator on that layer alone (a flood
+# from the seed, as tools/route/plane_reach.py). Without it a pad may be "tied" to an island that signals fenced off.
+SEEDS = {("3V3", "In6.Cu"): (195.5, 87.5), ("1V8", "In4.Cu"): (168.5, 103.5), ("1V0", "In6.Cu"): (153.5, 102.0),
+         ("1V35", "B.Cu"): (196.5, 74.5)}
+REACH = {}
+RS = 0.1
+
+
+def reach(net, layer):
+    if (net, layer) not in REACH:
+        import collections
+        sx, sy = SEEDS[(net, layer)]
+        zs = ZONES.get((net, layer), [])
+        nx, ny = int((EX1 - EX0) / RS) + 1, int((EY1 - EY0) / RS) + 1
+        filled = [bytearray(any(z.HitTestFilledArea(l, pcbnew.VECTOR2I(FM(EX0 + i * RS), FM(EY0 + j * RS))) for z, l in zs)
+                            for i in range(nx)) for j in range(ny)]
+        si, sj = int((sx - EX0) / RS), int((sy - EY0) / RS)
+        assert filled[sj][si], (net, layer, "seed not on the pour")
+        seen, q = {(si, sj)}, collections.deque([(si, sj)])
+        while q:
+            i, j = q.popleft()
+            for a, c in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
+                if 0 <= a < nx and 0 <= c < ny and filled[c][a] and (a, c) not in seen:
+                    seen.add((a, c)); q.append((a, c))
+        REACH[(net, layer)] = seen
+        print(f"patch_route: {net} on {layer}: reach from the regulator computed ({len(seen)} cells)")
+    return REACH[(net, layer)]
+
+
 def in_pour(net, layer, x, y, r=0.16):
     for z, l in ZONES.get((net, layer), []):
         if all(z.HitTestFilledArea(l, pcbnew.VECTOR2I(FM(x + dx), FM(y + dy))) for dx, dy in ((0, 0), (r, 0), (-r, 0), (0, r), (0, -r))):
+            if os.environ.get("PATCH_REACH") == "1" and (net, layer) in SEEDS:
+                return (int((x - EX0) / RS), int((y - EY0) / RS)) in reach(net, layer)
             return True
     return False
 
@@ -243,6 +286,8 @@ def connect(spec, pa, pz, ra, rz, width, layers, via, plane=False, soft=None):
         on = [k for k, l in enumerate(layers) if lay in (None, l)] if n != code else []
         # a track also keeps HOLE from a foreign via's drill (its ring may be narrower than that)
         need_i = (max(need, width / 2 + HOLE - (g[2] - dr)) if kind == "circle" else need) + wide
+        if kind == "rect" and dr:                      # a drilled pad: HOLE from its hole too (an NPTH has no ring)
+            need_i = max(need_i, width / 2 + HOLE - max(0.0, min(g[2] - g[0], g[3] - g[1]) / 2 - dr))
         hh = (dr + vh / 2 + H2H - (g[2] if kind == "circle" else 0)) if (vd and dr) else -1e9
         for j in range(j0, j1):
             y = y0 + j * G
@@ -425,9 +470,19 @@ ours = {n for g in ("signals", "phy_pwr", "soc_pwr") for n in ALLG[g]}
 code_of = {n: b.FindNet(n).GetNetCode() for n in ours if b.FindNet(n)}
 name_of = {c: n for n, c in code_of.items()}
 
+KEEP_BOXES = []      # --keep-box X0,Y0,X1,Y1: copper inside stays when a net is lifted (the breakout stubs under U20)
+while "--keep-box" in sys.argv:
+    _i = sys.argv.index("--keep-box")
+    KEEP_BOXES.append(tuple(float(v) for v in sys.argv[_i + 1].split(",")))
+    del sys.argv[_i:_i + 2]
+
+
 def hand(t):
-    """The user's hand-routed J3 pin <-> pull-down array links (B.Cu, west of x 141.5, 0.37 mm between the pins): this
-    router cannot redo them at its clearance, so a lift leaves them."""
+    """Copper a lift leaves: the user's hand-routed J3 pin <-> pull-down array links (B.Cu, west of x 141.5, 0.37 mm
+    between the pins: this router cannot redo them at its clearance), and what lies inside a --keep-box."""
+    pts = [t.GetPosition()] if isinstance(t, pcbnew.PCB_VIA) else [t.GetStart(), t.GetEnd()]
+    if any(all(r[0] <= MM(q.x) <= r[2] and r[1] <= MM(q.y) <= r[3] for q in pts) for r in KEEP_BOXES):
+        return True
     return not isinstance(t, pcbnew.PCB_VIA) and MM(t.GetStart().x) < 141.5 and MM(t.GetEnd().x) < 141.5 \
         and pcbnew.LayerName(t.GetLayer()) == "B.Cu"
 
@@ -547,6 +602,8 @@ if "--auto" in args:
         boxes = [(x["pos"]["x"], x["pos"]["y"], x["pos"]["x"], x["pos"]["y"]) for x in u["items"][:2]]
         if TIGHT:
             width = 0.09
+        if os.environ.get("PATCH_AUTO_WIDTH"):          # supply links: wider than a signal
+            width = float(os.environ["PATCH_AUTO_WIDTH"])
         ok.append(connect(f"{name} ({boxes[0][0]:.2f}, {boxes[0][1]:.2f}) > ({boxes[1][0]:.2f}, {boxes[1][1]:.2f})",
                           its[0], its[1], boxes[0], boxes[1], width, ALL, "0.3/0.15"))
     print(f"patch_route: {sum(ok)} of {len(ok)} open connections closed")
@@ -612,6 +669,76 @@ elif "--reroute" in args:
         put_back(saved)
         ok.append(False)
         print("patch_route: put back (no gain)")
+elif "--evict" in args:
+    # --evict LAYER[,LAYER]:X0,Y0,X1,Y1 (repeatable): our nets with a track on these layers ending in the rectangle
+    # (outside the keep-boxes) are lifted and joined again one at a time, the rectangles closed for those layers. A
+    # net that does not come back whole is put back as it was. To get signals off a supply plane's layer.
+    zones_ = []
+    while "--evict" in args:
+        i = args.index("--evict")
+        lays, r = args[i + 1].split(":")
+        zones_.append((lays.split(","), tuple(float(v) for v in r.split(","))))
+        del args[i:i + 2]
+    for lays, r in zones_:
+        keepouts.extend((l, r) for l in lays)
+    todo = []
+    for t in b.GetTracks():
+        if isinstance(t, pcbnew.PCB_VIA) or t.GetNetname() not in ours or hand(t) or t.GetNetname() in todo:
+            continue
+        ln = pcbnew.LayerName(t.GetLayer())
+        if any(ln in lays and any(r[0] < MM(q.x) < r[2] and r[1] < MM(q.y) < r[3] for q in (t.GetStart(), t.GetEnd())) for lays, r in zones_):
+            todo.append(t.GetNetname())
+    print(f"patch_route: {len(todo)} nets to move:", " ".join(n.split("/")[-1] for n in todo))
+    for name in todo:
+        pieces = len(parts(netpads[name]))
+        before = {t.m_Uuid.AsString() for t in b.GetTracks()}
+        saved = lift({code_of[name]})
+        if saved is None:
+            ok.append(False); continue
+        join_net(name, None)
+        good = len(parts(netpads[name])) <= pieces
+        if not good:
+            for t in [t for t in b.GetTracks() if t.m_Uuid.AsString() not in before]:
+                b.Delete(t)
+            items[:] = [it for it in items if not (it[5] and it[2] == code_of[name])]
+            for t in b.GetTracks():
+                if t.GetNetCode() == code_of[name]:
+                    add_track(t)
+            put_back(saved)
+        ok.append(good)
+        print(f"patch_route: {name.split('/')[-1]}: {'moved' if good else 'PUT BACK (no route off the layer)'}")
+    print(f"patch_route: {sum(ok)} of {len(ok)} nets moved off the layers")
+elif "--trim" in args:
+    # --trim DRC.json BASE.kicad_pcb: the tracks and vias the report calls dangling, net by net, unless they are on
+    # BASE (the block's inherited ones). A net whose pads end up in more groups than before gets its items back: a
+    # route may have joined a stub mid-way, and then the "dangling" stub end is holding it.
+    i = args.index("--trim")
+    report = json.load(open(args[i + 1]))
+    keep = set(re.findall(r'\(uuid "([0-9a-f-]+)"\)', open(args[i + 2]).read()))
+    bad = {x["uuid"] for v in report["violations"] if v["type"] in ("track_dangling", "via_dangling") for x in v["items"]} - keep
+    by_net = {}
+    for t in b.GetTracks():
+        if t.m_Uuid.AsString() in bad:
+            by_net.setdefault(t.GetNetname(), []).append(t)
+    cp = lambda v: pcbnew.VECTOR2I(v.x, v.y)   # noqa: E731
+    n_del = 0
+    for name, ts in sorted(by_net.items()):
+        if any(isinstance(t, pcbnew.PCB_ARC) for t in ts):
+            continue
+        before = len(parts(netpads.get(name, [])))
+        saved = [(isinstance(t, pcbnew.PCB_VIA), cp(t.GetPosition()) if isinstance(t, pcbnew.PCB_VIA) else cp(t.GetStart()),
+                  None if isinstance(t, pcbnew.PCB_VIA) else cp(t.GetEnd()),
+                  t.GetWidth(pcbnew.F_Cu) if isinstance(t, pcbnew.PCB_VIA) else t.GetWidth(),
+                  t.GetDrill() if isinstance(t, pcbnew.PCB_VIA) else 0, None if isinstance(t, pcbnew.PCB_VIA) else t.GetLayer(),
+                  t.GetNet(), t.IsLocked()) for t in ts]
+        for t in ts:
+            b.Delete(t)
+        if len(parts(netpads.get(name, []))) > before:
+            put_back(saved)
+            print(f"patch_route: {name.split('/')[-1]}: {len(ts)} dangling items kept (they hold the net together)")
+        else:
+            n_del += len(ts)
+    print(f"patch_route: {n_del} dangling items deleted")
 elif "--orphans" in args:
     # copper of our nets that reaches no pad (a breakout stub left beside the final route): deleted
     b.BuildConnectivity()
@@ -666,11 +793,12 @@ elif "--planes" in args:
         spec = f"{ref}.{num} {p.GetNetname()} -> plane"
         lays = [own] + [l for l in PLANE[p.GetNetname()] if l in ("F.Cu", "B.Cu") and l != own]
         wd = 0.2 if ref not in ("U20", "U1001", "U901") else 0.1
+        wd = float(os.environ.get("PATCH_PLANE_WIDTH", wd))
         res = connect(spec, p, None, r, r, wd, lays, "0.3/0.15", plane=True)
         if not res and RIP:
             victims = connect(spec, p, None, r, r, 0.1, lays, "0.3/0.15", plane=True, soft=set(code_of.values()))
             if victims and len(victims) <= MAXV:
-                res = lift_and_retry(spec, victims, lambda: connect(spec, p, None, r, r, 0.1, lays, "0.3/0.15", plane=True),
+                res = lift_and_retry(spec, victims, lambda: connect(spec, p, None, r, r, min(wd, 0.2), lays, "0.3/0.15", plane=True),
                                      lambda: True)
         ok.append(bool(res))
     print(f"patch_route: {sum(ok)} of {len(ok)} supply pads tied")

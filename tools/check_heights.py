@@ -28,6 +28,7 @@ mm = pcbnew.ToMM
 
 # card B.Cu parts: footprint -> max height, mm (the part in the BOM)
 CARD_H = {
+    "Fiducial_1mm_Mask2mm": 0.0,                 # FID4-FID6 on B.Cu: copper only (tools/route/fiducials.py)
     "R_0402_1005Metric": 0.40,                   # 0402WGF: 0.35 +/- 0.05
     "C_0402_1005Metric": 0.55,                   # CL05x: 0.5 +/- 0.05
     "R_Array_Convex_4x0402": 0.45,               # 4D02WGJ0103TCE

@@ -32,8 +32,10 @@ def rect(x0, y0, x1, y1):
 
 
 ZONES = [  # net, layer, priority, outline, clearance, min width
-    ("GND", "F.Cu", 0, BOARD, 0.2, 0.2),
-    ("GND", "B.Cu", 0, BOARD, 0.2, 0.2),
+    # 0.35 mm minimum width: at 0.2 mm a 0.29 mm sliver stood along the block's south edge, joined to nothing but
+    # a sliver of the block's own pour (KiCad keeps it, and reports it unconnected)
+    ("GND", "F.Cu", 0, BOARD, 0.2, 0.35),
+    ("GND", "B.Cu", 0, BOARD, 0.2, 0.35),
     ("3V3", "In6.Cu", 0, BOARD, 0.102, 0.102),
     ("1V8", "In4.Cu", 0, BOARD, 0.102, 0.102),
     # 1V0: from inside the block's island (its south-west lobe, x 143-151 at y 91-95) to the U301 cell

@@ -104,9 +104,12 @@ NETCLASSES = [
     ("ddr3_diff", 0.102, 0.1, 0.48, 0.25, 0.102, 0.102),
     # RGMII, SD0 (eMMC), QSPI: 0.1 mm inner = about 40 ohm (§6.4); skew limits only
     ("mio_fast", 0.1, 0.1, 0.48, 0.25, 0.1, 0.2),
-    # MDI: 0.35/0.20 mm on F.Cu = 102 ohm (§6.4)
+    # MDI: 0.2 mm on F.Cu, as routed by hand (2026-10-31) and kept at the routing review (2026-11-20). The jack's
+    # pinout has P and N in opposite pin rows, so the eight nets run singly, 4.5-14 mm, matched within each pair, and
+    # east of x 190 there is no plane under them (j9_no_pour): the 0.35/0.20 mm = 102 ohm coupled pair of §6.4 cannot
+    # be had here. The Ti135 card has the same PHY and jack at the same distance with 0.12 mm tracks.
     # (class clearance 0.1: the PHY's QFN pads are on 0.4 mm pitch; the 0.2 mm track spacing is a rule)
-    ("mdi", 0.35, 0.1, 0.48, 0.25, 0.35, 0.2),
+    ("mdi", 0.2, 0.1, 0.48, 0.25, 0.2, 0.2),
     # PL I/O (banks 33/34: the pin plan's signals, on the SoC side of any series part); colour only
     ("pl_io", 0.1, 0.1, 0.48, 0.25, 0.1, 0.2),
     ("PWR", 0.3, 0.1, 0.48, 0.25, 0.1, 0.2),
@@ -173,16 +176,17 @@ DRU_TEXT = """(version 1)
 	(condition "A.hasNetclass('ddr3_diff') && !A.intersectsArea('ddr3_block')")
 	(constraint diff_pair_gap (min 0.09mm) (opt 0.102mm) (max 0.15mm)))
 
-# ---- MDI pairs: F.Cu only, 0.35/0.20 mm = 102 ohm (NASR-M erratum: inner-layer MDI was worse) -------
+# ---- MDI nets: F.Cu only (NASR-M erratum: inner-layer MDI was worse), 0.2 mm single tracks as routed by hand; no
+# pair-gap rule, the jack's pinout does not let P and N run side by side (tools/board_setup.py, class mdi) -------
 (rule "mdi_geometry"
 	(condition "A.hasNetclass('mdi') && A.Layer == 'F.Cu'")
-	(constraint track_width (min 0.33mm) (opt 0.35mm) (max 0.37mm))
-	(constraint diff_pair_gap (min 0.18mm) (opt 0.2mm) (max 0.22mm)))
+	(constraint track_width (min 0.19mm) (opt 0.2mm) (max 0.37mm))
+	(constraint diff_pair_gap (min 0.1mm) (opt 0.2mm) (max 20mm)))
 (rule "mdi_spacing"
 	(condition "A.Type == 'Track' && A.hasNetclass('mdi') && A.NetName != B.NetName && !B.inDiffPair('*')")
 	(constraint clearance (min 0.2mm)))
 # breakout at U901: the QFN pads are 0.2 mm on 0.4 mm pitch, so the pairs leave them at 0.2/0.2 mm (down to 0.1 mm
-# beside the VDD10 vias of pins 3 and 8) and widen to 0.35 mm outside the package's courtyard
+# beside the VDD10 vias of pins 3 and 8)
 (rule "mdi_breakout"
 	(condition "A.hasNetclass('mdi') && A.intersectsCourtyard('U901')")
 	(constraint track_width (min 0.1mm) (opt 0.2mm) (max 0.37mm))

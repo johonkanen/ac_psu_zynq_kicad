@@ -332,6 +332,8 @@ Why it was chosen:
 **Consequences for the rest of the board:**
 - **F.Cu and B.Cu are poor impedance layers:** 0.102 mm is 111 Ω, and 50 Ω would take about 0.8 mm. Use them for
   fan-out, pours, power and slow signals. The exception is the **MDI pairs: 0.35/0.20 mm on F.Cu = 102 Ω**, which also
+  **As built (2026-11-20):** the MDI nets are 0.2 mm single tracks, 4.5-14 mm: the jack has P and N in opposite pin
+  rows and no plane under it (`j9_no_pour`), so the coupled pair is not possible there (`tools/board_setup.py`, class `mdi`).
   follows NASR-M's erratum to keep MDI on an outer layer. The inner layers cannot reach 100 Ω differential at
   practical widths (0.10/0.40 mm gives 79 Ω).
 - **Other single-ended nets on the inner layers** (RGMII, eMMC, QSPI): 0.09–0.102 mm gives 41–40 Ω, and 0.07 mm gives
